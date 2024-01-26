@@ -9,8 +9,10 @@ let mainUrl
 switch (isDevelopingMode) {
     case true:
         mainUrl = 'http://localhost:3001'
+        break
     case false:
         mainUrl = 'https://try-render-com.onrender.com'
+        break
 }
 
 // 輸出參數
