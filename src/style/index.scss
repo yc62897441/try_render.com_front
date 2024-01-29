@@ -1,5 +1,5 @@
-@use './containers\ style/homepage.scss';
+@use './base.scss';
 
-h1 {
-    color: goldenrod;
+* {
+    color: base.$text-primary-color;
 }

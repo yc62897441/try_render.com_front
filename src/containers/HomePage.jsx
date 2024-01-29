@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Axios from 'axios'
 
 // 靜態資源
+import '../style/containers style/homepage.scss'
 
 // 自定義 components
 
@@ -17,7 +18,7 @@ function HomePage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        //  fetch()
+        fetch()
     }, [])
     async function fetch() {
         try {
