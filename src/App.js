@@ -7,6 +7,7 @@ import HomePage from './containers/HomePage.jsx'
 
 // style
 import './index.css'
+import './style/index.scss'
 
 function App() {
     return (

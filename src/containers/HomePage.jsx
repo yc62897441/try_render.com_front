@@ -1,8 +1,7 @@
 // 套件
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Axios from 'axios'
-import styled from 'styled-components'
 
 // 靜態資源
 
@@ -18,7 +17,7 @@ function HomePage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        fetch()
+        //  fetch()
     }, [])
     async function fetch() {
         try {
@@ -74,7 +73,7 @@ function HomePage() {
 
     return (
         <div>
-            HomePage
+            <h1>HomePage</h1>
             <div>
                 {/* 測試：redux 【{isLoading.toString()}】
                 <button onClick={handleClick}>改變 redux</button> */}
