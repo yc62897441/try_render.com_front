@@ -13,7 +13,7 @@ import './index.css'
 import './style/index.scss'
 
 function App() {
-    const isLogin = useSelector((state) => state.controlReducer.isLogin)
+    const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
     const isLoginToken = sessionStorage.getItem('token') ? true : false
 
     return (

@@ -9,8 +9,18 @@ import { applyMiddleware } from 'redux-subspace'
 import thunk from 'redux-thunk'
 import dynostore, { dynamicReducers } from '@redux-dynostore/core'
 
+// Redux Persist
+import { persistStore, persistReducer } from 'redux-persist'
+import storageSession from 'redux-persist/lib/storage/session'
+const persistConfig = {
+    key: 'controlReducer',
+    storage: storageSession,
+    whitelist: ['userData', 'isLogin'],
+}
+const persistedControlReducer = persistReducer(persistConfig, controlReducer)
+
 const rootReducer = combineReducers({
-    controlReducer,
+    persistedControlReducer,
 })
 
 const store = createStore(
@@ -18,4 +28,5 @@ const store = createStore(
     compose(applyMiddleware(thunk), dynostore(dynamicReducers()))
 )
 
+export const persistor = persistStore(store)
 export default store

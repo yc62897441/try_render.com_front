@@ -12,8 +12,13 @@ import { dispatchLOADING } from '../actions'
 import { apiHelper } from '../utils/helper'
 
 function HomePage() {
-    const isLoading = useSelector((state) => state.controlReducer.isLoading)
     const dispatch = useDispatch()
+
+    const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
+    const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
+    const userData = useSelector((state) => state.persistedControlReducer.userData)
+    console.log('isLogin', isLogin)
+    console.log('userData', userData)
 
     async function fetchData() {
         try {

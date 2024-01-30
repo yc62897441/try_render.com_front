@@ -3,6 +3,7 @@ import * as actions from '../actions'
 const initState = {
     isLogin: false,
     isLoading: false,
+    userData: {},
 }
 
 const controlReducer = (state = initState, action) => {
@@ -16,6 +17,11 @@ const controlReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: action.payload,
+            }
+        case actions.SWITCH_USER_DATA:
+            return {
+                ...state,
+                userData: action.payload,
             }
         default:
             return state

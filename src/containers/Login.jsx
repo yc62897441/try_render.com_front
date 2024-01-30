@@ -9,11 +9,11 @@ import LoadingModal from '../components/LoadingModal'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../config/api'
-import { dispatchLOGIN, dispatchLOADING } from '../actions'
+import { dispatchLOGIN, dispatchLOADING, dispatchUSER_DATA } from '../actions'
 
 function Login() {
     const dispatch = useDispatch()
-    const isLoading = useSelector((state) => state.controlReducer.isLoading)
+    const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
 
     function handelLogin() {
         return async (dispatch) => {
@@ -27,6 +27,22 @@ function Login() {
                         let token = response.data.token
                         sessionStorage.setItem('token', token)
                         dispatch(dispatchLOGIN(true))
+
+                        // 測試 redux persist 的假資料
+                        dispatch(
+                            dispatchUSER_DATA({
+                                name: 'John',
+                                age: 18,
+                                address: {
+                                    city: 'Taipei',
+                                    street: 'Da An',
+                                    else: {
+                                        no: 1,
+                                        room: 'a1',
+                                    },
+                                },
+                            })
+                        )
                         dispatch(dispatchLOADING(false))
                     } else {
                         dispatch(dispatchLOADING(false))
