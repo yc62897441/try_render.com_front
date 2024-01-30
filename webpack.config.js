@@ -87,7 +87,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public/index.html'), //html模板
             filename: 'index.html',
-            favicon: './public/www.png',
+            favicon: './public/logo.png',
         }),
         new MiniCssExtractPlugin({
             filename: 'main.css',

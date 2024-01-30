@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 // 自定義 components
 import HomePage from './containers/HomePage.jsx'
 import Login from './containers/Login.jsx'
+import Layout from './components/Layout.jsx'
 
 // style
 import './index.css'
@@ -18,9 +19,11 @@ function App() {
     return (
         <BrowserRouter>
             {isLoginToken || isLogin ? (
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                </Routes>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                    </Routes>
+                </Layout>
             ) : (
                 <Routes>
                     <Route path="*" element={<Login />} />

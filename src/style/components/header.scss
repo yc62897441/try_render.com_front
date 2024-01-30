@@ -1,0 +1,128 @@
+.headerWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    padding: 0 25px;
+    background-color: #c19787;
+    border-bottom: 4px solid #805849;
+}
+
+// Logo
+.logoWrapper {
+    width: 50px;
+    height: 50px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+// 漢堡排
+.barsWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+
+    .bar {
+        display: block;
+        width: 24px;
+        height: 3px;
+        margin: 2px 0;
+        background-color: #000000;
+        transition: all 0.2s;
+    }
+
+    @media (min-width: 768px) {
+        position: absolute;
+        z-index: -9999;
+        opacity: 0;
+    }
+}
+.bar1.dropdown {
+    position: absolute;
+    transform: rotate(45deg);
+}
+.bar2.dropdown {
+    position: absolute;
+    opacity: 0;
+    z-index: -9999;
+}
+.bar3.dropdown {
+    position: absolute;
+    transform: rotate(-45deg);
+}
+
+// 連結選單
+.urlsWrapper {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    z-index: -9999;
+    opacity: 0;
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: inherit;
+    padding: 5px 15px;
+
+    @media (min-width: 768px) {
+        position: absolute;
+        z-index: -9999;
+        opacity: 0;
+    }
+}
+// 連結選單顯示功能(手機版)
+.urlsWrapper.dropdown {
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+// 連結選單(電腦版)
+.urlsWrapperPc {
+    position: absolute;
+    z-index: -9999;
+    opacity: 0;
+
+    display: flex;
+    flex-direction: row;
+
+    @media (min-width: 768px) {
+        position: relative;
+        z-index: 0;
+        opacity: 1;
+    }
+}
+// 連結
+.urlWrapper {
+    background-color: inherit;
+    margin: 3px 0;
+    padding: 3px 0;
+    border-bottom: 2px solid #805849;
+
+    a {
+        margin: 0;
+        background-color: inherit;
+        text-decoration: none;
+    }
+    a:hover {
+        font-weight: 600;
+    }
+
+    @media (min-width: 768px) {
+        margin: 0 10px;
+        padding: 0;
+        border: none;
+    }
+}
