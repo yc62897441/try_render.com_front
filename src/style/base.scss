@@ -1,4 +1,14 @@
-$text-primary-color : null; // $text-primary-color 因為是空值，所以就使用預設值。
+$text-primary-color: null; // $text-primary-color 因為是空值，所以就使用預設值。
 // $text-primary-color : #000; // 但如果有設定值，就不會使用預設值。
-$text-primary-color : #444 !default; // 如果值後面加上 !default 則表示默認值。
+$text-primary-color: #17202a !default; // 如果值後面加上 !default 則表示默認值。
 
+// 主題色
+// $main-theme-color: #c10265;
+$main-theme-color: #2471a3;
+$main-theme-color-dark: #00416f;
+$main-theme-color-light: #64a5da;
+$main-theme-color-complement: #a35624;
+
+// 背景顏色
+$main-background-color: #fefefe;
+$main-background-color-contrasting: $text-primary-color;

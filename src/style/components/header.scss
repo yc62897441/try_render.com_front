@@ -1,3 +1,5 @@
+@use '../base.scss';
+
 .headerWrapper {
     position: relative;
     display: flex;
@@ -7,8 +9,12 @@
     width: 100%;
     height: 100px;
     padding: 0 25px;
-    background-color: #c19787;
-    border-bottom: 4px solid #805849;
+    background-color: base.$main-theme-color;
+    border-bottom: 4px solid base.$main-theme-color-dark;
+
+    font-size: 16px;
+    font-weight: 600;
+    color: base.$main-background-color-contrasting;
 }
 
 // Logo
@@ -39,7 +45,7 @@
         width: 24px;
         height: 3px;
         margin: 2px 0;
-        background-color: #000000;
+        background-color: base.$main-background-color-contrasting;
         transition: all 0.2s;
     }
 
@@ -74,7 +80,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: inherit;
+    background-color: base.$main-theme-color-light;
     padding: 5px 15px;
 
     @media (min-width: 768px) {
@@ -88,6 +94,12 @@
     z-index: 0;
     opacity: 1;
     transition: opacity 0.5s;
+
+    @media (min-width: 768px) {
+        position: absolute;
+        z-index: -9999;
+        opacity: 0;
+    }
 }
 // 連結選單(電腦版)
 .urlsWrapperPc {
@@ -106,18 +118,16 @@
 }
 // 連結
 .urlWrapper {
-    background-color: inherit;
     margin: 3px 0;
     padding: 3px 0;
-    border-bottom: 2px solid #805849;
+    border-bottom: 2px solid base.$main-theme-color-dark;
 
     a {
         margin: 0;
-        background-color: inherit;
         text-decoration: none;
     }
     a:hover {
-        font-weight: 600;
+        font-weight: 700;
     }
 
     @media (min-width: 768px) {

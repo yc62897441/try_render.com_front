@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import '../style/containers/homepage.scss'
 
 // 自定義 components
+import LoadingModal from '../components/LoadingModal'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../config/api'
@@ -13,12 +14,9 @@ import { apiHelper } from '../utils/helper'
 
 function HomePage() {
     const dispatch = useDispatch()
-
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
     const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
     const userData = useSelector((state) => state.persistedControlReducer.userData)
-    console.log('isLogin', isLogin)
-    console.log('userData', userData)
 
     async function fetchData() {
         try {
@@ -55,6 +53,11 @@ function HomePage() {
 
     return (
         <div>
+            {
+                // 是否顯示 loading modal
+                isLoading && <LoadingModal text={''} />
+            }
+
             <h1>HomePage</h1>
             <div>
                 <button onClick={fetchData}>fetchData</button>
