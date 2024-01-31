@@ -1,4 +1,5 @@
 // 套件
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 // 靜態資源
@@ -17,6 +18,8 @@ function HomePage() {
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
     const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
     const userData = useSelector((state) => state.persistedControlReducer.userData)
+
+    console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY)
 
     async function fetchData() {
         try {
