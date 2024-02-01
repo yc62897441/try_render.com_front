@@ -19,7 +19,7 @@ function HomePage() {
     const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
     const userData = useSelector((state) => state.persistedControlReducer.userData)
 
-    console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY)
+    console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY.slice(0, 5) + 'aaaaa')
 
     async function fetchData() {
         try {
