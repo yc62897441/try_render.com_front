@@ -6,8 +6,8 @@ module.exports = {
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
-        'prettier',
         'plugin:prettier/recommended',
+        'prettier',
     ],
     overrides: [
         {
@@ -30,5 +30,6 @@ module.exports = {
     rules: {
         'prettier/prettier': 'warn',
         'react/prop-types': 'off',
+        'no-unused-vars': 'warn',
     },
 }
