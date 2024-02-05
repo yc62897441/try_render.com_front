@@ -1,0 +1,40 @@
+// 字串使用單引號
+singleQuote: true,
+// 每行末尾自動新增分號
+semi: true,
+// tab縮排大小,預設為2
+tabWidth: 2,
+// 使用tab縮進，預設false
+useTabs: false,
+// 物件中列印空格 預設true
+// true: { foo: bar }
+// false: {foo: bar}
+bracketSpacing: true,
+// 箭頭函數參數括號 預設avoid 可選 avoid| always
+// avoid 能省略括號的時候就省略 例如x => x
+// always 總是有括號
+arrowParens: 'avoid',
+// 換行長度，預設80
+printWidth: 80,
+
+-----------------------以下內容為參考項---------------------- ----
+"prettier.printWidth": 100, // 超過最大值換行
+"prettier.tabWidth": 4, // 縮排位元組數
+"prettier.useTabs": false, // 縮排不使用tab，使用空格
+"prettier.semi": true, // 句尾加上分號
+"prettier.singleQuote": true, // 使用單引號取代雙引號
+"prettier.proseWrap": "preserve", // 預設值。 因為使用了一些折行敏感型的渲染器（如GitHub comment）而依照markdown文字樣式進行折行
+"prettier.arrowParens": "avoid", // (x) => {} 箭頭函數參數只有一個時是否要有小括號。 avoid：省略括號
+"prettier.bracketSpacing": true, // 在對象，陣列括號與文字之間加空格 "{ foo: bar }"
+"prettier.disableLanguages": ["vue"], // 不格式化vue文件，vue文件的格式化單獨設置
+"prettier.endOfLine": "auto", // 結尾是 \n \r \n\r auto
+"prettier.eslintIntegration": false, //不讓prettier使用eslint的程式碼格式進行校驗
+"prettier.htmlWhitespaceSensitivity": "ignore",
+"prettier.ignorePath": ".prettierignore", // 不使用prettier格式化的文件填寫在專案的.prettierignore文件中
+"prettier.jsxBracketSameLine": false, // 在jsx中把'>' 是否單獨放一行
+"prettier.jsxSingleQuote": false, // 在jsx中使用單引號取代雙引號
+"prettier.parser": "babylon", // 格式化的解析器，預設是babylon
+"prettier.requireConfig": false, // Require a 'prettierconfig' to format prettier
+"prettier.stylelintIntegration": false, //不讓prettier使用stylelint的程式碼格式進行校驗
+"prettier.trailingComma": "es5", // 在物件或陣列最後一個元素後面是否加逗號（在ES5中加尾逗號）
+"prettier.tslintIntegration": false // 不讓prettier使用tslint的程式碼格式進行校驗

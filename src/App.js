@@ -21,12 +21,12 @@ function App() {
             {isLoginToken || isLogin ? (
                 <Layout>
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
+                        <Route path='/' element={<HomePage />} />
                     </Routes>
                 </Layout>
             ) : (
                 <Routes>
-                    <Route path="*" element={<Login />} />
+                    <Route path='*' element={<Login />} />
                 </Routes>
             )}
         </BrowserRouter>

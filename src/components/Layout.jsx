@@ -1,4 +1,5 @@
 // 套件
+import React from 'react'
 
 // 靜態資源
 import '../style/components/layout.scss'
@@ -10,7 +11,7 @@ import Header from './Header'
 
 function Layout({ children }) {
     return (
-        <div className="layoutWrapper">
+        <div className='layoutWrapper'>
             <Header />
 
             {children}

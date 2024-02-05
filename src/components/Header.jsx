@@ -1,5 +1,5 @@
 // 套件
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // 靜態資源
@@ -33,16 +33,16 @@ function Header() {
     }
 
     return (
-        <div className="headerWrapper">
+        <div className='headerWrapper'>
             {/* Logo */}
-            <div className="logoWrapper">
+            <div className='logoWrapper'>
                 <Link to={'/'}>
-                    <img src={LogoImg} alt="" srcset="" />
+                    <img src={LogoImg} alt='' srcSet='' />
                 </Link>
             </div>
 
             {/* 漢堡排 */}
-            <div className="barsWrapper" onClick={handleDropdown}>
+            <div className='barsWrapper' onClick={handleDropdown}>
                 <div className={'bar bar1 ' + isDropdown}></div>
                 <div className={'bar bar2 ' + isDropdown}></div>
                 <div className={'bar bar3 ' + isDropdown}></div>
@@ -51,7 +51,7 @@ function Header() {
             <div className={'urlsWrapper ' + isDropdown}>
                 {urls.length > 0 &&
                     urls.map((item) => (
-                        <div ket={item.name} className="urlWrapper">
+                        <div key={item.name} className='urlWrapper'>
                             <Link to={item.url}>{item.name}</Link>
                         </div>
                     ))}
@@ -60,7 +60,7 @@ function Header() {
             <div className={'urlsWrapperPc'}>
                 {urls.length > 0 &&
                     urls.map((item) => (
-                        <div ket={item.name} className="urlWrapper">
+                        <div key={item.name} className='urlWrapper'>
                             <Link to={item.url}>{item.name}</Link>
                         </div>
                     ))}
