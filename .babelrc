@@ -1,0 +1,14 @@
+{
+    "presets": [
+      "@babel/preset-env", // 使用最新的 JavaScript 特性
+      "@babel/preset-react" // 支援 React JSX 語法
+    ],
+    "plugins": [
+      // 可能需要其他插件，根據專案需求添加
+    ],
+    "env": {
+        "test": {
+          "plugins": ["@babel/plugin-transform-modules-commonjs"]
+        }
+    }
+}
