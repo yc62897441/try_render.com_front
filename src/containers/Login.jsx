@@ -57,7 +57,7 @@ function Login() {
     }
 
     return (
-        <div>
+        <main>
             {
                 // 是否顯示 loading modal
                 isLoading && <LoadingModal text={''} />
@@ -71,7 +71,7 @@ function Login() {
             >
                 登入
             </button>
-        </div>
+        </main>
     )
 }
 

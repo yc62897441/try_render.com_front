@@ -19,7 +19,7 @@ function HomePage() {
     const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
     const userData = useSelector((state) => state.persistedControlReducer.userData)
 
-    console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY.slice(0, 5) + 'aaaaa')
+    // console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY.slice(0, 5) + 'aaaaa')
 
     async function fetchData() {
         try {
@@ -53,7 +53,7 @@ function HomePage() {
     }
 
     return (
-        <div>
+        <main>
             {
                 // 是否顯示 loading modal
                 isLoading && <LoadingModal text={''} />
@@ -63,7 +63,7 @@ function HomePage() {
             <div>
                 <button onClick={fetchData}>fetchData</button>
             </div>
-        </div>
+        </main>
     )
 }
 

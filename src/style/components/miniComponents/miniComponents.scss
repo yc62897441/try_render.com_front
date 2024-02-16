@@ -1,0 +1,38 @@
+.button {
+    display: inline-block;
+    padding: 8px 13px; /*調整按鈕的內邊距 */
+    border: 1px solid #dddddd; /* 添加1px的淺灰色邊框 */
+    border-radius: 4px; /* 圓角 */
+    background-color: #ffffff;
+    color: #24292e; /* 文字顏色設為深灰色 */
+    font-size: 14px; /* 進一步降低字體大小 */
+    transition: background-color 0.3s ease; /* 平滑的背景顏色過渡效果 */
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #eeeeee; /* 鼠標懸停時的背景顏色設為淺灰色 */
+}
+.button.isActive {
+    border: 1px solid #088a6b;
+    color: #088a6b;
+}
+
+.selectWrapper {
+    width: 100%;
+    padding: 5px 10px; /* 調整內邊距 */
+    background-color: #ffffff;
+    border: 1px solid #dddddd; /* 更改邊框顏色 */
+    border-radius: 4px; /* 添加圓角 */
+
+    font-size: 16px;
+    cursor: pointer;
+}
+.option {
+    /* 以下的樣式應該是沒有效果 */
+    /* This is because this type of element is an example of a "replaced element". They are OS-dependent and are not part of the HTML/browser. It cannot be styled via CSS. */
+    padding: 10px 50px; /* 調整內邊距 */
+
+    /* 以下的樣式有效果 */
+    background-color: #ffffff;
+    font-size: 16px; /* 進一步降低字體大小 */
+}

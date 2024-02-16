@@ -16,8 +16,8 @@ const urls = [
         url: '/',
     },
     {
-        name: 'A page',
-        url: '/a',
+        name: 'All',
+        url: '/all',
     },
 ]
 

@@ -1,0 +1,7 @@
+.dataListWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    width: 100%;
+    border: 5px solid red;
+}
