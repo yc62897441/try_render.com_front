@@ -16,7 +16,7 @@ const urls = [
         url: '/',
     },
     {
-        name: 'All',
+        name: '列表',
         url: '/all',
     },
 ]

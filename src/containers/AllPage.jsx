@@ -72,7 +72,8 @@ function AllPage() {
                 isLoading && <LoadingModal text={''} />
             }
 
-            <h1>All</h1>
+            <h1>列表</h1>
+
             <DataListPagination propData={data} />
         </main>
     )

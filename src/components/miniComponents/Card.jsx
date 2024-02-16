@@ -11,7 +11,7 @@ import '../../style/components/miniComponents/card.scss'
 function Card({ datum }) {
     return (
         <div className='cardWrapper'>
-            <div className='cardTitle'>{datum.id}</div>
+            <h2>{datum.id}</h2>
             <div className='cardImgWrapper'>
                 <img src={datum.url} alt='' srcSet='' />
             </div>
