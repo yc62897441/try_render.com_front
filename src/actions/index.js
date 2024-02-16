@@ -1,5 +1,7 @@
 export const SWITCH_LOGIN = 'SWITCH_LOGIN'
 export const SWITCH_LOADING = 'SWITCH_LOADING'
+export const SWITCH_REFETCH = 'SWITCH_REFETCH'
+export const SWITCH_KEEP_FETCH = 'SWITCH_KEEP_FETCH'
 export const SWITCH_USER_DATA = 'SWITCH_USER_DATA'
 
 export const dispatchLOGIN = (option) => ({
@@ -9,6 +11,16 @@ export const dispatchLOGIN = (option) => ({
 
 export const dispatchLOADING = (option) => ({
     type: SWITCH_LOADING,
+    payload: option,
+})
+
+export const dispatchREFETCH = (option) => ({
+    type: SWITCH_REFETCH,
+    payload: option,
+})
+
+export const dispatchKEEP_FETCH = (option) => ({
+    type: SWITCH_KEEP_FETCH,
     payload: option,
 })
 
