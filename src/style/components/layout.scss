@@ -1,11 +1,4 @@
-@use '../base.scss';
-
 .layoutWrapper {
     width: 100%;
     min-height: 100vh;
-}
-
-main {
-    width: 100%;
-    background-color: base.$main-background-color;
 }

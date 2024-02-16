@@ -8,6 +8,25 @@ body {
     background-color: base.$main-background-color;
 }
 
+// 區塊
+main {
+    width: 100%;
+    padding: 20px;
+    background-color: base.$main-background-color;
+    // border: 2px solid red;
+}
+
+article {
+    width: 100%;
+    // border: 2px solid green;
+}
+
+section {
+    width: 100%;
+    // border: 2px solid blue;
+}
+
+// 標題文字
 h1 {
     margin: 0 0 20px;
     font-size: 48px;
