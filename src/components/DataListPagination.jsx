@@ -73,6 +73,7 @@ function DataListPagination({ propData }) {
             (paginationStates.page - 1) * paginationStates.numberPerPage
         const newPage = Math.floor(currentPageFirstItemIndex / Number(newNumberPerPage)) + 1
 
+        // 改變 numberPerPage
         const page =
             newPage > paginationStates.maxPage
                 ? paginationStates.maxPage
@@ -80,8 +81,6 @@ function DataListPagination({ propData }) {
                   ? 1
                   : newPage
         const maxPage = Math.ceil(propData.length / Number(newNumberPerPage))
-
-        // 改變 numberPerPage
         setPaginationStates({
             ...paginationStates,
             page: page,

@@ -1,24 +1,27 @@
+@use '../../base.scss';
+
 .cardWrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 400px;
+    width: 600px;
     padding: 20px;
     border-radius: 20px;
-    border: 2px solid rebeccapurple;
+    box-shadow: base.$box-shadow;
 }
 
 .cardTitle {
-    text-align: center;
-    color: rebeccapurple;
+    margin: 0 0 20px;
+    // text-align: center;
     font-size: 20px;
     font-weight: 600;
 }
 
 .cardImgWrapper {
-    width: 300px;
-    height: 200px;
+    width: 450px;
+    height: 300px;
+    margin: 0 0 20px;
     border-radius: 20px;
 
     img {
