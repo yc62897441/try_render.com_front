@@ -314,6 +314,7 @@ function LoginPage() {
                 // 是否顯示 loading modal
                 isLoading && <LoadingModal text={''} />
             }
+            <LoadingModal text={''} />
 
             <section className='loginSection'>
                 <div className='loginBackgroundImageWrapper' />

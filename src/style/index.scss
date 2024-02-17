@@ -28,6 +28,7 @@ h1 {
     font-size: 30px;
     font-weight: 600;
     text-align: center;
+    color: base.$main-theme-color;
 
     @media (min-width: 576px) {
         margin: 0 0 20px;
@@ -39,6 +40,7 @@ h2 {
     font-size: 24px;
     font-weight: 600;
     text-align: center;
+    color: base.$main-theme-color-light;
 
     @media (min-width: 576px) {
         margin: 0 0 20px;

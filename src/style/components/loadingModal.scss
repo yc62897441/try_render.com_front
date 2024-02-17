@@ -28,17 +28,26 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
+    width: 150px;
+    height: 150px;
     z-index: 1;
+
+    @media (min-width: 576px) {
+        width: 300px;
+        height: 300px;
+    }
 }
 .modalLoadingMainText {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 28px;
+    font-size: 20px;
     z-index: 1;
+
+    @media (min-width: 576px) {
+        font-size: 28px;
+    }
 }
 
 // 轉圈圈效果
@@ -47,88 +56,143 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 300px;
-    height: 300px;
+    width: 150px;
+    height: 150px;
     z-index: 0;
+
+    @media (min-width: 576px) {
+        width: 300px;
+        height: 300px;
+    }
 }
 .lds-roller div {
     animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    transform-origin: 150px 150px;
+    transform-origin: 75px 75px;
+
+    @media (min-width: 576px) {
+        transform-origin: 150px 150px;
+    }
 }
 .lds-roller div:after {
     content: ' ';
     display: block;
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background-color: base.$main-theme-color;
     opacity: 1;
-    margin: -10px 0 0 -10px;
+    margin: -5px 0 0 -5px;
+
+    @media (min-width: 576px) {
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+    }
 }
 
 .lds-roller div:nth-child(1) {
     animation-delay: -0.036s;
 }
 .lds-roller div:nth-child(1):after {
-    top: 274px;
-    left: 232px;
+    top: 135px;
+    left: 118px;
+
+    @media (min-width: 576px) {
+        top: 274px;
+        left: 232px;
+    }
 }
 
 .lds-roller div:nth-child(2) {
     animation-delay: -0.072s;
 }
 .lds-roller div:nth-child(2):after {
-    top: 287px;
-    left: 207px;
+    top: 142px;
+    left: 105px;
+
+    @media (min-width: 576px) {
+        top: 287px;
+        left: 207px;
+    }
 }
 
 .lds-roller div:nth-child(3) {
     animation-delay: -0.108s;
 }
 .lds-roller div:nth-child(3):after {
-    top: 297px;
-    left: 180px;
+    top: 147px;
+    left: 90px;
+
+    @media (min-width: 576px) {
+        top: 297px;
+        left: 180px;
+    }
 }
 
 .lds-roller div:nth-child(4) {
     animation-delay: -0.144s;
 }
 .lds-roller div:nth-child(4):after {
-    top: 300px;
-    left: 150px;
+    top: 149px;
+    left: 75px;
+
+    @media (min-width: 576px) {
+        top: 300px;
+        left: 150px;
+    }
 }
 
 .lds-roller div:nth-child(5) {
     animation-delay: -0.18s;
 }
 .lds-roller div:nth-child(5):after {
-    top: 297px;
-    left: 120px;
+    top: 148px;
+    left: 60px;
+
+    @media (min-width: 576px) {
+        top: 297px;
+        left: 120px;
+    }
 }
 
 .lds-roller div:nth-child(6) {
     animation-delay: -0.216s;
 }
 .lds-roller div:nth-child(6):after {
-    top: 289px;
-    left: 94px;
+    top: 144px;
+    left: 46px;
+
+    @media (min-width: 576px) {
+        top: 289px;
+        left: 94px;
+    }
 }
 
 .lds-roller div:nth-child(7) {
     animation-delay: -0.252s;
 }
 .lds-roller div:nth-child(7):after {
-    top: 276px;
-    left: 69px;
+    top: 137px;
+    left: 34px;
+
+    @media (min-width: 576px) {
+        top: 276px;
+        left: 69px;
+    }
 }
 
 .lds-roller div:nth-child(8) {
     animation-delay: -0.288s;
 }
 .lds-roller div:nth-child(8):after {
-    top: 260px;
-    left: 48px;
+    top: 129px;
+    left: 23px;
+
+    @media (min-width: 576px) {
+        top: 260px;
+        left: 48px;
+    }
 }
 @keyframes lds-roller {
     0% {
