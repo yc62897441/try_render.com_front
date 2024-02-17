@@ -1,0 +1,87 @@
+.loginSection {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+}
+
+// 背景圖
+.loginBackgroundImageWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5;
+    z-index: 0;
+    background-image: url('../../assets/img/pexels-ihsan-adityawarman-1056251.jpg');
+}
+
+// 跑馬燈
+.loginMarquee {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    background-color: transparent;
+    z-index: 1;
+
+    @media (min-width: 576px) {
+        top: 15%;
+    }
+}
+.loginMarqueeItem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    animation: show 6s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: top;
+}
+.loginMarqueeItem1 {
+    animation-delay: 2s;
+}
+.loginMarqueeItem2 {
+    animation-delay: 4s;
+}
+.loginMarqueeItem3 {
+    animation-delay: 6s;
+}
+@keyframes show {
+    0% {
+        transform: scale(1, 0);
+    }
+    17% {
+        transform: scale(1, 1);
+    }
+    33% {
+        transform: scale(1, 1);
+    }
+    34% {
+        transform: scale(1, 0);
+    }
+    100% {
+        transform: scale(1, 0);
+    }
+}
+
+// 主要區域
+.loginSectionMain {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background-color: transparent;
+    z-index: 1;
+
+    @media (min-width: 576px) {
+        top: 45%;
+    }
+}
