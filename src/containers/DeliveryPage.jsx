@@ -13,7 +13,7 @@ import { mainUrl } from '../config/api'
 import { dispatchLOADING, dispatchREFETCH } from '../actions'
 import { apiHelper } from '../utils/helper'
 
-function AllPage() {
+function DeliveryPage() {
     const dispatch = useDispatch()
     const reFetch = useSelector((state) => state.persistedControlReducer.reFetch)
     const keepFetch = useSelector((state) => state.persistedControlReducer.keepFetch)
@@ -62,11 +62,11 @@ function AllPage() {
 
     return (
         <main>
-            <h1>列表</h1>
+            <h1>貓咪宅急便</h1>
 
             <DataListPagination propData={data} />
         </main>
     )
 }
 
-export default AllPage
+export default DeliveryPage

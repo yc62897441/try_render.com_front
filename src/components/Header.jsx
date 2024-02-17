@@ -16,8 +16,8 @@ const urls = [
         url: '/',
     },
     {
-        name: '列表',
-        url: '/all',
+        name: '貓咪宅急便',
+        url: '/delivery',
     },
 ]
 

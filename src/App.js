@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 // 自定義 components
 import HomePage from './containers/HomePage.jsx'
-import AllPage from './containers/AllPage.jsx'
+import DeliveryPage from './containers/DeliveryPage.jsx'
 import Login from './containers/Login.jsx'
 import Layout from './components/Layout.jsx'
 
@@ -23,7 +23,7 @@ function App() {
                 <Layout>
                     <Routes>
                         <Route path='/' element={<HomePage />} />
-                        <Route path='/all' element={<AllPage />} />
+                        <Route path='/delivery' element={<DeliveryPage />} />
                     </Routes>
                 </Layout>
             ) : (
