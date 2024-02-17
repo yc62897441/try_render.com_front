@@ -1,7 +1,7 @@
 @use '../base.scss';
 
 .modalWrapper {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -23,7 +23,7 @@
 }
 
 // 主區域
-.modalMain {
+.modalLoadingMain {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -32,7 +32,7 @@
     height: 300px;
     z-index: 1;
 }
-.modalMainText {
+.modalLoadingMainText {
     position: absolute;
     top: 50%;
     left: 50%;

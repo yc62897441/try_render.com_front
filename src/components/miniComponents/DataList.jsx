@@ -6,7 +6,7 @@ import '../../style/components/miniComponents/dataList.scss'
 
 // 自定義 components
 
-import Card from './Card'
+import Card, { CardWithModal } from './Card'
 
 // 自定義函數 or 參數
 
@@ -14,7 +14,9 @@ function DataList({ propData }) {
     return (
         <div className='dataListWrapper'>
             {propData?.length > 0 &&
-                propData.map((datum, index) => <Card key={index} datum={datum}></Card>)}
+                propData.map((datum, index) => (
+                    <CardWithModal key={index} datum={datum}></CardWithModal>
+                ))}
         </div>
     )
 }

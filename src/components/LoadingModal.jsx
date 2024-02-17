@@ -11,8 +11,8 @@ import '../style/components/loadingModal.scss'
 function LoadingModal({ text }) {
     return (
         <div className='modalWrapper'>
-            <div className='modalMain'>
-                <div className='modalMainText'>{text || 'Loading...'}</div>
+            <div className='modalLoadingMain'>
+                <div className='modalLoadingMainText'>{text || 'Loading...'}</div>
 
                 {/* 轉圈圈 */}
                 <div className='lds-roller'>
