@@ -1,6 +1,6 @@
 // 套件
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 // 靜態資源
 import '../style/containers/homepage.scss'
@@ -14,10 +14,6 @@ import { apiHelper } from '../utils/helper'
 
 function HomePage() {
     const dispatch = useDispatch()
-    const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
-    const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
-    const userData = useSelector((state) => state.persistedControlReducer.userData)
-
     // console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY.slice(0, 5) + 'aaaaa')
 
     async function fetchData() {
