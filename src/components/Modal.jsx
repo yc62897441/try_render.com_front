@@ -51,44 +51,36 @@ export function CatModalContent({ datum }) {
 
     return (
         <div className='catModalContentWrapper'>
-            {data !== null &&
-                (data.breeds ? (
-                    <>
-                        <div className='catModalContentInfo'>
-                            <div>品種: </div>
-                            <div>{data?.breeds[0]?.name}</div>
-                        </div>
-                        <div className='catModalContentInfo'>
-                            <div>性情: </div>
-                            <div>{data?.breeds[0]?.temperament}</div>
-                        </div>
-                        <div className='catModalContentInfo'>
-                            <div>起源地: </div>
-                            <div>{data?.breeds[0]?.origin}</div>
-                        </div>
-                        <div className='catModalContentInfo'>
-                            <div>描述: </div>
-                            <div>{data?.breeds[0]?.description}</div>
-                        </div>
-                        <div className='catModalContentInfo'>
-                            <div>壽命長度: </div>
-                            <div>{data?.breeds[0]?.life_span}</div>
-                        </div>
-                        <div className='catModalContentInfo'>
-                            <a href={data?.breeds[0]?.wikipedia_url}>維基介紹</a>
-                        </div>
-                        <div className='catModalContentImgWrapper'>
-                            <img src={data?.url} alt='' srcSet='' />
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className='catModalContentInfo'>name: {data?.categories[0]?.name}</div>
-                        <div className='catModalContentImgWrapper'>
-                            <img src={data?.url} alt='' srcSet='' />
-                        </div>
-                    </>
-                ))}
+            {data !== null && data.breeds && (
+                <>
+                    <div className='catModalContentInfo'>
+                        <div>品種: </div>
+                        <div>{data?.breeds?.[0]?.name}</div>
+                    </div>
+                    <div className='catModalContentInfo'>
+                        <div>性情: </div>
+                        <div>{data?.breeds?.[0]?.temperament}</div>
+                    </div>
+                    <div className='catModalContentInfo'>
+                        <div>起源地: </div>
+                        <div>{data?.breeds?.[0]?.origin}</div>
+                    </div>
+                    <div className='catModalContentInfo'>
+                        <div>描述: </div>
+                        <div>{data?.breeds?.[0]?.description}</div>
+                    </div>
+                    <div className='catModalContentInfo'>
+                        <div>壽命長度: </div>
+                        <div>{data?.breeds?.[0]?.life_span}</div>
+                    </div>
+                    <div className='catModalContentInfo'>
+                        <a href={data?.breeds?.[0]?.wikipedia_url}>維基介紹</a>
+                    </div>
+                    <div className='catModalContentImgWrapper'>
+                        <img src={data?.url} alt='' srcSet='' />
+                    </div>
+                </>
+            )}
         </div>
     )
 }

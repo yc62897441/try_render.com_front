@@ -1,3 +1,33 @@
+// 用來過濾出有 breeds 的資料
+// async function fetch2(datum) {
+//     try {
+//         const response = await apiHelper('get', 'https://api.thecatapi.com/v1/images/' + datum.id)
+
+//         if (response?.data?.breeds) {
+//             return datum
+//         } else {
+//             return null
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+// async function fetchAll() {
+//     try {
+//         const temp = []
+//         const aaa = await Promise.all(catsData.map((datum) => fetch2(datum)))
+//         aaa.forEach((item) => {
+//             if (item !== null) {
+//                 temp.push(item)
+//             }
+//         })
+//         console.log('aaa', aaa)
+//         console.log('temp', temp)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
 export const catsData = [
     {
         id: '3h2',
