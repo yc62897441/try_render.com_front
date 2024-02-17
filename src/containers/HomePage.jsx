@@ -6,11 +6,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import '../style/containers/homepage.scss'
 
 // 自定義 components
-import LoadingModal from '../components/LoadingModal'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../config/api'
-// import { dispatchLOADING } from '../actions'
+import { dispatchLOADING } from '../actions'
 import { apiHelper } from '../utils/helper'
 
 function HomePage() {
@@ -23,6 +22,7 @@ function HomePage() {
 
     async function fetchData() {
         try {
+            dispatch(dispatchLOADING(true))
             // const response1 = await apiHelper('get', mainUrl + '/')
             // console.log('response1', response1)
 
@@ -34,18 +34,15 @@ function HomePage() {
                 limit: 10,
             })
             console.log('response3', response3)
+            dispatch(dispatchLOADING(false))
         } catch (error) {
+            dispatch(dispatchLOADING(false))
             console.log(error)
         }
     }
 
     return (
         <main>
-            {
-                // 是否顯示 loading modal
-                isLoading && <LoadingModal text={''} />
-            }
-
             <h1>HomePage</h1>
             <div>
                 <button onClick={fetchData}>fetchData</button>

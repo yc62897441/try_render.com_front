@@ -10,7 +10,7 @@ import '../style/components/loadingModal.scss'
 
 function LoadingModal({ text }) {
     return (
-        <div className='modalWrapper'>
+        <div className='loadingModalWrapper'>
             <div className='modalLoadingMain'>
                 <div className='modalLoadingMainText'>{text || 'Loading...'}</div>
 

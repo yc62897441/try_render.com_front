@@ -6,7 +6,7 @@ import '../../style/components/miniComponents/dataList.scss'
 
 // 自定義 components
 import Card from './Card'
-import Modal from '../Modal'
+import Modal, { CatModalContent } from '../Modal'
 
 // 自定義函數 or 參數
 
@@ -43,7 +43,9 @@ function DataList({ propData }) {
             </div>
 
             {modalState.showIndex !== null && (
-                <Modal switchModal={switchModal}>{modalState.showDatum.id}</Modal>
+                <Modal switchModal={switchModal}>
+                    <CatModalContent datum={modalState.showDatum} />
+                </Modal>
             )}
         </Fragment>
     )

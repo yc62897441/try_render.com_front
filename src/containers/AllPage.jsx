@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import '../style/containers/homepage.scss'
 
 // 自定義 components
-import LoadingModal from '../components/LoadingModal'
 import DataListPagination from '../components/DataListPagination'
 
 // 自定義函數 or 參數
@@ -64,11 +63,6 @@ function AllPage() {
 
     return (
         <main>
-            {
-                // 是否顯示 loading modal
-                isLoading && <LoadingModal text={''} />
-            }
-
             <h1>列表</h1>
 
             <DataListPagination propData={data} />
