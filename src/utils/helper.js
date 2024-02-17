@@ -25,7 +25,19 @@ axiosInstance.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 )
-export const apiHelper = axiosInstance
+export async function apiHelper(method, url, data) {
+    try {
+        return await axiosInstance({ method, url, data })
+            .then((response) => {
+                return response
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 // 打 cats API
 const requestOptions = {
@@ -45,8 +57,7 @@ axiosCatsApiInstance.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 )
-export const apiCatsApiHelper = axiosCatsApiInstance
-
+const apiCatsApiHelper = axiosCatsApiInstance
 // 暫時用來抓 cats API 使用
 export async function fetchCatsData() {
     try {

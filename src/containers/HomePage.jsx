@@ -23,30 +23,17 @@ function HomePage() {
 
     async function fetchData() {
         try {
-            // await apiHelper
-            //     .get(mainUrl + '/')
-            //     .then((response) => {
-            //         console.log('response', response)
-            //     })
-            //     .catch((error) => {
-            //         alert(error)
-            //     })
-            // await apiHelper
-            //     .get(mainUrl + '/api/data')
-            //     .then((response) => {
-            //         console.log('api data response', response)
-            //     })
-            //     .catch((error) => {
-            //         alert(error)
-            //     })
-            await apiHelper
-                .post(mainUrl + '/api/catslist', { offset: 10, limit: 10 })
-                .then((response) => {
-                    console.log('api catslist response', response)
-                })
-                .catch((error) => {
-                    alert(error)
-                })
+            // const response1 = await apiHelper('get', mainUrl + '/')
+            // console.log('response1', response1)
+
+            // const response2 = await apiHelper('get', mainUrl + '/api/data')
+            // console.log('response2', response2)
+
+            const response3 = await apiHelper('post', mainUrl + '/api/catslist', {
+                offset: 10,
+                limit: 10,
+            })
+            console.log('response3', response3)
         } catch (error) {
             console.log(error)
         }

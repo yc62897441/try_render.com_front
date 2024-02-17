@@ -37,14 +37,11 @@ function AllPage() {
         return async (dispatch) => {
             try {
                 dispatch(dispatchLOADING(false))
-                const response = await apiHelper
-                    .post(mainUrl + '/api/catslist', { offset: offset, limit: fetchLimit })
-                    .then((response) => {
-                        return response
-                    })
-                    .catch((error) => {
-                        alert(error)
-                    })
+
+                const response = await apiHelper('post', mainUrl + '/api/catslist', {
+                    offset: offset,
+                    limit: fetchLimit,
+                })
                 // console.log('api catslist response', response)
 
                 if (keepFetch) {
