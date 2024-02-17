@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 // 靜態資源
 import '../style/containers/login.scss'
+import LogoImg from '../assets/img/logo.png'
 
 // 自定義 components
 import LoadingModal from '../components/LoadingModal'
@@ -317,8 +318,10 @@ function LoginPage() {
             <section className='loginSection'>
                 <div className='loginBackgroundImageWrapper' />
 
+                {/* 跑馬燈 */}
                 <LoginMarquee />
 
+                {/* 登入、註冊、忘記密碼表單 */}
                 {form === 'login' ? (
                     <LoginForm changeForm={changeForm} />
                 ) : form === 'register' ? (
@@ -328,6 +331,11 @@ function LoginPage() {
                 ) : (
                     <></>
                 )}
+
+                {/* LOGO */}
+                <div className='loginLogoWrapper'>
+                    <img src={LogoImg} alt='' srcSet='' />
+                </div>
             </section>
         </main>
     )
