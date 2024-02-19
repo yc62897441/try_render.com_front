@@ -84,3 +84,40 @@ export function CatModalContent({ datum }) {
         </div>
     )
 }
+
+export function RestaurantModalContent({ datum }) {
+    const [data, setData] = useState(null)
+
+    useEffect(() => {
+        setData(datum)
+    }, [datum])
+
+    return (
+        <div className='catModalContentWrapper'>
+            {data && (
+                <>
+                    <div className='catModalContentInfo'>
+                        <div>店名: </div>
+                        <div>{data?.name}</div>
+                    </div>
+                    <div className='catModalContentInfo'>
+                        <div>地址: </div>
+                        <div>{data?.address}</div>
+                    </div>
+                    <div className='catModalContentInfo'>
+                        <div>營業時間: </div>
+                        <div>
+                            {data?.openingHoursList?.map((item, index) => (
+                                <div key={index}>{item}</div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className='catModalContentImgWrapper'>
+                        <img src={data?.coverUrl} alt='' srcSet='' />
+                    </div>
+                </>
+            )}
+        </div>
+    )
+}

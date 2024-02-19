@@ -10,11 +10,13 @@ import Modal, { CatModalContent } from '../Modal'
 
 // 自定義函數 or 參數
 
-function DataList({ propData }) {
+function DataList({ propData, PropCard, PropModalContent }) {
     const [modalState, setModalState] = useState({
         showIndex: null,
         showDatum: null,
     })
+
+    console.log('propData', propData)
 
     function switchModal(index) {
         if (modalState.showIndex === null) {
@@ -37,14 +39,18 @@ function DataList({ propData }) {
                 {propData?.length > 0 &&
                     propData.map((datum, index) => (
                         <div key={index} onClick={() => switchModal(index)}>
-                            <Card datum={datum}></Card>
+                            {PropCard ? <PropCard datum={datum} /> : <Card datum={datum} />}
                         </div>
                     ))}
             </div>
 
             {modalState.showIndex !== null && (
                 <Modal switchModal={switchModal}>
-                    <CatModalContent datum={modalState.showDatum} />
+                    {PropModalContent ? (
+                        <PropModalContent datum={modalState.showDatum} />
+                    ) : (
+                        <CatModalContent datum={modalState.showDatum} />
+                    )}
                 </Modal>
             )}
         </Fragment>

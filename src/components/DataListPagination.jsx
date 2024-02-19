@@ -11,7 +11,7 @@ import DataList from './miniComponents/DataList'
 // 自定義函數 or 參數
 import { dispatchKEEP_FETCH } from '../actions'
 
-function DataListPagination({ propData }) {
+function DataListPagination({ propData, PropCard, PropModalContent }) {
     const dispatch = useDispatch()
     const keepFetch = useSelector((state) => state.persistedControlReducer.keepFetch)
     const [totalData, setTotalData] = useState([])
@@ -99,7 +99,7 @@ function DataListPagination({ propData }) {
 
     return (
         <Fragment>
-            <DataList propData={showData} />
+            <DataList propData={showData} PropCard={PropCard} PropModalContent={PropModalContent} />
 
             <PaginationRaw
                 propPaginationStates={paginationStates}

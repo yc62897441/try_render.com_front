@@ -19,6 +19,10 @@ const urls = [
         name: '貓咪宅急便',
         url: '/delivery',
     },
+    {
+        name: '貓咪餐廳',
+        url: '/restaurant',
+    },
 ]
 
 function Header() {
