@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 // 靜態資源
-import '../style/containers/restaurantPage.scss'
 
 // 自定義 components
 import DataListPagination from '../components/DataListPagination'
@@ -66,7 +65,7 @@ function RestaurantPage() {
         <main>
             <h1>貓咪餐廳</h1>
 
-            <section className='restaurantPageSection'>
+            <section className='pageSection'>
                 <h2>服務介紹</h2>
                 <p>
                     歡迎蒞臨「貓咪餐廳」系列，匯聚世界各地迷人的貓咪餐廳，提供多樣風格料理，並搭配可愛的貓迷陪伴您共享美好用餐時光。一同探索菜單，品味來自不同地方的美味，讓每一口都成為一場風味之旅，打造美味和愛貓共同為生活增添色彩的獨特體驗。
