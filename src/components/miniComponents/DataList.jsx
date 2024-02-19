@@ -5,8 +5,7 @@ import React, { Fragment, useState } from 'react'
 import '../../style/components/miniComponents/dataList.scss'
 
 // 自定義 components
-import Card from './Card'
-import Modal, { CatModalContent } from '../Modal'
+import Modal from '../Modal'
 
 // 自定義函數 or 參數
 
@@ -15,8 +14,6 @@ function DataList({ propData, PropCard, PropModalContent }) {
         showIndex: null,
         showDatum: null,
     })
-
-    console.log('propData', propData)
 
     function switchModal(index) {
         if (modalState.showIndex === null) {
@@ -36,21 +33,18 @@ function DataList({ propData, PropCard, PropModalContent }) {
     return (
         <Fragment>
             <div className='dataListWrapper'>
-                {propData?.length > 0 &&
+                {PropCard &&
+                    propData?.length > 0 &&
                     propData.map((datum, index) => (
                         <div key={index} onClick={() => switchModal(index)}>
-                            {PropCard ? <PropCard datum={datum} /> : <Card datum={datum} />}
+                            <PropCard datum={datum} />
                         </div>
                     ))}
             </div>
 
             {modalState.showIndex !== null && (
                 <Modal switchModal={switchModal}>
-                    {PropModalContent ? (
-                        <PropModalContent datum={modalState.showDatum} />
-                    ) : (
-                        <CatModalContent datum={modalState.showDatum} />
-                    )}
+                    {PropModalContent && <PropModalContent datum={modalState.showDatum} />}
                 </Modal>
             )}
         </Fragment>

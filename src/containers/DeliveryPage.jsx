@@ -7,6 +7,8 @@ import '../style/containers/deliveryPage.scss'
 
 // 自定義 components
 import DataListPagination from '../components/DataListPagination'
+import { CatModalContent } from '../components/Modal'
+import { CatCard } from '../components/miniComponents/Card'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../config/api'
@@ -81,7 +83,11 @@ function DeliveryPage() {
                 </ol>
             </section>
 
-            <DataListPagination propData={data} />
+            <DataListPagination
+                propData={data}
+                PropCard={CatCard}
+                PropModalContent={CatModalContent}
+            />
         </main>
     )
 }

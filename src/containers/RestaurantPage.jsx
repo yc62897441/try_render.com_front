@@ -8,22 +8,12 @@ import '../style/containers/restaurantPage.scss'
 // 自定義 components
 import DataListPagination from '../components/DataListPagination'
 import { RestaurantModalContent } from '../components/Modal'
+import { RestaurantCard } from '../components/miniComponents/Card'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../config/api'
 import { dispatchLOADING, dispatchREFETCH } from '../actions'
 import { apiHelper } from '../utils/helper'
-
-function Card({ datum }) {
-    return (
-        <div className='cardWrapper'>
-            <h2>{datum.name}</h2>
-            <div className='cardImgWrapper'>
-                <img src={datum.coverUrl} alt='' srcSet='' />
-            </div>
-        </div>
-    )
-}
 
 function RestaurantPage() {
     const dispatch = useDispatch()
@@ -85,7 +75,7 @@ function RestaurantPage() {
 
             <DataListPagination
                 propData={data}
-                PropCard={Card}
+                PropCard={RestaurantCard}
                 PropModalContent={RestaurantModalContent}
             />
         </main>
