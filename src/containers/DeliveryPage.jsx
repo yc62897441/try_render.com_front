@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 // 靜態資源
-import '../style/containers/homepage.scss'
+import '../style/containers/deliveryPage.scss'
 
 // 自定義 components
 import DataListPagination from '../components/DataListPagination'
@@ -63,6 +63,23 @@ function DeliveryPage() {
     return (
         <main>
             <h1>貓咪宅急便</h1>
+
+            <section className='deliveryPageSection'>
+                <h2>服務介紹</h2>
+                <p>
+                    歡迎使用「貓咪宅急便」，我們提供簡便的線上預訂服務，讓您輕鬆享受親切可愛的貓咪送上門的體驗，擁有多款品種、健康檢查完備的貓咪，確保您和貓咪共度美好時光，是打造美好回憶的首選。
+                </p>
+            </section>
+
+            <section className='deliveryPageSection'>
+                <h2>服務流程</h2>
+                <ol>
+                    <li>選擇喜歡的貓咪</li>
+                    <li>填寫您的地址與及預約時間</li>
+                    <li>依付款資訊進行付款</li>
+                    <li>等待貓咪上門</li>
+                </ol>
+            </section>
 
             <DataListPagination propData={data} />
         </main>
