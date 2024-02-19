@@ -334,7 +334,7 @@ function LoginPage() {
 
                 {/* LOGO */}
                 <div className='loginLogoWrapper'>
-                    <img src={LogoImg} alt='' srcSet='' />
+                    <img src={LogoImg} alt='貓咪 icon' srcSet='' />
                 </div>
             </section>
         </main>

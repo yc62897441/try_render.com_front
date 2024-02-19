@@ -77,7 +77,7 @@ export function CatModalContent({ datum }) {
                         <a href={data?.breeds?.[0]?.wikipedia_url}>維基介紹</a>
                     </div>
                     <div className='catModalContentImgWrapper'>
-                        <img src={data?.url} alt='' srcSet='' />
+                        <img src={data?.url} alt='貓咪圖片' srcSet='' />
                     </div>
                 </>
             )}
@@ -114,7 +114,7 @@ export function RestaurantModalContent({ datum }) {
                     </div>
 
                     <div className='catModalContentImgWrapper'>
-                        <img src={data?.coverUrl} alt='' srcSet='' />
+                        <img src={data?.coverUrl} alt='餐廳圖片' srcSet='' />
                     </div>
                 </>
             )}

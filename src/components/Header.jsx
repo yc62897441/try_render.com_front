@@ -45,7 +45,7 @@ function Header() {
             {/* Logo */}
             <div className='logoWrapper'>
                 <Link to={'/'}>
-                    <img src={LogoImg} alt='' srcSet='' />
+                    <img src={LogoImg} alt='貓咪 icon' srcSet='' />
                 </Link>
             </div>
 

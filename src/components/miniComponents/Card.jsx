@@ -13,7 +13,7 @@ export function CatCard({ datum }) {
         <div className='cardWrapper'>
             <h2>{datum.id}</h2>
             <div className='cardImgWrapper'>
-                <img src={datum.url} alt='' srcSet='' />
+                <img src={datum.url} alt='貓咪圖片' srcSet='' />
             </div>
         </div>
     )
@@ -24,7 +24,7 @@ export function RestaurantCard({ datum }) {
         <div className='cardWrapper'>
             <h2>{datum.name}</h2>
             <div className='cardImgWrapper'>
-                <img src={datum.coverUrl} alt='' srcSet='' />
+                <img src={datum.coverUrl} alt='餐廳圖片' srcSet='' />
             </div>
         </div>
     )

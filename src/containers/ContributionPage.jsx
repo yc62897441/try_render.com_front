@@ -29,7 +29,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/2173872/pexels-photo-2173872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -38,7 +38,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/2361952/pexels-photo-2361952.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -47,7 +47,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/2646483/pexels-photo-2646483.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -56,7 +56,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/1107807/pexels-photo-1107807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -65,7 +65,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/179237/pexels-photo-179237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -74,7 +74,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/2173872/pexels-photo-2173872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -83,7 +83,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/2361952/pexels-photo-2361952.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -92,7 +92,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/2646483/pexels-photo-2646483.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -101,7 +101,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/1107807/pexels-photo-1107807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
@@ -110,7 +110,7 @@ function ContributionPage() {
                                 src={
                                     'https://images.pexels.com/photos/179237/pexels-photo-179237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                 }
-                                alt=''
+                                alt='貓咪圖片'
                                 srcSet=''
                             />
                         </div>
