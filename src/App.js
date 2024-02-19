@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import HomePage from './containers/HomePage.jsx'
 import DeliveryPage from './containers/DeliveryPage.jsx'
 import RestaurantPage from './containers/RestaurantPage.jsx'
+import ContributionPage from './containers/ContributionPage.jsx'
 import LoginPage from './containers/LoginPage.jsx'
 import Layout from './components/Layout.jsx'
 
@@ -26,6 +27,7 @@ function App() {
                         <Route path='/' element={<HomePage />} />
                         <Route path='/delivery' element={<DeliveryPage />} />
                         <Route path='/restaurant' element={<RestaurantPage />} />
+                        <Route path='/contribution' element={<ContributionPage />} />
                     </Routes>
                 </Layout>
             ) : (
