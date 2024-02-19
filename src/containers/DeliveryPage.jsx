@@ -35,7 +35,7 @@ function DeliveryPage() {
     function fetch() {
         return async (dispatch) => {
             try {
-                dispatch(dispatchLOADING(false))
+                dispatch(dispatchLOADING(true))
 
                 const response = await apiHelper('post', mainUrl + '/api/catslist', {
                     offset: offset,
