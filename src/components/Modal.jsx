@@ -14,7 +14,14 @@ import { dispatchLOADING } from '../actions'
 function Modal({ children, switchModal }) {
     return (
         <div className='modalWrapper'>
-            <div className='modalMain'>{children}</div>
+            <div className='modalMain'>
+                <div className='modalCloseWrapper'>
+                    <div className='modalClose' onClick={switchModal}>
+                        X
+                    </div>
+                </div>
+                {children}
+            </div>
 
             {/* 遮罩 */}
             <div className='modalMask' onClick={switchModal}></div>

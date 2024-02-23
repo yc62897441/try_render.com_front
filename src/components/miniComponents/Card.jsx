@@ -10,7 +10,7 @@ import '../../style/components/miniComponents/card.scss'
 
 export function CatCard({ datum }) {
     return (
-        <div className='cardWrapper'>
+        <div className='cardWrapper pointer'>
             <h2>{datum.id}</h2>
             <div className='cardImgWrapper'>
                 <img src={datum.url} alt='貓咪圖片' srcSet='' />
@@ -21,7 +21,7 @@ export function CatCard({ datum }) {
 
 export function RestaurantCard({ datum }) {
     return (
-        <div className='cardWrapper'>
+        <div className='cardWrapper pointer'>
             <h2>{datum.name}</h2>
             <div className='cardImgWrapper'>
                 <img src={datum.coverUrl} alt='餐廳圖片' srcSet='' />
