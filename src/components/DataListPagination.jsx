@@ -10,6 +10,7 @@ import DataList from './miniComponents/DataList'
 
 // 自定義函數 or 參數
 import { dispatchKEEP_FETCH } from '../actions'
+import { onEnterView } from '../helper/helper'
 
 function DataListPagination({ propData, PropCard, PropModalContent }) {
     const dispatch = useDispatch()
@@ -49,6 +50,17 @@ function DataListPagination({ propData, PropCard, PropModalContent }) {
         const endIndex = startIndex + paginationStates.numberPerPage
         setShowData(totalData.slice(startIndex, endIndex))
     }, [paginationStates])
+
+    // 使用圖片 Lazy Loading
+    useEffect(() => {
+        // 參考來源：Lazy Loading 延遲載入圖片
+        // https://mingjun.lu/blog/lazy-loading-images-with-intersection-observer
+        const watcher = new IntersectionObserver(onEnterView)
+        const lazyImages = document.querySelectorAll('img.lazy')
+        for (const image of lazyImages) {
+            watcher.observe(image)
+        }
+    }, [showData])
 
     // pagination 使用的函數，改變當前頁面(如上一頁、下一頁)
     function handleChangePage(newPage) {
