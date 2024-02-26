@@ -110,3 +110,10 @@
         }
     }
 }
+
+// 用來掛載 ReCaptcha 的隱藏按鈕
+.reCaptchaButton {
+    position: absolute;
+    opacity: 0;
+    z-index: -9999;
+}

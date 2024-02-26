@@ -1,5 +1,5 @@
 // 套件
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // 靜態資源
@@ -14,7 +14,7 @@ import { mainUrl } from '../config/api'
 import { dispatchLOGIN, dispatchLOADING, dispatchUSER_DATA } from '../actions'
 import { apiHelper } from '../utils/helper'
 
-function LoginForm({ changeForm }) {
+function LoginForm({ changeForm, reCaptchaSubmit }) {
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
         account: '',
@@ -103,7 +103,11 @@ function LoginForm({ changeForm }) {
                         className='button'
                         type='button'
                         onClick={() => {
-                            dispatch(handelLogin())
+                            if (reCaptchaSubmit) {
+                                reCaptchaSubmit(handelLogin)
+                            } else {
+                                dispatch(handelLogin())
+                            }
                         }}
                     >
                         登入
@@ -300,6 +304,56 @@ function LoginMarquee() {
     )
 }
 
+// ReCaptcha HOC
+const ReCaptchHOC = (WrappedComponent) => {
+    function ReturnWrappedComponent(props) {
+        const dispatch = useDispatch()
+        const [isReCaptchaLoaded, setIsReCaptchaLoaded] = useState(false) // reCaptcha API 資源是否已經載入
+        const REACT_APP_CATSAPIKEY = process.env.REACT_APP_CATSAPIKEY
+
+        useEffect(() => {
+            // 載入 reCaptcha API 資源
+            const script = document.createElement('script')
+            script.src = 'https://www.google.com/recaptcha/api.js?render=explicit'
+            const loadCompleted = () => {
+                setIsReCaptchaLoaded(true)
+            }
+            script.addEventListener('load', loadCompleted)
+            document.body.appendChild(script)
+
+            return () => {
+                script.removeEventListener('load', loadCompleted)
+            }
+        }, [])
+        useEffect(() => {
+            // 確認 reCaptcha API 資源已載入完成後，再去綁定  reCaptcha invisible 到 submit 按鈕上
+            if (isReCaptchaLoaded === true) {
+                window.grecaptcha.ready(function () {
+                    window.grecaptcha.render('submit', {
+                        sitekey: REACT_APP_CATSAPIKEY,
+                        callback: reCaptchaSubmit,
+                    })
+                })
+            }
+        }, [isReCaptchaLoaded])
+
+        function reCaptchaSubmit(callback) {
+            dispatch(callback())
+        }
+
+        return (
+            <>
+                <WrappedComponent {...props} reCaptchaSubmit={reCaptchaSubmit} />
+                <button className='reCaptchaButton' id='submit' />
+            </>
+        )
+    }
+    return ReturnWrappedComponent
+}
+const LoginFormWithReCaptch = ReCaptchHOC(LoginForm)
+const RegisterFormWithReCaptch = ReCaptchHOC(RegisterForm)
+const ForgetPasswordFormWithReCaptch = ReCaptchHOC(ForgetPasswordForm)
+
 function LoginPage() {
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
     const [form, setForm] = useState('login')
@@ -321,8 +375,19 @@ function LoginPage() {
                 {/* 跑馬燈 */}
                 <LoginMarquee />
 
-                {/* 登入、註冊、忘記密碼表單 */}
+                {/* 登入、註冊、忘記密碼表單(with ReCaptcha) */}
                 {form === 'login' ? (
+                    <LoginFormWithReCaptch changeForm={changeForm} />
+                ) : form === 'register' ? (
+                    <RegisterFormWithReCaptch changeForm={changeForm} />
+                ) : form === 'forgetPassword' ? (
+                    <ForgetPasswordFormWithReCaptch changeForm={changeForm} />
+                ) : (
+                    <></>
+                )}
+
+                {/* 登入、註冊、忘記密碼表單 */}
+                {/* {form === 'login' ? (
                     <LoginForm changeForm={changeForm} />
                 ) : form === 'register' ? (
                     <RegisterForm changeForm={changeForm} />
@@ -330,7 +395,7 @@ function LoginPage() {
                     <ForgetPasswordForm changeForm={changeForm} />
                 ) : (
                     <></>
-                )}
+                )} */}
 
                 {/* LOGO */}
                 <div className='loginLogoWrapper'>
