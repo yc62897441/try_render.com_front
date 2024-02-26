@@ -36,7 +36,7 @@ function DataList({ propData, PropCard, PropModalContent }) {
                 {PropCard &&
                     propData?.length > 0 &&
                     propData.map((datum, index) => (
-                        <div key={index} onClick={() => switchModal(index)}>
+                        <div key={datum?.id || index} onClick={() => switchModal(index)}>
                             <PropCard datum={datum} />
                         </div>
                     ))}

@@ -65,13 +65,12 @@ export function Select({
         >
             {
                 // 如果沒有 defaultValue，則顯示「請選擇」並且使用者不能選這個選項
-                !defaultValue && selectList.length > 0 && (
+                selectList.length > 0 && !defaultValue && (
                     <option className='option' key={'請選擇'} value='' disabled>
                         請選擇
                     </option>
                 )
             }
-
             {selectList.length > 0 &&
                 selectList.map((selectItem) => (
                     <option

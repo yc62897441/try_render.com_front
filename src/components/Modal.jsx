@@ -114,8 +114,8 @@ export function RestaurantModalContent({ datum }) {
                     <div className='catModalContentInfo'>
                         <div>營業時間: </div>
                         <div>
-                            {data?.openingHoursList?.map((item, index) => (
-                                <div key={index}>{item}</div>
+                            {data?.openingHoursList?.map((item) => (
+                                <div key={item}>{item}</div>
                             ))}
                         </div>
                     </div>
