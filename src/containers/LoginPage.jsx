@@ -311,8 +311,6 @@ const ReCaptchHOC = (WrappedComponent) => {
         const [isReCaptchaLoaded, setIsReCaptchaLoaded] = useState(false) // reCaptcha API 資源是否已經載入
         const REACT_APP_RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_KEY
 
-        console.log('REACT_APP_RECAPTCHA_KEY', REACT_APP_RECAPTCHA_KEY)
-
         useEffect(() => {
             // 載入 reCaptcha API 資源
             const script = document.createElement('script')
