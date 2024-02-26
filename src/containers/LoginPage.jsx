@@ -309,7 +309,7 @@ const ReCaptchHOC = (WrappedComponent) => {
     function ReturnWrappedComponent(props) {
         const dispatch = useDispatch()
         const [isReCaptchaLoaded, setIsReCaptchaLoaded] = useState(false) // reCaptcha API 資源是否已經載入
-        const REACT_APP_CATSAPIKEY = process.env.REACT_APP_CATSAPIKEY
+        const REACT_APP_RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_KEY
 
         useEffect(() => {
             // 載入 reCaptcha API 資源
@@ -330,7 +330,7 @@ const ReCaptchHOC = (WrappedComponent) => {
             if (isReCaptchaLoaded === true) {
                 window.grecaptcha.ready(function () {
                     window.grecaptcha.render('submit', {
-                        sitekey: REACT_APP_CATSAPIKEY,
+                        sitekey: REACT_APP_RECAPTCHA_KEY,
                         callback: reCaptchaSubmit,
                     })
                 })
