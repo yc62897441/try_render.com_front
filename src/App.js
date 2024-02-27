@@ -9,6 +9,7 @@ import DeliveryPage from './containers/DeliveryPage.jsx'
 import RestaurantPage from './containers/RestaurantPage.jsx'
 import ContributionPage from './containers/ContributionPage.jsx'
 import LoginPage from './containers/LoginPage.jsx'
+import Throttle from './containers/Throttle.jsx'
 import Layout from './components/Layout.jsx'
 
 // style
@@ -28,6 +29,7 @@ function App() {
                         <Route path='/delivery' element={<DeliveryPage />} />
                         <Route path='/restaurant' element={<RestaurantPage />} />
                         <Route path='/contribution' element={<ContributionPage />} />
+                        <Route path='/throttle' element={<Throttle />} />
                     </Routes>
                 </Layout>
             ) : (

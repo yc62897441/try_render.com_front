@@ -27,6 +27,10 @@ const urls = [
         name: '線上認養',
         url: '/contribution',
     },
+    {
+        name: 'Throttle',
+        url: '/throttle',
+    },
 ]
 
 function Header() {
