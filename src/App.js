@@ -10,6 +10,9 @@ import RestaurantPage from './containers/RestaurantPage.jsx'
 import ContributionPage from './containers/ContributionPage.jsx'
 import LoginPage from './containers/LoginPage.jsx'
 import Throttle from './containers/Throttle.jsx'
+import Debounce from './containers/Debounce.jsx'
+import ThrottleFirst from './containers/ThrottleFirst.jsx'
+
 import Layout from './components/Layout.jsx'
 
 // style
@@ -30,6 +33,8 @@ function App() {
                         <Route path='/restaurant' element={<RestaurantPage />} />
                         <Route path='/contribution' element={<ContributionPage />} />
                         <Route path='/throttle' element={<Throttle />} />
+                        <Route path='/debounce' element={<Debounce />} />
+                        <Route path='/throttleFirst' element={<ThrottleFirst />} />
                     </Routes>
                 </Layout>
             ) : (

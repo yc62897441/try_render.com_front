@@ -6,30 +6,7 @@ import React, { useState } from 'react'
 // 自定義 components
 
 // 自定義函數 or 參數
-
-const withDebounce = (callback, time) => {
-    let timer = null
-
-    return function () {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-            callback()
-        }, time)
-    }
-}
-
-// function debounce(func, delay = 250) {
-//     let timer = null
-
-//     return function (...args) {
-//         let context = this
-
-//         clearTimeout(timer)
-//         timer = setTimeout(() => {
-//             func.apply(context, args)
-//         }, delay)
-//     }
-// }
+import { withDebounce } from '../helper/helper'
 
 function Debounce() {
     const [count, setCount] = useState(0)
@@ -41,18 +18,23 @@ function Debounce() {
     const handleClickWithDebounce = withDebounce(handleClick, 2000)
 
     return (
-        <div>
-            Debounce
-            <div>{count}</div>
+        <section>
+            <h1>Debounce</h1>
+            <p>
+                debounce(防抖): 在 n
+                秒內多次觸發，只會執行最後一次觸發，中間其餘的觸發都會被後續的觸發蓋掉。並且最後一次觸發會在
+                n 秒後執行。
+            </p>
+            <div>count: {count}</div>
             <button
                 onClick={() => {
-                    console.log('onClick')
+                    console.log('click')
                     handleClickWithDebounce()
                 }}
             >
                 +1
             </button>
-        </div>
+        </section>
     )
 }
 

@@ -31,6 +31,14 @@ const urls = [
         name: 'Throttle',
         url: '/throttle',
     },
+    {
+        name: 'Debounce',
+        url: '/debounce',
+    },
+    {
+        name: 'ThrottleFirst',
+        url: '/throttleFirst',
+    },
 ]
 
 function Header() {

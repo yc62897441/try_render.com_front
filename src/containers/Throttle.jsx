@@ -6,21 +6,7 @@ import React, { useState } from 'react'
 // 自定義 components
 
 // 自定義函數 or 參數
-
-// throttle(節流): 從第一次觸發開始，在 n 秒後執行 callback 函數。在第一次觸發到執行其間，無論再觸發多少次都不會執行。
-const withThrottle = (callback, time) => {
-    let idThrottled = false
-
-    return () => {
-        if (idThrottled) return
-
-        idThrottled = true
-        setTimeout(() => {
-            idThrottled = false
-            callback()
-        }, time)
-    }
-}
+import { withThrottle } from '../helper/helper'
 
 function Throttle() {
     const [count, setCount] = useState(0)
@@ -32,18 +18,22 @@ function Throttle() {
     const handleClickWithThrottle = withThrottle(handleClick, 2000)
 
     return (
-        <div>
-            Throttle
-            <div>{count}</div>
+        <section>
+            <h1>Throttle</h1>
+            <p>
+                throttle(節流): 從第一次觸發開始，在 n 秒後執行 callback
+                函數。在第一次觸發到執行其間，無論再觸發多少次都不會執行。
+            </p>
+            <div>count: {count}</div>
             <button
                 onClick={() => {
-                    console.log('onClick')
+                    console.log('click')
                     handleClickWithThrottle()
                 }}
             >
                 +1
             </button>
-        </div>
+        </section>
     )
 }
 
