@@ -1,0 +1,26 @@
+@use '../base.scss';
+
+.reactFlowWrapper {
+    width: 100%;
+    height: calc(100vh - 100px); // 減去 Header 的高度 100px
+    border: 2px dashed #000000;
+    border-color: #aaaaaa;
+}
+
+.reactFlow-node-title {
+    color: base.$text-primary-color;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.reactFlow-node-content-wrapper {
+    margin: 5px 0;
+
+    > div {
+        margin: 5px 0;
+    }
+}
+
+.reactFlow-node-content-span {
+    font-weight: 500;
+}

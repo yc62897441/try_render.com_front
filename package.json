@@ -23,7 +23,7 @@
     "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^2.7.2",
     "path-browserify": "^1.0.1",
-    "sass-loader": "^14.0.0",
+    "sass-loader": "^10.2.0",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
@@ -43,6 +43,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
+    "reactflow": "^11.7.4",
     "redux-persist": "^6.0.0",
     "redux-persist-transform-encrypt": "^5.1.1",
     "redux-subspace": "^6.2.1",

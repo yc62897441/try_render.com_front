@@ -16,3 +16,14 @@ $main-background-color-contrasting: $text-primary-color;
 $box-shadow:
     rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+// 匯出變數，可以在 js 檔案中引入
+// 參考資料 How to share variables between JS and SCSS? https://github.com/vitejs/vite/discussions/9601
+// 參考資料 support SCSS :export{} ? https://github.com/vitejs/vite/issues/1279
+:export {
+    textPrimaryColor: $text-primary-color;
+    mainThemeColor: $main-theme-color;
+    mainThemeColorDark: $main-theme-color-dark;
+    mainThemeColorLight: $main-theme-color-light;
+    mainThemeColorComplement: $main-theme-color-complement;
+}
