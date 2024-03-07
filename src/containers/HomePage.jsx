@@ -72,7 +72,7 @@ function HomepageSectionMain({ sectionData }) {
 }
 
 function HomePage() {
-    // console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY.slice(0, 5) + 'aaaaa')
+    // console.log('REACT_APP_CATSAPIKEY', process.env.REACT_APP_CATSAPIKEY.slice(0, 5))
 
     return (
         <main>

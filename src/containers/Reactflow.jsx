@@ -20,11 +20,6 @@ const {
     mainThemeColorLight,
     mainThemeColorComplement,
 } = baseSCSS
-// const textPrimaryColor = '#17202a'
-// const mainThemeColor = '#43766c'
-// const mainThemeColorDark = '#f8fae5'
-// const mainThemeColorLight = '#b19470'
-// const mainThemeColorComplement = '#76453b'
 import '../style/containers/reactflow.scss'
 
 // 自定義 components

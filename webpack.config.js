@@ -142,7 +142,7 @@ module.exports = (env) => {
             //     },
             // }),
             // new webpack.optimize.OccurenceOrderPlugin(),
-            new BundleAnalyzerPlugin(), // Bundle 分析視圖 // npm run deploy 時要註解起來
+            // new BundleAnalyzerPlugin(), // Bundle 分析視圖 // npm run deploy 時要註解起來
         ],
         // resolve: {
         //   fallback: { "path": false }
