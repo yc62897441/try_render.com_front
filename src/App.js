@@ -1,6 +1,6 @@
 // 套件
 import React, { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // 自定義 components
@@ -19,15 +19,16 @@ import Layout from './components/Layout.jsx'
 import './index.css'
 import './style/index.scss'
 
-// 部屬到 github pages 時使用
+// 部屬到 github pages 時使用(BrowserRouter)
 function App({ basename }) {
     // function App() {
     const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
 
     return (
-        <BrowserRouter
-            basename={basename} // 部屬到 github pages 時使用
-        >
+        // <BrowserRouter
+        //     basename={basename} // 部屬到 github pages 時使用(BrowserRouter)
+        // >
+        <HashRouter>
             {isLogin ? (
                 <Layout>
                     <Suspense fallback={<LoadingPage />}>
@@ -45,7 +46,8 @@ function App({ basename }) {
                     <Route path='*' element={<LoginPage />} />
                 </Routes>
             )}
-        </BrowserRouter>
+        </HashRouter>
+        // </BrowserRouter>
     )
 }
 

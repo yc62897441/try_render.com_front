@@ -10,14 +10,14 @@ const root = ReactDOM.createRoot(domContainer)
 
 // 配合 webpack.config.js 是否有設定 publicPath
 // export const BASE_NAME = '/basename'
-export const BASE_NAME = '/try_render.com_front' // 部屬到 github pages 時使用
+export const BASE_NAME = '/try_render.com_front' // 部屬到 github pages 時使用(BrowserRouter)
 
 root.render(
     <React.StrictMode>
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <App
-                    basename={BASE_NAME} // 部屬到 github pages 時使用
+                    basename={BASE_NAME} // 部屬到 github pages 時使用(BrowserRouter)
                 />
             </PersistGate>
         </Provider>
