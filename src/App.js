@@ -19,11 +19,15 @@ import Layout from './components/Layout.jsx'
 import './index.css'
 import './style/index.scss'
 
-function App() {
+// 部屬到 github pages 時使用
+function App({ basename }) {
+    // function App() {
     const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
 
     return (
-        <BrowserRouter>
+        <BrowserRouter
+            basename={basename} // 部屬到 github pages 時使用
+        >
             {isLogin ? (
                 <Layout>
                     <Suspense fallback={<LoadingPage />}>

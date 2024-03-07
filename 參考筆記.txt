@@ -1,0 +1,17 @@
+React Router not working with Github Pages
+https://stackoverflow.com/questions/71984401/react-router-not-working-with-github-pages
+
+1.If deploying to GitHub, ensure there is a "homepage" entry in package.json for where you are hosting it in Github.
+
+Examples:
+
+User Page
+"homepage": "https://amodhakal.github.io",
+
+Project Page
+"homepage": "https://amodhakal.github.io/portfolio",
+
+Custom Domain Page
+"homepage": "https://amodhakal.com",
+
+2.Switch to the HashRouter since GitHub pages doesn't support the tech used by the BrowserRouter.

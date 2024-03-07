@@ -55,7 +55,19 @@ module.exports = (env) => {
                         // Creates `style` nodes from JS strings
                         'style-loader',
                         // Translates CSS into CommonJS
-                        'css-loader',
+                        // 'css-loader',
+
+                        // https://github.com/alexanderweigelt/ExportSassVarsToJS
+                        // 解決 gh-pages 找不到 scss export 的變數的問題
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                importLoaders: 1,
+                                modules: {
+                                    mode: 'icss', // Enable ICSS (Interoperable CSS)
+                                },
+                            },
+                        },
                         // Compiles Sass to CSS
                         'sass-loader',
                     ],
@@ -130,7 +142,7 @@ module.exports = (env) => {
             //     },
             // }),
             // new webpack.optimize.OccurenceOrderPlugin(),
-            new BundleAnalyzerPlugin(), // Bundle 分析視圖
+            // new BundleAnalyzerPlugin(), // Bundle 分析視圖
         ],
         // resolve: {
         //   fallback: { "path": false }
