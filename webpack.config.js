@@ -14,6 +14,8 @@ const Dotenv = require('dotenv-webpack')
 // https://ithelp.ithome.com.tw/articles/10274467?sc=rss.iron
 // webpack-bundle-analyzer
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// Webpack4分割程式碼的正確姿勢
+// https://juejin.cn/post/6964642182183518215
 
 module.exports = (env) => {
     return {
@@ -23,7 +25,9 @@ module.exports = (env) => {
         entry: ['./src/index.js'],
         output: {
             path: path.resolve(__dirname, 'build'),
-            filename: '[name].js',
+            // filename: '[name].js',
+            filename: '[name].[contenthash].js',
+            // chunkFilename: '[name].js',
             //加hash是為了快取問題，版本更新使用者會抓到最新的檔案
 
             // 不要加 publicPath，配合 nginx 設定 root 根目錄路徑即為專案資料夾，靜態檔案都放在專案資料夾，在 index.html 引入 js、css 的路徑為「/main.js」、不要「/homepage/main.js」。
@@ -143,6 +147,7 @@ module.exports = (env) => {
             // }),
             // new webpack.optimize.OccurenceOrderPlugin(),
             // new BundleAnalyzerPlugin(), // Bundle 分析視圖 // npm run deploy 時要註解起來
+            new webpack.ids.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
         ],
         // resolve: {
         //   fallback: { "path": false }
@@ -153,12 +158,24 @@ module.exports = (env) => {
         },
         // 程式碼切分，抽離第三方套件
         optimization: {
+            runtimeChunk: 'single',
             splitChunks: {
                 chunks: 'all',
+                maxInitialRequests: Infinity,
+                minSize: 0,
                 cacheGroups: {
                     vendors: {
                         test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
+                        // name: 'vendors',
+                        name(module) {
+                            // 取得每個npm套件的名稱
+                            const packageName =
+                                module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)?.[1] ||
+                                Math.random().toString()
+
+                            // 對npm的包名子加上前綴，並去掉@
+                            return `npm.${packageName.replace('@', '')}`
+                        },
                     },
                     // 拆分出共用的 chunk
                     default: {

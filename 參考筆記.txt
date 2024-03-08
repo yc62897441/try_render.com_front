@@ -15,3 +15,8 @@ Custom Domain Page
 "homepage": "https://amodhakal.com",
 
 2.Switch to the HashRouter since GitHub pages doesn't support the tech used by the BrowserRouter.
+
+
+===================================
+7個步驟將 React 部署到 Github Pages
+https://medium.com/@bun.coding/7%E5%80%8B%E6%AD%A5%E9%A9%9F%E5%B0%87-react-%E9%83%A8%E7%BD%B2%E5%88%B0-github-pages-2d7e0d203d50

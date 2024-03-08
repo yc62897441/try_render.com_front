@@ -12,6 +12,7 @@ const DeliveryPage = lazy(() => import('./containers/DeliveryPage.jsx'))
 const RestaurantPage = lazy(() => import('./containers/RestaurantPage.jsx'))
 const ContributionPage = lazy(() => import('./containers/ContributionPage.jsx'))
 const Reactflow = lazy(() => import('./containers/Reactflow.jsx'))
+// const Reactflow = lazy(() => import('./containers/ReactflowWrapper.jsx'))
 
 import Layout from './components/Layout.jsx'
 
