@@ -36,7 +36,7 @@ export function Select({
             if (datumIndex === undefined || datumIndex === null) {
                 onChangeFunc(selectList[0]?.value, onChangeKey)
             } else {
-                onChangeFunc(selectList[0]?.value, datumIndex, onChangeKey)
+                onChangeFunc(selectList[0]?.value, onChangeKey, datumIndex)
             }
         }
     }, [])
@@ -47,7 +47,7 @@ export function Select({
             if (datumIndex === undefined || datumIndex === null) {
                 onChangeFunc(e.target.value, onChangeKey)
             } else {
-                onChangeFunc(e.target.value, datumIndex, onChangeKey)
+                onChangeFunc(e.target.value, onChangeKey, datumIndex)
             }
         }
     }
@@ -59,7 +59,8 @@ export function Select({
             onChange={(e) => {
                 handleChange(e)
             }}
-            defaultValue={selectList.length === 0 ? '無資料' : defaultValue}
+            value={selectList.length === 0 ? '無資料' : defaultValue}
+            // defaultValue={selectList.length === 0 ? '無資料' : defaultValue}
             disabled={disabled}
             id={id}
         >
@@ -77,7 +78,7 @@ export function Select({
                     <option
                         className='option'
                         key={selectItem.label}
-                        selected={defaultValue === selectItem.value}
+                        // selected={defaultValue.toString() === selectItem.value.toString()}
                         value={selectItem.value}
                     >
                         {selectItem.label}
@@ -90,5 +91,133 @@ export function Select({
                 </option>
             )}
         </select>
+    )
+}
+
+export function Ratio({
+    defaultValue,
+    ratioList,
+    onChangeFunc,
+    datumIndex,
+    onChangeKey,
+    disabled,
+}) {
+    // 預選設定 state 為 ratioList 第一筆資料的 value
+    useEffect(() => {
+        // 如果資料是來自於由父層的 state，則 UI 操作的變動結果需要透過父層傳下來的函數，一同更新父層的 state
+        if (onChangeFunc && onChangeKey && !defaultValue) {
+            if (datumIndex === undefined || datumIndex === null) {
+                onChangeFunc(ratioList[0]?.value, onChangeKey)
+            } else {
+                onChangeFunc(ratioList[0]?.value, onChangeKey, datumIndex)
+            }
+        }
+    }, [])
+
+    function handleChange(e) {
+        // 如果資料是來自於由父層的 state，則 UI 操作的變動結果需要透過父層傳下來的函數，一同更新父層的 state
+        if (onChangeFunc && onChangeKey) {
+            if (datumIndex === undefined || datumIndex === null) {
+                onChangeFunc(e.target.value, onChangeKey)
+            } else {
+                onChangeFunc(e.target.value, onChangeKey, datumIndex)
+            }
+        }
+    }
+
+    return (
+        <fieldset disabled={disabled}>
+            {ratioList.length > 0 &&
+                ratioList.map((ratioItem, index) => (
+                    <div className='fieldsetItemWrapper' key={index + ratioItem.label}>
+                        <label htmlFor={ratioItem.label}>{ratioItem.label}</label>
+                        <input
+                            type='radio'
+                            id={ratioItem.label}
+                            name='radio'
+                            value={ratioItem.value}
+                            onChange={(e) => {
+                                handleChange(e)
+                            }}
+                            checked={defaultValue?.toString() === ratioItem.value.toString()}
+                        />
+                    </div>
+                ))}
+        </fieldset>
+    )
+}
+
+export function Checkbox({
+    defaultValue,
+    checkList,
+    onChangeFunc,
+    datumIndex,
+    onChangeKey,
+    disabled,
+}) {
+    // 預選設定 state 為 checkList 第一筆資料的 value
+    useEffect(() => {
+        // 如果資料是來自於由父層的 state，則 UI 操作的變動結果需要透過父層傳下來的函數，一同更新父層的 state
+        if (onChangeFunc && onChangeKey && !defaultValue) {
+            if (datumIndex === undefined || datumIndex === null) {
+                onChangeFunc(checkList[0]?.value, onChangeKey)
+            } else {
+                onChangeFunc(checkList[0]?.value, onChangeKey, datumIndex)
+            }
+        }
+    }, [])
+
+    function handleChange(e) {
+        // 如果資料是來自於由父層的 state，則 UI 操作的變動結果需要透過父層傳下來的函數，一同更新父層的 state
+        if (onChangeFunc && onChangeKey) {
+            const newValue = generateNewValue(e.target.value.toString())
+            if (datumIndex === undefined || datumIndex === null) {
+                onChangeFunc(newValue, onChangeKey)
+            } else {
+                onChangeFunc(newValue, onChangeKey, datumIndex)
+            }
+        }
+    }
+
+    function generateNewValue(checkItemValue) {
+        let newValue = ''
+        if (defaultValueArr?.includes(checkItemValue)) {
+            // 取消選取
+            defaultValueArr.forEach((item) => {
+                if (item !== checkItemValue && item) {
+                    newValue += item.toString() + ';'
+                }
+            })
+        } else {
+            // 新增選取
+            defaultValueArr.forEach((item) => {
+                if (item) newValue += item.toString() + ';'
+            })
+            newValue += checkItemValue.toString()
+        }
+        return newValue
+    }
+
+    // 把 check 的選項，切分成 arr
+    const defaultValueArr = defaultValue?.toString().split(';')
+
+    return (
+        <fieldset disabled={disabled}>
+            {checkList.length > 0 &&
+                checkList.map((checkItem, index) => (
+                    <div className='fieldsetItemWrapper' key={index + checkItem.label}>
+                        <label htmlFor={checkItem.label}>{checkItem.label}</label>
+                        <input
+                            type='checkbox'
+                            id={checkItem.label}
+                            value={checkItem.value}
+                            onChange={(e) => {
+                                handleChange(e)
+                            }}
+                            checked={defaultValueArr?.includes(checkItem.value.toString())}
+                        />
+                    </div>
+                ))}
+        </fieldset>
     )
 }

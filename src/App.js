@@ -3,6 +3,10 @@ import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
+// 靜態資源
+import './index.css'
+import './style/index.scss'
+
 // 自定義 components
 import HomePage from './containers/HomePage.jsx'
 import LoginPage from './containers/LoginPage.jsx'
@@ -14,11 +18,12 @@ const ContributionPage = lazy(() => import('./containers/ContributionPage.jsx'))
 const Reactflow = lazy(() => import('./containers/Reactflow.jsx'))
 // const Reactflow = lazy(() => import('./containers/ReactflowWrapper.jsx'))
 
+const MiniComponent = lazy(() => import('./containers/MiniComponent.jsx'))
+
 import Layout from './components/Layout.jsx'
 
-// style
-import './index.css'
-import './style/index.scss'
+// 自定義函數 or 參數
+import { isDevelopingMode } from './config/api.js'
 
 // 部屬到 github pages 時使用(BrowserRouter)
 function App({ basename }) {
@@ -39,6 +44,12 @@ function App({ basename }) {
                             <Route path='/restaurant' element={<RestaurantPage />} />
                             <Route path='/contribution' element={<ContributionPage />} />
                             <Route path='/reactflow' element={<Reactflow />} />
+                            {
+                                // 開發模式下才顯示的頁面
+                                isDevelopingMode && (
+                                    <Route path='/miniComponent' element={<MiniComponent />} />
+                                )
+                            }
                         </Routes>
                     </Suspense>
                 </Layout>

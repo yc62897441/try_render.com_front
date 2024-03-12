@@ -9,6 +9,7 @@ import LogoImg from '../assets/img/logo.png'
 // 自定義 components
 
 // 自定義函數 or 參數
+import { isDevelopingMode } from '../config/api'
 
 const urls = [
     {
@@ -32,6 +33,14 @@ const urls = [
         url: '/reactflow',
     },
 ]
+
+// 開發模式下才顯示的頁面
+if (isDevelopingMode) {
+    urls.push({
+        name: 'MiniComponent',
+        url: '/miniComponent',
+    })
+}
 
 function Header() {
     const [isDropdown, setIsDropdown] = useState('non-dropdown')

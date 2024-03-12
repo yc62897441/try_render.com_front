@@ -16,4 +16,4 @@ switch (isDevelopingMode) {
 }
 
 // 輸出參數
-export { mainUrl }
+export { mainUrl, isDevelopingMode }

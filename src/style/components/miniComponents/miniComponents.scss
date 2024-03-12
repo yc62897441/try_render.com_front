@@ -1,3 +1,4 @@
+// 按鈕
 .button {
     display: inline-block;
     padding: 8px 13px; /*調整按鈕的內邊距 */
@@ -17,6 +18,7 @@
     color: #088a6b;
 }
 
+// select 選單
 .selectWrapper {
     width: 100%;
     padding: 5px 10px; /* 調整內邊距 */
@@ -35,4 +37,40 @@
     /* 以下的樣式有效果 */
     background-color: #ffffff;
     font-size: 16px; /* 進一步降低字體大小 */
+}
+
+// ration、checkbox 選單
+fieldset {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    padding: 5px 10px; /* 調整內邊距 */
+    background-color: #ffffff;
+    border: 1px solid #dddddd; /* 更改邊框顏色 */
+    border-radius: 4px; /* 添加圓角 */
+
+    font-size: 16px;
+    cursor: pointer;
+}
+.fieldsetItemWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 10px 0 0;
+
+    label {
+        margin: 0 5px 0 0;
+        padding: 0;
+    }
+
+    input {
+        width: auto;
+        margin: 0;
+        padding: 0;
+    }
 }

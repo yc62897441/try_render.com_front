@@ -147,7 +147,7 @@ module.exports = (env) => {
             // }),
             // new webpack.optimize.OccurenceOrderPlugin(),
             // new BundleAnalyzerPlugin(), // Bundle 分析視圖 // npm run deploy 時要註解起來
-            new webpack.ids.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
+            new webpack.ids.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly // https://webpack.js.org/plugins/hashed-module-ids-plugin/
         ],
         // resolve: {
         //   fallback: { "path": false }
