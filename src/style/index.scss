@@ -156,6 +156,50 @@ textarea {
     resize: none;
 }
 
+// table元件
+.tableWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.tableContainer {
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    max-height: 80vh;
+    overflow-x: scroll;
+    flex-grow: 0;
+    flex-shrink: 1;
+}
+table {
+    border-radius: 5px;
+    box-shadow: base.$box-shadow;
+    font-size: 14px;
+
+    @media (min-width: 576px) {
+        font-size: 16px;
+    }
+}
+thead {
+    background-color: base.$main-theme-color;
+    font-weight: 600;
+}
+tbody {
+    tr:hover {
+        background-color: #dddddd;
+    }
+}
+tr {
+    border-bottom: 1px solid #dddddd;
+}
+th,
+td {
+    padding: 10px;
+    @media (min-width: 576px) {
+        padding: 15px;
+    }
+}
+
 // 清單元件
 ol {
     li {

@@ -165,6 +165,7 @@ code {
 /* scroll bar 樣式 */
 ::-webkit-scrollbar {
     width: 12px;
+    height: 12px;
 }
 ::-webkit-scrollbar-button {
     /* background: transparent; */

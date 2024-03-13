@@ -80,7 +80,6 @@ function LoginForm({ changeForm, reCaptchaSubmit }) {
                 <div className='formGroup'>
                     <label htmlFor='account'>帳號</label>
                     <input
-                        className='text'
                         type='text'
                         name='account'
                         id='account'
@@ -90,11 +89,11 @@ function LoginForm({ changeForm, reCaptchaSubmit }) {
                 <div className='formGroup'>
                     <label htmlFor='password'>密碼</label>
                     <input
-                        className='password'
                         type='password'
                         name='password'
                         id='password'
                         onChange={(e) => handleChange(e.target.value, 'password')}
+                        autoComplete='true'
                     />
                 </div>
 
@@ -163,7 +162,6 @@ function RegisterForm({ changeForm }) {
                 <div className='formGroup'>
                     <label htmlFor='account'>帳號</label>
                     <input
-                        className='text'
                         type='text'
                         name='account'
                         id='account'
@@ -173,21 +171,21 @@ function RegisterForm({ changeForm }) {
                 <div className='formGroup'>
                     <label htmlFor='password'>密碼</label>
                     <input
-                        className='password'
                         type='password'
                         name='password'
                         id='password'
                         onChange={(e) => handleChange(e.target.value, 'password')}
+                        autoComplete='false'
                     />
                 </div>
                 <div className='formGroup'>
                     <label htmlFor='passwordCheck'>密碼確認</label>
                     <input
-                        className='password'
                         type='password'
                         name='passwordCheck'
                         id='passwordCheck'
                         onChange={(e) => handleChange(e.target.value, 'passwordCheck')}
+                        autoComplete='false'
                     />
                 </div>
 
@@ -251,7 +249,6 @@ function ForgetPasswordForm({ changeForm }) {
                 <div className='formGroup'>
                     <label htmlFor='account'>帳號</label>
                     <input
-                        className='text'
                         type='text'
                         name='account'
                         id='account'
@@ -259,9 +256,8 @@ function ForgetPasswordForm({ changeForm }) {
                     />
                 </div>
                 <div className='formGroup'>
-                    <label htmlFor='password'>Email</label>
+                    <label htmlFor='email'>Email</label>
                     <input
-                        className='email'
                         type='email'
                         name='email'
                         id='email'

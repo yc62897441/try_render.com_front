@@ -16,7 +16,7 @@ const DeliveryPage = lazy(() => import('./containers/DeliveryPage.jsx'))
 const RestaurantPage = lazy(() => import('./containers/RestaurantPage.jsx'))
 const ContributionPage = lazy(() => import('./containers/ContributionPage.jsx'))
 const Reactflow = lazy(() => import('./containers/Reactflow.jsx'))
-// const Reactflow = lazy(() => import('./containers/ReactflowWrapper.jsx'))
+// const Reactflow = lazy(() => import('./containers/ReactflowWrapper.jsx')) // 這個頁面沒有使用，是在嘗試動態導入頁面 + npm 套件時，所產生的
 
 const MiniComponent = lazy(() => import('./containers/MiniComponent.jsx'))
 

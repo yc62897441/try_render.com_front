@@ -1,5 +1,5 @@
 // 套件
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 
 // 靜態資源
@@ -10,6 +10,7 @@ import '../style/containers/miniComponent.scss'
 import { Button, Select, Ratio, Checkbox } from '../components/miniComponents/MiniComponents'
 
 // 自定義函數 or 參數
+import { dummyTableData } from '../assets/dummyTableData'
 
 const config = {
     name: {
@@ -89,16 +90,15 @@ const config = {
 }
 
 function ContributionPage() {
-    const [data, updateData] = useImmer({
-        // name: '',
-        // gender: '',
-        // residencePlace: '',
-        // preference: '',
-    })
-    console.log('data', data)
+    const [formData, updateFormData] = useImmer({})
+    const [tableData, updateTableData] = useImmer({})
+
+    useEffect(() => {
+        updateTableData(dummyTableData)
+    }, [])
 
     function handleChange(value, Key, datumIndex) {
-        updateData((draft) => {
+        updateFormData((draft) => {
             draft[Key] = value
         })
     }
@@ -111,6 +111,34 @@ function ContributionPage() {
                     height: '920px',
                 }}
             >
+                <div className='tableWrapper'>
+                    <div className='tableContainer'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    {tableData.length > 0 &&
+                                        Object.keys(tableData[0]).length > 0 &&
+                                        Object.keys(tableData[0]).map((key) => (
+                                            <th key={key}>{key}</th>
+                                        ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {tableData.length > 0 &&
+                                    tableData.map((item, index) => (
+                                        <tr key={index}>
+                                            {Object.keys(tableData[0]).length > 0 &&
+                                                Object.keys(tableData[0]).map((key, keyIndex) => (
+                                                    <td key={keyIndex + key}>{item[key]}</td>
+                                                ))}
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr />
+
                 <form
                     onSubmit={(e) => {
                         e.preventDefault()
@@ -197,7 +225,7 @@ function ContributionPage() {
                                         onChangeFunc={handleChange}
                                         onChangeKey={key}
                                         name={null}
-                                        defaultValue={data[key]}
+                                        defaultValue={formData[key]}
                                         datumIndex={null}
                                         disabled={false}
                                         id={null}
@@ -210,7 +238,7 @@ function ContributionPage() {
                                         ratioList={config[key]?.ratioList}
                                         onChangeFunc={handleChange}
                                         onChangeKey={key}
-                                        defaultValue={data[key]}
+                                        defaultValue={formData[key]}
                                     />
                                 </div>
                             ) : config[key]?.type === 'checkbox' ? (
@@ -220,7 +248,7 @@ function ContributionPage() {
                                         checkList={config[key]?.checkList}
                                         onChangeFunc={handleChange}
                                         onChangeKey={key}
-                                        defaultValue={data[key]}
+                                        defaultValue={formData[key]}
                                     />
                                 </div>
                             ) : null
