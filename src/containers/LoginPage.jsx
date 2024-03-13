@@ -14,16 +14,54 @@ import { mainUrl } from '../config/api'
 import { dispatchLOGIN, dispatchLOADING, dispatchUSER_DATA } from '../actions'
 import { apiHelper } from '../utils/helper'
 
-function LoginForm({ changeForm, reCaptchaSubmit }) {
+const loginConfig = {
+    account: {
+        label: '帳號',
+        type: 'text',
+        required: true,
+    },
+    password: {
+        label: '密碼',
+        type: 'password',
+        autoComplete: true,
+        required: true,
+    },
+}
+const registerConfig = {
+    account: {
+        label: '帳號',
+        type: 'text',
+        required: true,
+    },
+    password: {
+        label: '密碼',
+        type: 'password',
+        autoComplete: false,
+        required: true,
+    },
+    passwordCheck: {
+        label: '密碼確認',
+        type: 'password',
+        autoComplete: false,
+        required: true,
+    },
+}
+const forgetPasswordConfig = {
+    account: {
+        label: '帳號',
+        type: 'text',
+        required: true,
+    },
+    email: {
+        label: 'email',
+        type: 'email',
+        required: true,
+    },
+}
+
+function Form({ changeFormType, formType, formConfig, reCaptchaSubmit }) {
     const dispatch = useDispatch()
-    const [formData, setFormData] = useState({
-        account: '',
-        password: '',
-    })
-    // {
-    //     account: 'a001',
-    //     password: 'abc123',
-    // }
+    const [formData, setFormData] = useState({}) // 帳號a001 密碼abc123
 
     function handleChange(value, key) {
         setFormData({
@@ -32,37 +70,54 @@ function LoginForm({ changeForm, reCaptchaSubmit }) {
         })
     }
 
-    function handelLogin() {
+    function handleSubmit() {
         return async (dispatch) => {
             try {
                 dispatch(dispatchLOADING(true))
-
-                const response = await apiHelper('post', mainUrl + '/auth/signin', {
+                const apiUrl =
+                    formType === 'login'
+                        ? '/auth/signin'
+                        : formType === 'register'
+                          ? '/auth/register'
+                          : formType === 'forgetPassword'
+                            ? '/auth/forgetPassword'
+                            : ''
+                const response = await apiHelper('post', mainUrl + apiUrl, {
                     ...formData,
                 })
 
-                if (response?.data?.token) {
-                    let token = response.data.token
-                    sessionStorage.setItem('token', token)
-                    dispatch(dispatchLOGIN(true))
+                if (formType === 'login') {
+                    if (response?.data?.token) {
+                        let token = response.data.token
+                        sessionStorage.setItem('token', token)
+                        dispatch(dispatchLOGIN(true))
 
-                    // 測試 redux persist 的假資料
-                    dispatch(
-                        dispatchUSER_DATA({
-                            name: 'John',
-                            age: 18,
-                            address: {
-                                city: 'Taipei',
-                                street: 'Da An',
-                                else: {
-                                    no: 1,
-                                    room: 'a1',
+                        // 測試 redux persist 的假資料
+                        dispatch(
+                            dispatchUSER_DATA({
+                                name: 'John',
+                                age: 18,
+                                address: {
+                                    city: 'Taipei',
+                                    street: 'Da An',
+                                    else: {
+                                        no: 1,
+                                        room: 'a1',
+                                    },
                                 },
-                            },
-                        })
-                    )
+                            })
+                        )
+                        dispatch(dispatchLOADING(false))
+                    } else {
+                        dispatch(dispatchLOADING(false))
+                    }
+                }
+                if (formType === 'register') {
+                    console.log('response', response)
                     dispatch(dispatchLOADING(false))
-                } else {
+                }
+                if (formType === 'forgetPassword') {
+                    console.log('response', response)
                     dispatch(dispatchLOADING(false))
                 }
             } catch (error) {
@@ -72,220 +127,62 @@ function LoginForm({ changeForm, reCaptchaSubmit }) {
         }
     }
 
+    const formTitleAndButtonName =
+        formType === 'login'
+            ? '登入'
+            : formType === 'register'
+              ? '註冊'
+              : formType === 'forgetPassword'
+                ? '忘記密碼'
+                : ''
+
     return (
         <div className='loginSectionMain'>
-            <h2>登入</h2>
+            <h2>{formTitleAndButtonName}</h2>
 
-            <form>
-                <div className='formGroup'>
-                    <label htmlFor='account'>帳號</label>
-                    <input
-                        type='text'
-                        name='account'
-                        id='account'
-                        onChange={(e) => handleChange(e.target.value, 'account')}
-                    />
-                </div>
-                <div className='formGroup'>
-                    <label htmlFor='password'>密碼</label>
-                    <input
-                        type='password'
-                        name='password'
-                        id='password'
-                        onChange={(e) => handleChange(e.target.value, 'password')}
-                        autoComplete='true'
-                    />
-                </div>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    if (reCaptchaSubmit) {
+                        reCaptchaSubmit(handleSubmit)
+                    } else {
+                        dispatch(handleSubmit())
+                    }
+                }}
+            >
+                {Object.keys(formConfig).map((key) => (
+                    <div key={key} className='formGroup'>
+                        <label htmlFor={key}>{formConfig[key].label}</label>
+                        <input
+                            type={formConfig[key].type}
+                            name={key}
+                            id={key}
+                            onChange={(e) => handleChange(e.target.value, key)}
+                            autoComplete={formConfig[key].autoComplete}
+                            required={formConfig[key].required}
+                        />
+                    </div>
+                ))}
 
                 <div className='formControlGroup'>
-                    <button
-                        className='button'
-                        type='button'
-                        onClick={() => {
-                            if (reCaptchaSubmit) {
-                                reCaptchaSubmit(handelLogin)
-                            } else {
-                                dispatch(handelLogin())
-                            }
-                        }}
-                    >
-                        登入
+                    <button className='button' type='submit'>
+                        {formTitleAndButtonName}
                     </button>
                 </div>
 
                 <div className='formControlGroup'>
-                    <div onClick={() => changeForm('register')}>註冊</div>
-                    <div onClick={() => changeForm('forgetPassword')}>忘記密碼</div>
+                    {formType !== 'login' && <div onClick={() => changeFormType('login')}>登入</div>}
+                    {formType !== 'register' && <div onClick={() => changeFormType('register')}>註冊</div>}
+                    {formType !== 'forgetPassword' && (
+                        <div onClick={() => changeFormType('forgetPassword')}>忘記密碼</div>
+                    )}
                 </div>
             </form>
         </div>
     )
 }
 
-function RegisterForm({ changeForm }) {
-    const dispatch = useDispatch()
-    const [formData, setFormData] = useState({
-        account: '',
-        password: '',
-        passwordCheck: '',
-    })
-
-    function handleChange(value, key) {
-        setFormData({
-            ...formData,
-            [key]: value,
-        })
-    }
-
-    function handelLogin() {
-        return async (dispatch) => {
-            try {
-                dispatch(dispatchLOADING(true))
-
-                const response = await apiHelper('post', mainUrl + '/auth/register', {
-                    ...formData,
-                })
-                console.log('response', response)
-                dispatch(dispatchLOADING(false))
-            } catch (error) {
-                dispatch(dispatchLOADING(false))
-                console.log(error)
-            }
-        }
-    }
-
-    return (
-        <div className='loginSectionMain'>
-            <h2>註冊</h2>
-
-            <form>
-                <div className='formGroup'>
-                    <label htmlFor='account'>帳號</label>
-                    <input
-                        type='text'
-                        name='account'
-                        id='account'
-                        onChange={(e) => handleChange(e.target.value, 'account')}
-                    />
-                </div>
-                <div className='formGroup'>
-                    <label htmlFor='password'>密碼</label>
-                    <input
-                        type='password'
-                        name='password'
-                        id='password'
-                        onChange={(e) => handleChange(e.target.value, 'password')}
-                        autoComplete='false'
-                    />
-                </div>
-                <div className='formGroup'>
-                    <label htmlFor='passwordCheck'>密碼確認</label>
-                    <input
-                        type='password'
-                        name='passwordCheck'
-                        id='passwordCheck'
-                        onChange={(e) => handleChange(e.target.value, 'passwordCheck')}
-                        autoComplete='false'
-                    />
-                </div>
-
-                <div className='formControlGroup'>
-                    <button
-                        className='button'
-                        type='button'
-                        onClick={() => {
-                            dispatch(handelLogin())
-                        }}
-                    >
-                        註冊
-                    </button>
-                </div>
-
-                <div className='formControlGroup'>
-                    <div onClick={() => changeForm('login')}>登入</div>
-                    <div onClick={() => changeForm('forgetPassword')}>忘記密碼</div>
-                </div>
-            </form>
-        </div>
-    )
-}
-
-function ForgetPasswordForm({ changeForm }) {
-    const dispatch = useDispatch()
-    const [formData, setFormData] = useState({
-        account: '',
-        email: '',
-    })
-
-    function handleChange(value, key) {
-        setFormData({
-            ...formData,
-            [key]: value,
-        })
-    }
-
-    function handelLogin() {
-        return async (dispatch) => {
-            try {
-                dispatch(dispatchLOADING(true))
-
-                const response = await apiHelper('post', mainUrl + '/auth/forgetPassword', {
-                    ...formData,
-                })
-                console.log('response', response)
-                dispatch(dispatchLOADING(false))
-            } catch (error) {
-                dispatch(dispatchLOADING(false))
-                console.log(error)
-            }
-        }
-    }
-
-    return (
-        <div className='loginSectionMain'>
-            <h2>忘記密碼</h2>
-
-            <form>
-                <div className='formGroup'>
-                    <label htmlFor='account'>帳號</label>
-                    <input
-                        type='text'
-                        name='account'
-                        id='account'
-                        onChange={(e) => handleChange(e.target.value, 'account')}
-                    />
-                </div>
-                <div className='formGroup'>
-                    <label htmlFor='email'>Email</label>
-                    <input
-                        type='email'
-                        name='email'
-                        id='email'
-                        onChange={(e) => handleChange(e.target.value, 'email')}
-                    />
-                </div>
-
-                <div className='formControlGroup'>
-                    <button
-                        className='button'
-                        type='button'
-                        onClick={() => {
-                            dispatch(handelLogin())
-                        }}
-                    >
-                        忘記密碼
-                    </button>
-                </div>
-
-                <div className='formControlGroup'>
-                    <div onClick={() => changeForm('login')}>登入</div>
-                    <div onClick={() => changeForm('register')}>註冊</div>
-                </div>
-            </form>
-        </div>
-    )
-}
-
+// 跑馬燈輪播標題
 function LoginMarquee() {
     return (
         <div className='loginMarquee'>
@@ -347,17 +244,24 @@ const ReCaptchHOC = (WrappedComponent) => {
     }
     return ReturnWrappedComponent
 }
-const LoginFormWithReCaptch = ReCaptchHOC(LoginForm)
-const RegisterFormWithReCaptch = ReCaptchHOC(RegisterForm)
-const ForgetPasswordFormWithReCaptch = ReCaptchHOC(ForgetPasswordForm)
+const FormWithReCaptch = ReCaptchHOC(Form)
 
 function LoginPage() {
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
-    const [form, setForm] = useState('login')
+    const [formType, setFormType] = useState('login')
 
-    function changeForm(value) {
-        setForm(value)
+    function changeFormType(value) {
+        setFormType(value)
     }
+
+    const formConfig =
+        formType === 'login'
+            ? loginConfig
+            : formType === 'register'
+              ? registerConfig
+              : formType === 'forgetPassword'
+                ? forgetPasswordConfig
+                : {}
 
     return (
         <main>
@@ -369,30 +273,14 @@ function LoginPage() {
             <section className='loginSection'>
                 <div className='loginBackgroundImageWrapper' />
 
-                {/* 跑馬燈 */}
+                {/* 跑馬燈輪播標題 */}
                 <LoginMarquee />
 
                 {/* 登入、註冊、忘記密碼表單(with ReCaptcha) */}
-                {form === 'login' ? (
-                    <LoginFormWithReCaptch changeForm={changeForm} />
-                ) : form === 'register' ? (
-                    <RegisterFormWithReCaptch changeForm={changeForm} />
-                ) : form === 'forgetPassword' ? (
-                    <ForgetPasswordFormWithReCaptch changeForm={changeForm} />
-                ) : (
-                    <></>
-                )}
+                <FormWithReCaptch changeFormType={changeFormType} formType={formType} formConfig={formConfig} />
 
                 {/* 登入、註冊、忘記密碼表單 */}
-                {/* {form === 'login' ? (
-                    <LoginForm changeForm={changeForm} />
-                ) : form === 'register' ? (
-                    <RegisterForm changeForm={changeForm} />
-                ) : form === 'forgetPassword' ? (
-                    <ForgetPasswordForm changeForm={changeForm} />
-                ) : (
-                    <></>
-                )} */}
+                {/* <Form changeFormType={changeFormType} formType={formType} formConfig={formConfig} /> */}
 
                 {/* LOGO */}
                 <div className='loginLogoWrapper'>
