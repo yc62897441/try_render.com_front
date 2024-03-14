@@ -5,8 +5,8 @@ import { useImmer } from 'use-immer'
 // 靜態資源
 
 // 自定義 components
-import Table, { TableWithControl } from '../../components/miniComponents/Table'
-import { Button } from '../../components/miniComponents/MiniComponents'
+import Table, { TableWithModal } from '../../components/miniComponents/Table'
+import { Textarea, Button } from '../../components/miniComponents/MiniComponents'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../../config/api'
@@ -86,7 +86,7 @@ function OrderModalContent({ datum }) {
 
                     <div className='formGroup'>
                         <label htmlFor={'response'}>回應訂購者</label>
-                        <textarea
+                        <Textarea
                             type={'textarea'}
                             name={'response'}
                             id={'response'}
@@ -96,7 +96,7 @@ function OrderModalContent({ datum }) {
                     </div>
                     <div className='formGroup'>
                         <label htmlFor={'systemNote'}>系統備註</label>
-                        <textarea
+                        <Textarea
                             type={'textarea'}
                             name={'systemNote'}
                             id={'systemNote'}
@@ -140,7 +140,7 @@ function Orders() {
     return (
         <main>
             <Table tableData={tableData} />
-            <TableWithControl tableData={tableData} ModalContent={OrderModalContent} />
+            <TableWithModal tableData={tableData} ModalContent={OrderModalContent} />
         </main>
     )
 }

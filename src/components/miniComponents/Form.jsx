@@ -5,7 +5,7 @@ import React from 'react'
 import '../../style/containers/miniComponent.scss'
 
 // 自定義 components
-import { Select, Ratio, Checkbox, Button } from './MiniComponents'
+import { Input, Textarea, Select, Ratio, Checkbox, Button } from './MiniComponents'
 
 // 自定義函數 or 參數
 
@@ -56,7 +56,7 @@ function Form({ formData, formConfig, handleChange, handleSubmit, AppendComponen
                     ) : formConfig[key]?.type === 'textarea' ? (
                         <div className='formGroup' key={index + key}>
                             <label htmlFor={key}>{formConfig[key]?.label}</label>
-                            <textarea
+                            <Textarea
                                 type={formConfig[key]?.type}
                                 name={key}
                                 id={key}
@@ -67,7 +67,7 @@ function Form({ formData, formConfig, handleChange, handleSubmit, AppendComponen
                     ) : (
                         <div className='formGroup' key={index + key}>
                             <label htmlFor={key}>{formConfig[key].label}</label>
-                            <input
+                            <Input
                                 type={formConfig[key].type}
                                 name={key}
                                 id={key}

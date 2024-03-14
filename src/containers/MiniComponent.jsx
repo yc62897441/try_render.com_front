@@ -14,7 +14,7 @@ import Table from '../components/miniComponents/Table'
 import { dummyTableData } from '../assets/dummyTableData'
 import { dummyFormConfig } from '../assets/dummyFormConfig'
 
-function ContributionPage() {
+function MiniComponentPage() {
     const [formData, updateFormData] = useImmer({})
     const [tableData, updateTableData] = useImmer({})
 
@@ -57,4 +57,4 @@ function ContributionPage() {
     )
 }
 
-export default ContributionPage
+export default MiniComponentPage

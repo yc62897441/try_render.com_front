@@ -19,6 +19,24 @@ export function Button({ name, isActive, onClick }) {
     )
 }
 
+export function Input({ type, name, id, onChange, autoComplete, required, readOnly }) {
+    return (
+        <input
+            type={type}
+            name={name}
+            id={id}
+            onChange={onChange}
+            autoComplete={autoComplete}
+            required={required}
+            readOnly={readOnly}
+        />
+    )
+}
+
+export function Textarea({ type, name, id, onChange, rows }) {
+    return <textarea type={type} name={name} id={id} rows={rows || '6'} onChange={onChange} />
+}
+
 export function Select({
     name,
     defaultValue,
