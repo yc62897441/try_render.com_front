@@ -1,5 +1,4 @@
 /node_modules
 /build
-note.txt
 .env
 .env.production

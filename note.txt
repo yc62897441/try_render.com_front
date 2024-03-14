@@ -1,0 +1,7 @@
+// done 1 多圖片，lazy loading
+// 2 首頁一頁式設計，介紹多個頁面功能
+// 3 後臺管理介面，表格、CRUD、統計 dashboard
+// 4 pets delivery
+// 5 後臺管理系統，用 react flow 顯示配送狀態
+// 6 後臺管理系統，多樣的表格、圖表、輸入元件
+// 7 hls.js live stream

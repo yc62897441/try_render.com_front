@@ -8,6 +8,7 @@ import '../style/containers/miniComponent.scss'
 
 // 自定義 components
 import Form from '../components/miniComponents/Form'
+import Table from '../components/miniComponents/Table'
 
 // 自定義函數 or 參數
 import { dummyTableData } from '../assets/dummyTableData'
@@ -39,34 +40,6 @@ function ContributionPage() {
                     height: '920px',
                 }}
             >
-                <div className='tableWrapper'>
-                    <div className='tableContainer'>
-                        <table>
-                            <thead>
-                                <tr>
-                                    {tableData.length > 0 &&
-                                        Object.keys(tableData[0]).length > 0 &&
-                                        Object.keys(tableData[0]).map((key) => (
-                                            <th key={key}>{key}</th>
-                                        ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {tableData.length > 0 &&
-                                    tableData.map((item, index) => (
-                                        <tr key={index}>
-                                            {Object.keys(tableData[0]).length > 0 &&
-                                                Object.keys(tableData[0]).map((key, keyIndex) => (
-                                                    <td key={keyIndex + key}>{item[key]}</td>
-                                                ))}
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <hr />
-
                 <Form
                     formData={formData}
                     formConfig={dummyFormConfig}
@@ -76,6 +49,9 @@ function ContributionPage() {
                         return <div className='formControlGroup'>其他</div>
                     }}
                 />
+                <hr />
+
+                <Table tableData={tableData} />
             </section>
         </main>
     )
