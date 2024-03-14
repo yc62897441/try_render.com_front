@@ -40,6 +40,10 @@ if (isDevelopingMode) {
         name: 'MiniComponent',
         url: '/miniComponent',
     })
+    urls.push({
+        name: 'TryApi',
+        url: '/tryApi',
+    })
 }
 
 function Header() {

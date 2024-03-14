@@ -20,6 +20,9 @@ const Reactflow = lazy(() => import('./containers/Reactflow.jsx'))
 
 const MiniComponent = lazy(() => import('./containers/MiniComponent.jsx'))
 
+const TryApiPage = lazy(() => import('./containers/TryApi.jsx'))
+const TryApiAuthPage = lazy(() => import('./containers/TryApiAuth.jsx'))
+
 import Layout from './components/Layout.jsx'
 
 // 自定義函數 or 參數
@@ -47,7 +50,10 @@ function App({ basename }) {
                             {
                                 // 開發模式下才顯示的頁面
                                 isDevelopingMode && (
-                                    <Route path='/miniComponent' element={<MiniComponent />} />
+                                    <>
+                                        <Route path='/miniComponent' element={<MiniComponent />} />
+                                        <Route path='/tryApi' element={<TryApiAuthPage />} />
+                                    </>
                                 )
                             }
                         </Routes>
@@ -55,6 +61,10 @@ function App({ basename }) {
                 </Layout>
             ) : (
                 <Routes>
+                    {
+                        // 開發模式下才顯示的頁面
+                        isDevelopingMode && <Route path='/tryApi' element={<TryApiPage />} />
+                    }
                     <Route path='*' element={<LoginPage />} />
                 </Routes>
             )}

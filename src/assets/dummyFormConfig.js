@@ -25,8 +25,8 @@ export const dummyFormConfig = {
             { label: '其他', value: 2 },
         ],
     },
-    residencePlace: {
-        label: '居住地',
+    city: {
+        label: '居住縣市',
         type: 'select',
         selectList: [
             { label: '台北市', value: 0 },
