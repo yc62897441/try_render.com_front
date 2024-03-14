@@ -5,11 +5,122 @@ import { useImmer } from 'use-immer'
 // 靜態資源
 
 // 自定義 components
-import Table from '../../components/miniComponents/Table'
+import Table, { TableWithControl } from '../../components/miniComponents/Table'
+import { Button } from '../../components/miniComponents/MiniComponents'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../../config/api'
 import { apiHelper } from '../../utils/helper'
+
+function OrderModalContent({ datum }) {
+    const [formData, updateFormData] = useImmer({})
+
+    function handleChange(value, Key, datumIndex) {
+        updateFormData((draft) => {
+            draft[Key] = value
+        })
+    }
+
+    function handleSubmit(submitType) {
+        const data = {
+            ...formData,
+            orderId: datum?.id,
+            submitType: submitType,
+        }
+        console.log('data', data)
+        // TODO: 打 API 變更訂單狀態
+    }
+
+    return (
+        <div className='modalContentWrapper'>
+            {datum && (
+                <>
+                    <div className='modalContentInfo'>
+                        <div>訂單編號: </div>
+                        <div>{datum?.id}</div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>訂單狀態: </div>
+                        <div>{datum?.status}</div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>貓咪編號: </div>
+                        <div>{datum?.catId}</div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>訂購者編號: </div>
+                        <div>{datum?.userId}</div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>訂購者電話: </div>
+                        <div>{datum?.tel}</div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>訂購地址: </div>
+                        <div>
+                            {datum?.city}
+                            {datum?.district}
+                            {datum?.address}
+                        </div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>起始時間: </div>
+                        <div>
+                            {datum?.startDate}
+                            {datum?.startTime}
+                        </div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>結束時間: </div>
+                        <div>
+                            {datum?.endDate}
+                            {datum?.endTime}
+                        </div>
+                    </div>
+                    <div className='modalContentInfo'>
+                        <div>訂單備註: </div>
+                        <div>{datum?.elseInfo}</div>
+                    </div>
+
+                    <hr />
+
+                    <div className='formGroup'>
+                        <label htmlFor={'response'}>回應訂購者</label>
+                        <textarea
+                            type={'textarea'}
+                            name={'response'}
+                            id={'response'}
+                            rows='6'
+                            onChange={(e) => handleChange(e.target.value, 'response')}
+                        />
+                    </div>
+                    <div className='formGroup'>
+                        <label htmlFor={'systemNote'}>系統備註</label>
+                        <textarea
+                            type={'textarea'}
+                            name={'systemNote'}
+                            id={'systemNote'}
+                            rows='6'
+                            onChange={(e) => handleChange(e.target.value, 'systemNote')}
+                        />
+                    </div>
+                    <Button
+                        name='確認訂單'
+                        onClick={() => {
+                            handleSubmit('confirmOrder')
+                        }}
+                    />
+                    <Button
+                        name='取消訂單'
+                        onClick={() => {
+                            handleSubmit('cancelOrder')
+                        }}
+                    />
+                </>
+            )}
+        </div>
+    )
+}
 
 function Orders() {
     const [tableData, updateTableData] = useImmer([])
@@ -29,6 +140,7 @@ function Orders() {
     return (
         <main>
             <Table tableData={tableData} />
+            <TableWithControl tableData={tableData} ModalContent={OrderModalContent} />
         </main>
     )
 }

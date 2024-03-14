@@ -44,7 +44,8 @@
     }
 }
 
-.catModalContentWrapper {
+// content 區域
+.modalContentWrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -52,7 +53,7 @@
     max-width: 900px;
     margin: 0 auto;
 }
-.catModalContentInfo {
+.modalContentInfo {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -73,7 +74,7 @@
         font-size: 20px;
     }
 }
-.catModalContentImgWrapper {
+.modalContentImgWrapper {
     width: 100%;
     height: 225px;
     margin: 0 auto;

@@ -57,33 +57,33 @@ export function CatModalContent({ datum }) {
     }
 
     return (
-        <div className='catModalContentWrapper'>
+        <div className='modalContentWrapper'>
             {data !== null && data.breeds && (
                 <>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>品種: </div>
                         <div>{data?.breeds?.[0]?.name}</div>
                     </div>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>性情: </div>
                         <div>{data?.breeds?.[0]?.temperament}</div>
                     </div>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>起源地: </div>
                         <div>{data?.breeds?.[0]?.origin}</div>
                     </div>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>描述: </div>
                         <div>{data?.breeds?.[0]?.description}</div>
                     </div>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>壽命長度: </div>
                         <div>{data?.breeds?.[0]?.life_span}</div>
                     </div>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <a href={data?.breeds?.[0]?.wikipedia_url}>維基介紹</a>
                     </div>
-                    <div className='catModalContentImgWrapper'>
+                    <div className='modalContentImgWrapper'>
                         <img src={data?.url} alt='貓咪圖片' srcSet='' />
                     </div>
                 </>
@@ -100,18 +100,18 @@ export function RestaurantModalContent({ datum }) {
     }, [datum])
 
     return (
-        <div className='catModalContentWrapper'>
+        <div className='modalContentWrapper'>
             {data && (
                 <>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>店名: </div>
                         <div>{data?.name}</div>
                     </div>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>地址: </div>
                         <div>{data?.address}</div>
                     </div>
-                    <div className='catModalContentInfo'>
+                    <div className='modalContentInfo'>
                         <div>營業時間: </div>
                         <div>
                             {data?.openingHoursList?.map((item, index) => (
@@ -120,7 +120,7 @@ export function RestaurantModalContent({ datum }) {
                         </div>
                     </div>
 
-                    <div className='catModalContentImgWrapper'>
+                    <div className='modalContentImgWrapper'>
                         <img src={data?.coverUrl} alt='餐廳圖片' srcSet='' />
                     </div>
                 </>
