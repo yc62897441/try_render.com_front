@@ -8,6 +8,7 @@ import LogoImg from '../assets/img/logo.png'
 
 // 自定義 components
 import LoadingModal from '../components/LoadingModal'
+import Form from '../components/miniComponents/Form'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../config/api'
@@ -59,7 +60,7 @@ const forgetPasswordConfig = {
     },
 }
 
-function Form({ changeFormType, formType, formConfig, reCaptchaSubmit }) {
+function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) {
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({}) // 帳號a001 密碼abc123
 
@@ -127,57 +128,50 @@ function Form({ changeFormType, formType, formConfig, reCaptchaSubmit }) {
         }
     }
 
-    const formTitleAndButtonName =
-        formType === 'login'
-            ? '登入'
-            : formType === 'register'
-              ? '註冊'
-              : formType === 'forgetPassword'
-                ? '忘記密碼'
-                : ''
+    let formTitleAndButtonName = ''
+    switch (formType) {
+        case 'login':
+            formTitleAndButtonName = '登入'
+            break
+        case 'register':
+            formTitleAndButtonName = '註冊'
+            break
+        case 'forgetPassword':
+            formTitleAndButtonName = '忘記密碼'
+            break
+    }
 
     return (
         <div className='loginSectionMain'>
             <h2>{formTitleAndButtonName}</h2>
 
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault()
+            <Form
+                formData={formData}
+                formConfig={formConfig}
+                handleChange={handleChange}
+                handleSubmit={function () {
                     if (reCaptchaSubmit) {
                         reCaptchaSubmit(handleSubmit)
                     } else {
                         dispatch(handleSubmit())
                     }
                 }}
-            >
-                {Object.keys(formConfig).map((key) => (
-                    <div key={key} className='formGroup'>
-                        <label htmlFor={key}>{formConfig[key].label}</label>
-                        <input
-                            type={formConfig[key].type}
-                            name={key}
-                            id={key}
-                            onChange={(e) => handleChange(e.target.value, key)}
-                            autoComplete={formConfig[key].autoComplete}
-                            required={formConfig[key].required}
-                        />
-                    </div>
-                ))}
-
-                <div className='formControlGroup'>
-                    <button className='button' type='submit'>
-                        {formTitleAndButtonName}
-                    </button>
-                </div>
-
-                <div className='formControlGroup'>
-                    {formType !== 'login' && <div onClick={() => changeFormType('login')}>登入</div>}
-                    {formType !== 'register' && <div onClick={() => changeFormType('register')}>註冊</div>}
-                    {formType !== 'forgetPassword' && (
-                        <div onClick={() => changeFormType('forgetPassword')}>忘記密碼</div>
-                    )}
-                </div>
-            </form>
+                AppendComponent={function AppendComponent() {
+                    return (
+                        <div className='formControlGroup'>
+                            {formType !== 'login' && (
+                                <div onClick={() => changeFormType('login')}>登入</div>
+                            )}
+                            {formType !== 'register' && (
+                                <div onClick={() => changeFormType('register')}>註冊</div>
+                            )}
+                            {formType !== 'forgetPassword' && (
+                                <div onClick={() => changeFormType('forgetPassword')}>忘記密碼</div>
+                            )}
+                        </div>
+                    )
+                }}
+            />
         </div>
     )
 }
@@ -198,7 +192,7 @@ function LoginMarquee() {
 }
 
 // ReCaptcha HOC
-const ReCaptchHOC = (WrappedComponent) => {
+const ReCaptchaHOC = (WrappedComponent) => {
     function ReturnWrappedComponent(props) {
         const dispatch = useDispatch()
         const [isReCaptchaLoaded, setIsReCaptchaLoaded] = useState(false) // reCaptcha API 資源是否已經載入
@@ -244,7 +238,7 @@ const ReCaptchHOC = (WrappedComponent) => {
     }
     return ReturnWrappedComponent
 }
-const FormWithReCaptch = ReCaptchHOC(Form)
+const FormWrapperWithReCaptcha = ReCaptchaHOC(FormWrapper)
 
 function LoginPage() {
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
@@ -254,14 +248,18 @@ function LoginPage() {
         setFormType(value)
     }
 
-    const formConfig =
-        formType === 'login'
-            ? loginConfig
-            : formType === 'register'
-              ? registerConfig
-              : formType === 'forgetPassword'
-                ? forgetPasswordConfig
-                : {}
+    let formConfig = ''
+    switch (formType) {
+        case 'login':
+            formConfig = loginConfig
+            break
+        case 'register':
+            formConfig = registerConfig
+            break
+        case 'forgetPassword':
+            formConfig = forgetPasswordConfig
+            break
+    }
 
     return (
         <main>
@@ -277,10 +275,14 @@ function LoginPage() {
                 <LoginMarquee />
 
                 {/* 登入、註冊、忘記密碼表單(with ReCaptcha) */}
-                <FormWithReCaptch changeFormType={changeFormType} formType={formType} formConfig={formConfig} />
+                <FormWrapperWithReCaptcha
+                    formType={formType}
+                    changeFormType={changeFormType}
+                    formConfig={formConfig}
+                />
 
                 {/* 登入、註冊、忘記密碼表單 */}
-                {/* <Form changeFormType={changeFormType} formType={formType} formConfig={formConfig} /> */}
+                {/* <FormWrapper formType={formType} changeFormType={changeFormType} formConfig={formConfig} /> */}
 
                 {/* LOGO */}
                 <div className='loginLogoWrapper'>
