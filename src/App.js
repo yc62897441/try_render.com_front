@@ -18,9 +18,13 @@ const ContributionPage = lazy(() => import('./containers/ContributionPage.jsx'))
 const Reactflow = lazy(() => import('./containers/Reactflow.jsx'))
 // const Reactflow = lazy(() => import('./containers/ReactflowWrapper.jsx')) // 這個頁面沒有使用，是在嘗試動態導入頁面 + npm 套件時，所產生的
 
-const MiniComponent = lazy(() => import('./containers/MiniComponent.jsx'))
+// 後台頁面
+const Orders = lazy(() => import('./containers/backstage/Orders.jsx'))
 
-const TryApiPage = lazy(() => import('./containers/TryApi.jsx'))
+// 測試環境時使用的頁面
+const MiniComponent = lazy(() => import('./containers/MiniComponent.jsx'))
+import TryApiPage from './containers/TryApi.jsx'
+// const TryApiPage = lazy(() => import('./containers/TryApi.jsx'))
 const TryApiAuthPage = lazy(() => import('./containers/TryApiAuth.jsx'))
 
 import Layout from './components/Layout.jsx'
@@ -47,6 +51,10 @@ function App({ basename }) {
                             <Route path='/restaurant' element={<RestaurantPage />} />
                             <Route path='/contribution' element={<ContributionPage />} />
                             <Route path='/reactflow' element={<Reactflow />} />
+
+                            {/* 後台頁面 */}
+                            <Route path='/backstage/orders' element={<Orders />} />
+
                             {
                                 // 開發模式下才顯示的頁面
                                 isDevelopingMode && (

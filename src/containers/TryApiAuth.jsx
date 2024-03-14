@@ -13,8 +13,8 @@ function TryApiAuth() {
     useEffect(() => {
         async function fetch() {
             try {
-                const result = await apiHelper('get', mainUrl + '/default/userController')
-                console.log('result', result)
+                const resultOrders = await apiHelper('post', mainUrl + '/api/orders', {})
+                console.log('訂單', resultOrders)
             } catch (error) {
                 console.log(error)
             }

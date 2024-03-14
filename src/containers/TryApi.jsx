@@ -14,7 +14,7 @@ function TryApi() {
         async function fetch() {
             try {
                 const result = await apiHelper('get', mainUrl + '/default/userController')
-                console.log('result', result)
+                console.log('北台灣行政區', result)
             } catch (error) {
                 console.log(error)
             }
@@ -22,7 +22,7 @@ function TryApi() {
         fetch()
     }, [])
 
-    return <main></main>
+    return <main>555</main>
 }
 
 export default TryApi

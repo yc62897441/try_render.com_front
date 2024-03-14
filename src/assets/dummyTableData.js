@@ -10,7 +10,7 @@ export const dummyTableData = [
         startTime: '15:20',
         endDate: '2024-03-12',
         endTime: '17:30',
-        elseInfo: 0,
+        elseInfo: '',
     },
     {
         name: 'Mary',
@@ -23,7 +23,7 @@ export const dummyTableData = [
         startTime: '15:20',
         endDate: '2024-03-13',
         endTime: '17:30',
-        elseInfo: 'no',
+        elseInfo: '',
     },
     {
         name: 'John',
