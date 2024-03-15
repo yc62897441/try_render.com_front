@@ -32,6 +32,10 @@ const urls = [
         name: 'Reactflow',
         url: '/reactflow',
     },
+    {
+        name: '購物車',
+        url: '/cart',
+    },
 
     // 後台頁面
     {
