@@ -24,7 +24,6 @@ const Orders = lazy(() => import('./containers/backstage/Orders.jsx'))
 // 測試環境時使用的頁面
 const MiniComponent = lazy(() => import('./containers/MiniComponent.jsx'))
 import TryApiPage from './containers/TryApi.jsx'
-// const TryApiPage = lazy(() => import('./containers/TryApi.jsx'))
 const TryApiAuthPage = lazy(() => import('./containers/TryApiAuth.jsx'))
 
 import Layout from './components/Layout.jsx'

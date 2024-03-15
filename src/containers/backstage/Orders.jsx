@@ -21,14 +21,18 @@ function OrderModalContent({ datum }) {
         })
     }
 
-    function handleSubmit(submitType) {
-        const data = {
-            ...formData,
-            orderId: datum?.id,
-            submitType: submitType,
+    async function handleSubmit(submitType) {
+        try {
+            const data = {
+                ...formData,
+                orderId: datum?.id,
+                submitType: submitType,
+            }
+            const result = await apiHelper('put', mainUrl + '/api/orders', data)
+            console.log('result', result)
+        } catch (error) {
+            console.log(error)
         }
-        console.log('data', data)
-        // TODO: 打 API 變更訂單狀態
     }
 
     return (
@@ -82,8 +86,6 @@ function OrderModalContent({ datum }) {
                         <div>{datum?.elseInfo}</div>
                     </div>
 
-                    <hr />
-
                     <div className='formGroup'>
                         <label htmlFor={'response'}>回應訂購者</label>
                         <Textarea
@@ -104,6 +106,7 @@ function OrderModalContent({ datum }) {
                             onChange={(e) => handleChange(e.target.value, 'systemNote')}
                         />
                     </div>
+
                     <Button
                         name='確認訂單'
                         onClick={() => {
@@ -139,7 +142,6 @@ function Orders() {
 
     return (
         <main>
-            <Table tableData={tableData} />
             <TableWithModal tableData={tableData} ModalContent={OrderModalContent} />
         </main>
     )

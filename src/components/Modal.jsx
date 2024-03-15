@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import '../style/components/modal.scss'
 
 // 自定義 components
+import { Button } from './miniComponents/MiniComponents'
 
 // 自定義函數 or 參數
 import { apiHelper } from '../utils/helper'
@@ -86,6 +87,22 @@ export function CatModalContent({ datum }) {
                     <div className='modalContentImgWrapper'>
                         <img src={data?.url} alt='貓咪圖片' srcSet='' />
                     </div>
+
+                    <Button
+                        name='加入購物車'
+                        onClick={() => {
+                            let tempCart = localStorage.getItem('cart')
+                            if (!tempCart) {
+                                tempCart = {
+                                    cartList: [data.id],
+                                }
+                            } else {
+                                tempCart = JSON.parse(tempCart)
+                                tempCart.cartList.push(data.id)
+                            }
+                            localStorage.setItem('cart', JSON.stringify(tempCart))
+                        }}
+                    />
                 </>
             )}
         </div>
