@@ -424,18 +424,18 @@ function LoginPage() {
     }
 
     console.log('location', location)
-    console.log('location.href', location.href)
-    console.log('location.href', location.href.split('/#')[1].split('&'))
-    const table = {}
-    location.href
-        .split('?#')[1]
-        .split('&')
-        .forEach((pair) => {
+    if (location.href.includes('state')) {
+        const paramsPart = location.href.split('/?')[1]
+        console.log('location.href paramsPart', paramsPart)
+
+        const table = {}
+        paramsPart.split('&').forEach((pair) => {
             console.log(pair.split('='))
             const [key, value] = pair.split('=')
             table[key] = value
         })
-    console.log('table', table)
+        console.log('table', table)
+    }
 
     return (
         <main>
