@@ -435,7 +435,32 @@ function LoginPage() {
             table[key] = value
         })
         console.log('table', table)
+
+        fetchGoogleUserInfo(table.access_token)
     }
+
+    async function fetchGoogleUserInfo(access_token) {
+        try {
+            const response = await Axios.get(
+                `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${access_token}`
+            )
+            console.log('response', response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // var xhr = new XMLHttpRequest()
+    // xhr.open(
+    //     'GET',
+    //     'https://www.googleapis.com/drive/v3/about?fields=user&' +
+    //         'access_token=' +
+    //         params['access_token']
+    // )
+    // xhr.onreadystatechange = function (e) {
+    //     console.log(xhr.response)
+    // }
+    // xhr.send(null)
 
     return (
         <main>

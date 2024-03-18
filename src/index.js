@@ -12,12 +12,8 @@ const root = ReactDOM.createRoot(domContainer)
 // export const BASE_NAME = '/basename'
 export const BASE_NAME = '/try_render.com_front' // 部屬到 github pages 時使用(BrowserRouter)
 
-if (
-    window.location.href.includes('#state')
-    // && window.location.href.includes('code')
-    // && /#\/$/.test(window.location.href)
-) {
-    // window.location.href = window.location.href.replace(/(\/\?code=.*)#(.*)/, '/#$2$1')
+// 配合 React Router HashRouter，要修改 google login api redirect url
+if (window.location.href.includes('#state')) {
     window.location.href = window.location.href.replace('/#state', '?state')
 }
 
