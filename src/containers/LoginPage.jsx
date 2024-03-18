@@ -441,10 +441,23 @@ function LoginPage() {
 
     async function fetchGoogleUserInfo(access_token) {
         try {
-            const response = await Axios.get(
+            // const response = await Axios.get(
+            //     `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${access_token}`
+
+            //     // https://www.googleapis.com/drive/v2/files?access_token=access_token
+            // )
+            // console.log('response', response)
+
+            var xhr = new XMLHttpRequest()
+            xhr.open(
+                'GET',
                 `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${access_token}`
             )
-            console.log('response', response)
+            xhr.onreadystatechange = function (e) {
+                console.log(xhr.response)
+            }
+            xhr.send(null)
+            console.log('xhr', xhr)
         } catch (error) {
             console.log(error)
         }
