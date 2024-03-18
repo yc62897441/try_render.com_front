@@ -1,6 +1,7 @@
 // 套件
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Axios from 'axios'
 
 // 靜態資源
 import '../style/containers/login.scss'
@@ -209,6 +210,14 @@ const ReCaptchaHOC = (WrappedComponent) => {
             script.addEventListener('load', loadCompleted)
             document.body.appendChild(script)
 
+            // const script2 = document.createElement('script')
+            // script2.src = 'https://accounts.google.com/gsi/client'
+            // // const loadCompleted2 = () => {
+            // //     setIsReCaptchaLoaded(true)
+            // // }
+            // // script2.addEventListener('load', loadCompleted2)
+            // document.body.appendChild(script2)
+
             return () => {
                 script.removeEventListener('load', loadCompleted)
             }
@@ -261,6 +270,99 @@ function LoginPage() {
             break
     }
 
+    async function oauthSignIn() {
+        try {
+            // Google's OAuth 2.0 endpoint for requesting an access token
+            var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
+
+            // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+            var form = document.createElement('form')
+            form.setAttribute('method', 'GET') // Send as a GET request.
+            form.setAttribute('action', oauth2Endpoint)
+
+            // Parameters to pass to OAuth 2.0 endpoint.
+            var params = {
+                client_id: 'YOUR_CLIENT_ID',
+                redirect_uri: 'YOUR_REDIRECT_URI',
+                response_type: 'token',
+                scope: 'https://www.googleapis.com/auth/drive.metadata.readonly',
+                include_granted_scopes: 'true',
+                state: 'pass-through value',
+            }
+
+            // Add form parameters as hidden input values.
+            for (var p in params) {
+                var input = document.createElement('input')
+                input.setAttribute('type', 'hidden')
+                input.setAttribute('name', p)
+                input.setAttribute('value', params[p])
+                form.appendChild(input)
+            }
+
+            // Add form to page and submit it to open the OAuth 2.0 endpoint.
+            document.body.appendChild(form)
+            // form.submit()
+            console.log('form', form)
+
+            const config = {
+                url: '/', // 只有此為必需
+                method: 'get', // 大小寫皆可
+                headers: { 'Content-Type': 'application/json' },
+
+                // 添加在 url 前面，除非 url 為絕對路徑
+                baseURL: 'https://accounts.google.com/o/oauth2/v2/auth',
+
+                // 主要傳送的資料 (只用於 PUT、POST、PATCH )
+                // 在沒有 transformRequest 情況下資料型別有限制 (下有補充)
+                // data: { name: 'test', title: 777 },
+
+                // params 注意此不等同於 data
+                // 此為 URL 上要代的參數   ~url?ID=123
+                params: {
+                    // ID: 123,
+                    client_id: process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID,
+                    redirect_uri: process.env.REACT_APP_GOOGLE_LOGIN_REDIRECT_URI,
+                    response_type: 'token',
+                    scope: 'https://www.googleapis.com/auth/drive.metadata.readonly',
+                    include_granted_scopes: 'true',
+                    state: 'pass-through value',
+                },
+
+                // // 序列化參數 ???
+                // paramsSerializer: function(params) {
+                //   return Qs.stringify(params, {arrayFormat: 'brackets'})
+                // },
+
+                // maxContentLength: 2000, // 限制傳送大小
+
+                // // 請求時間超過 1000毫秒(1秒)，請求會被中止
+                // timeout: 1000,
+
+                // // 選項: 'arraybuffer', 'document', 'json', 'text', 'stream'
+                // // 瀏覽器才有 'blob' ， 預設為 'json'
+                // responseType: 'json', // 伺服器回應的數據類型
+
+                // // 伺服器回應的編碼模式 預設 'utf8'
+                // responseEncoding: 'utf8',
+
+                // // 在上傳、下載途中可執行的事情 (progressBar、Loading)
+                // onUploadProgress(progressEvt) { /* 原生 ProgressEvent */  },
+                // onDownloadProgress(progressEvt) { /* 原生 ProgressEvent */ },
+
+                // // 允許自定義處理請求，可讓測試更容易 (有看沒懂..)
+                // // return promise 並提供有效的回應 (valid response)
+                // adapter (config) { /* 下方章節 補充詳細用法 */ },
+            }
+            const response = await Axios(config) // 預先檢查發送的請求是否安全
+            // const response = await apiHelper('post', mainUrl + apiUrl, {
+            //     ...formData,
+            // })
+            console.log('response', response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <main>
             {
@@ -286,7 +388,41 @@ function LoginPage() {
 
                 {/* LOGO */}
                 <div className='loginLogoWrapper'>
-                    <img src={LogoImg} alt='貓咪 icon' srcSet='' />
+                    {/* <img src={LogoImg} alt='貓咪 icon' srcSet='' /> */}
+
+                    <div onClick={oauthSignIn}>Google login</div>
+
+                    {/* <div
+                        id='g_id_onload'
+                        data-client_id={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
+                        // data-login_uri={process.env.REACT_APP_GOOGLE_LOGIN_REDIRECT_URI}
+                        data-login_uri='http://localhost:3000/'
+                        data-auto_prompt='false'
+                    ></div>
+                    <div
+                        className='g_id_signin'
+                        data-type='standard'
+                        data-size='large'
+                        data-theme='outline'
+                        data-text='sign_in_with'
+                        data-shape='rectangular'
+                        data-logo_alignment='left'
+                    ></div> */}
+                    {/* <div
+                        id='g_id_onload'
+                        data-client_id={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
+                        data-callback='handleCallback'
+                        data-auto_prompt='false'
+                    ></div>
+                    <div
+                        className='g_id_signin'
+                        data-type='standard'
+                        data-size='large'
+                        data-theme='outline'
+                        data-text='sign_in_with'
+                        data-shape='pill'
+                        data-logo_alignment='left'
+                    ></div> */}
                 </div>
             </section>
         </main>
