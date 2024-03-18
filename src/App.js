@@ -10,7 +10,6 @@ import './style/index.scss'
 // 自定義 components
 import HomePage from './containers/HomePage.jsx'
 import LoginPage from './containers/LoginPage.jsx'
-import LoginPageAPIWaitng from './containers/LoginPageAPIWaitng.jsx'
 import LoadingPage from './containers/LoadingPage.jsx'
 
 // 動態載入的頁面
@@ -76,7 +75,6 @@ function App({ basename }) {
                         // 開發模式下才顯示的頁面
                         isDevelopingMode && <Route path='/tryApi' element={<TryApiPage />} />
                     }
-                    <Route path='/loginPageAPIWaitng' element={<LoginPageAPIWaitng />} />
                     <Route path='*' element={<LoginPage />} />
                 </Routes>
             )}

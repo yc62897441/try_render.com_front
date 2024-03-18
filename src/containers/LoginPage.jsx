@@ -93,20 +93,9 @@ function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) 
                         let token = response.data.token
                         sessionStorage.setItem('token', token)
                         dispatch(dispatchLOGIN(true))
-
-                        // 測試 redux persist 的假資料
                         dispatch(
                             dispatchUSER_DATA({
-                                name: 'John',
-                                age: 18,
-                                address: {
-                                    city: 'Taipei',
-                                    street: 'Da An',
-                                    else: {
-                                        no: 1,
-                                        room: 'a1',
-                                    },
-                                },
+                                ...response.data.user,
                             })
                         )
                         dispatch(dispatchLOADING(false))
@@ -210,14 +199,6 @@ const ReCaptchaHOC = (WrappedComponent) => {
             script.addEventListener('load', loadCompleted)
             document.body.appendChild(script)
 
-            // const script2 = document.createElement('script')
-            // script2.src = 'https://accounts.google.com/gsi/client'
-            // // const loadCompleted2 = () => {
-            // //     setIsReCaptchaLoaded(true)
-            // // }
-            // // script2.addEventListener('load', loadCompleted2)
-            // document.body.appendChild(script2)
-
             return () => {
                 script.removeEventListener('load', loadCompleted)
             }
@@ -250,6 +231,7 @@ const ReCaptchaHOC = (WrappedComponent) => {
 const FormWrapperWithReCaptcha = ReCaptchaHOC(FormWrapper)
 
 function LoginPage() {
+    const dispatch = useDispatch()
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
     const [formType, setFormType] = useState('login')
 
@@ -307,67 +289,10 @@ function LoginPage() {
         }
     }
 
-    async function oauthSignIn2() {
-        try {
-            const config = {
-                url: '/', // 只有此為必需
-                method: 'get', // 大小寫皆可
-                headers: { 'Content-Type': 'application/json' },
-
-                // 添加在 url 前面，除非 url 為絕對路徑
-                baseURL: 'https://accounts.google.com/o/oauth2/v2/auth',
-
-                // 主要傳送的資料 (只用於 PUT、POST、PATCH )
-                // 在沒有 transformRequest 情況下資料型別有限制 (下有補充)
-                // data: { name: 'test', title: 777 },
-
-                // params 注意此不等同於 data
-                // 此為 URL 上要代的參數
-                params: {
-                    client_id: process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID,
-                    redirect_uri: process.env.REACT_APP_GOOGLE_LOGIN_REDIRECT_URI,
-                    response_type: 'token',
-                    scope: 'https://www.googleapis.com/auth/drive.metadata.readonly',
-                    include_granted_scopes: 'true',
-                    state: 'pass-through value',
-                },
-
-                // // 序列化參數 ???
-                // paramsSerializer: function(params) {
-                //   return Qs.stringify(params, {arrayFormat: 'brackets'})
-                // },
-
-                // maxContentLength: 2000, // 限制傳送大小
-
-                // // 請求時間超過 1000毫秒(1秒)，請求會被中止
-                // timeout: 1000,
-
-                // // 選項: 'arraybuffer', 'document', 'json', 'text', 'stream'
-                // // 瀏覽器才有 'blob' ， 預設為 'json'
-                // responseType: 'json', // 伺服器回應的數據類型
-
-                // // 伺服器回應的編碼模式 預設 'utf8'
-                // responseEncoding: 'utf8',
-
-                // // 在上傳、下載途中可執行的事情 (progressBar、Loading)
-                // onUploadProgress(progressEvt) { /* 原生 ProgressEvent */  },
-                // onDownloadProgress(progressEvt) { /* 原生 ProgressEvent */ },
-
-                // // 允許自定義處理請求，可讓測試更容易 (有看沒懂..)
-                // // return promise 並提供有效的回應 (valid response)
-                // adapter (config) { /* 下方章節 補充詳細用法 */ },
-            }
-            const response = await Axios(config) // 預先檢查發送的請求是否安全
-            console.log('response', response)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    console.log('location', location)
+    // 如果是從 google OAuth2 redirect 回來，則須從 redirect url 解析回回傳的參數
     if (location.href.includes('state')) {
         const paramsPart = location.href.split('/?')[1]
-        console.log('location.href paramsPart', paramsPart)
+        // console.log('location.href paramsPart', paramsPart)
 
         const table = {}
         paramsPart.split('&').forEach((pair) => {
@@ -375,34 +300,42 @@ function LoginPage() {
             const [key, value] = pair.split('=')
             table[key] = value
         })
-        console.log('table', table)
+        // console.log('table', table)
 
+        // 使用回傳參數 access_token，去向 google API 取回使用者資訊
         fetchGoogleUserInfo(table.access_token)
     }
-
+    // 使用回傳參數 access_token，去向 google API 取回使用者資訊
     async function fetchGoogleUserInfo(access_token) {
         try {
+            dispatch(dispatchLOADING(true))
+            console.log('fetchGoogleUserInfo', access_token)
+
+            // 往後端送 access_token，讓後端去向 google API 取回使用者資訊
             const response = await apiHelper('post', mainUrl + '/auth/google_signin', {
                 access_token: access_token,
             })
+            // 直接前端去向 google API 取回使用者資訊
             // const response = await Axios.get(
             //     `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${access_token}`
-
-            //     // https://www.googleapis.com/drive/v2/files?access_token=access_token
             // )
             console.log('response', response)
 
-            // var xhr = new XMLHttpRequest()
-            // xhr.open(
-            //     'GET',
-            //     `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${access_token}`
-            // )
-            // xhr.onreadystatechange = function (e) {
-            //     console.log(xhr.response)
-            // }
-            // xhr.send(null)
-            // console.log('xhr', xhr)
+            if (response?.data?.token) {
+                let token = response.data.token
+                sessionStorage.setItem('token', token)
+                dispatch(dispatchLOGIN(true))
+                dispatch(
+                    dispatchUSER_DATA({
+                        ...response.data.user,
+                    })
+                )
+                dispatch(dispatchLOADING(false))
+            }
+
+            dispatch(dispatchLOADING(false))
         } catch (error) {
+            dispatch(dispatchLOADING(false))
             console.log(error)
         }
     }
@@ -433,44 +366,7 @@ function LoginPage() {
                 {/* LOGO */}
                 <div className='loginLogoWrapper'>
                     {/* <img src={LogoImg} alt='貓咪 icon' srcSet='' /> */}
-
                     <div onClick={oauthSignIn}>Google login</div>
-
-                    <div onClick={oauthSignIn2}>Google login2</div>
-
-                    <div onClick={() => fetchGoogleUserInfo('aaa')}>測試</div>
-
-                    {/* <div
-                        id='g_id_onload'
-                        data-client_id={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
-                        // data-login_uri={process.env.REACT_APP_GOOGLE_LOGIN_REDIRECT_URI}
-                        data-login_uri='http://localhost:3000/'
-                        data-auto_prompt='false'
-                    ></div>
-                    <div
-                        className='g_id_signin'
-                        data-type='standard'
-                        data-size='large'
-                        data-theme='outline'
-                        data-text='sign_in_with'
-                        data-shape='rectangular'
-                        data-logo_alignment='left'
-                    ></div> */}
-                    {/* <div
-                        id='g_id_onload'
-                        data-client_id={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
-                        data-callback='handleCallback'
-                        data-auto_prompt='false'
-                    ></div>
-                    <div
-                        className='g_id_signin'
-                        data-type='standard'
-                        data-size='large'
-                        data-theme='outline'
-                        data-text='sign_in_with'
-                        data-shape='pill'
-                        data-logo_alignment='left'
-                    ></div> */}
                 </div>
             </section>
         </main>
