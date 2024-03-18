@@ -4,6 +4,7 @@ import { useImmer } from 'use-immer'
 import { useSelector, useDispatch } from 'react-redux'
 
 // 靜態資源
+import '../style/containers/cartPage.scss'
 
 // 自定義 components
 import { Button } from '../components/miniComponents/MiniComponents'
@@ -19,6 +20,7 @@ function Carts() {
     const dispatch = useDispatch()
     const userData = useSelector((state) => state.persistedControlReducer.userData)
     const [formData, updateFormData] = useImmer({})
+    console.log('formData', formData)
 
     useEffect(() => {
         async function fetch() {
@@ -93,32 +95,45 @@ function Carts() {
     return (
         <main>
             {/* TODO: 1 清單 UI style */}
-            {formData?.items?.length === 0
-                ? '購物車內無項目'
-                : formData?.items.map((datum) => (
-                      <div key={datum.catId}>
-                          <img
-                              src={datum?.url}
-                              alt='貓咪圖片'
-                              srcSet=''
-                              style={{ width: '200px', height: '150px' }}
-                          />
-                          <div>品種：{datum?.name}</div>
-                          <Button
-                              name='+'
-                              onClick={() => {
-                                  handleChangeQuantity(datum.catId, 1)
-                              }}
-                          />
-                          <Button
-                              name='-'
-                              onClick={() => {
-                                  handleChangeQuantity(datum.catId, -1)
-                              }}
-                          />
-                          {datum.id}
-                      </div>
-                  ))}
+            <div className='cart-items-wrapper'>
+                {formData?.items?.length === 0
+                    ? '購物車內無項目'
+                    : formData?.items.map((datum) => (
+                          <div key={datum.catId} className='cart-item-wrapper '>
+                              <div className='cart-item-wrapper-content'>
+                                  <img src={datum?.url} alt='貓咪圖片' srcSet='' />
+                              </div>
+                              <div className='cart-item-wrapper-content cart-item-wrapper-content-name'>
+                                  {datum?.name}
+                              </div>
+                              <div className='cart-item-wrapper-content cart-item-wrapper-content-control'>
+                                  <div>
+                                      <Button
+                                          name='+'
+                                          onClick={() => {
+                                              handleChangeQuantity(datum.catId, 1)
+                                          }}
+                                      />{' '}
+                                      <Button
+                                          name='-'
+                                          onClick={() => {
+                                              handleChangeQuantity(datum.catId, -1)
+                                          }}
+                                      />
+                                  </div>
+                                  <div>數量：{datum?.quantity}</div>
+                              </div>
+                              <div className='cart-item-wrapper-content'>
+                                  小計：{datum?.quantity}000
+                              </div>
+                          </div>
+                      ))}
+
+                <div className='cart-item-wrapper-content cart-item-wrapper-content-total'>
+                    <div>總計：</div>
+                    <div>1000</div>
+                </div>
+            </div>
 
             <Form
                 formData={formData}
