@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[895],{raqg:(n,t,u)=>{u.d(t,{x:()=>f});var e=u("IHrx"),c=u("q1tI");function f(n){var t=(0,c.useState)((function(){return(0,e.vV)("function"==typeof n?n():n,!0)})),u=t[1];return[t[0],(0,c.useCallback)((function(n){u("function"==typeof n?(0,e.Uy)(n):(0,e.vV)(n))}),[])]}}}]);
