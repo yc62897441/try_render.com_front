@@ -49,42 +49,34 @@ function OrderModalContent({ datum }) {
                     </div>
                     <div className='modalContentInfo'>
                         <div>貓咪編號: </div>
-                        <div>{datum?.catId}</div>
+                        <div>
+                            {datum?.catIds?.length > 0 && datum.catIds.map((catId) => `${catId}; `)}
+                        </div>
                     </div>
                     <div className='modalContentInfo'>
                         <div>訂購者編號: </div>
                         <div>{datum?.userId}</div>
                     </div>
                     <div className='modalContentInfo'>
-                        <div>訂購者電話: </div>
-                        <div>{datum?.tel}</div>
+                        <div>訂單聯絡電話: </div>
+                        <div>{datum?.orderPhone}</div>
                     </div>
                     <div className='modalContentInfo'>
-                        <div>訂購地址: </div>
-                        <div>
-                            {datum?.city}
-                            {datum?.district}
-                            {datum?.address}
-                        </div>
+                        <div>訂單地址: </div>
+                        <div>{datum?.orderAddress}</div>
                     </div>
                     <div className='modalContentInfo'>
                         <div>起始時間: </div>
-                        <div>
-                            {datum?.startDate}
-                            {datum?.startTime}
-                        </div>
+                        <div>{new Date(datum?.startDateTime).toString().split(' GMT')[0]}</div>
                     </div>
                     <div className='modalContentInfo'>
                         <div>結束時間: </div>
-                        <div>
-                            {datum?.endDate}
-                            {datum?.endTime}
-                        </div>
+                        <div>{new Date(datum?.endDateTime).toString().split(' GMT')[0]}</div>
                     </div>
-                    <div className='modalContentInfo'>
+                    {/* <div className='modalContentInfo'>
                         <div>訂單備註: </div>
                         <div>{datum?.elseInfo}</div>
-                    </div>
+                    </div> */}
 
                     <div className='formGroup'>
                         <label htmlFor={'response'}>回應訂購者</label>
@@ -129,15 +121,18 @@ function Orders() {
     const [tableData, updateTableData] = useImmer([])
 
     useEffect(() => {
-        async function fetch() {
+        async function fetchOrders() {
             try {
-                const resultOrders = await apiHelper('post', mainUrl + '/api/orders', {})
+                const resultOrders = await apiHelper('post', mainUrl + '/api/orders', {
+                    userId: '',
+                })
                 updateTableData(resultOrders?.data?.data || [])
+                // console.log('訂單', resultOrders)
             } catch (error) {
                 console.log(error)
             }
         }
-        fetch()
+        fetchOrders()
     }, [])
 
     return (
