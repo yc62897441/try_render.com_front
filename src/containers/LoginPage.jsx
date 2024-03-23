@@ -61,6 +61,7 @@ const forgetPasswordConfig = {
     },
 }
 
+// 向 google oauth 取回 access token
 async function oauthSignIn() {
     try {
         // Google's OAuth 2.0 endpoint for requesting an access token
