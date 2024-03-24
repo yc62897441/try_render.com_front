@@ -20,20 +20,22 @@ function Carts() {
     const dispatch = useDispatch()
     const userData = useSelector((state) => state.persistedControlReducer.userData)
     const [formData, updateFormData] = useImmer({})
-    console.log('formData', formData)
 
     useEffect(() => {
         async function fetch() {
             try {
                 const cart = JSON.parse(localStorage.getItem('cart'))
-                if (cart?.cartList?.length === 0) return // 購物車內無東西
+                const cartListTable = cart?.cartList || {}
+                // console.log('cartListTable', cartListTable)
+                if (Object.keys(cartListTable) === 0) return // 購物車內無東西
 
                 // 透過購物車內的 catIds，取回 cats' 詳細資料
                 dispatch(dispatchLOADING(true))
-                const promiseArray = cart.cartList.map((catId) => {
+                const promiseArray = Object.keys(cartListTable).map((catId) => {
                     return apiHelper('get', 'https://api.thecatapi.com/v1/images/' + catId)
                 })
                 const response = await Promise.all(promiseArray)
+                // console.log('response', response)
                 dispatch(dispatchLOADING(false))
 
                 // 建立發送購物車資料的表單
@@ -46,7 +48,7 @@ function Carts() {
                             catId: result.data.id,
                             name: result.data?.breeds?.[0]?.name,
                             url: result.data?.url,
-                            quantity: 1, // 預設 1 項
+                            quantity: cartListTable[result.data.id] || 1,
                         }
                         tempFormData.items.push(obj)
                     }
@@ -62,18 +64,43 @@ function Carts() {
     // 更改購物車內項目的數量
     function handleChangeQuantity(catId, value) {
         const itemIndex = formData.items.findIndex((item) => item.catId === catId)
+
+        // localStorage 儲存的資訊
+        let tempCart = localStorage.getItem('cart')
+        tempCart = JSON.parse(tempCart)
+
         // 數量變為 0 時，刪除項目
         if (formData.items[itemIndex].quantity + value <= 0) {
             updateFormData({
                 ...formData,
                 items: formData.items.filter((item) => item.catId !== catId),
             })
+
+            // 處理 localStorage 儲存的資訊
+            // 建立新的清單，排除掉目前數量要變為 0 的這項 catId
+            const newCartList = {}
+            Object.keys(tempCart.cartList).forEach((key) => {
+                if (key !== catId) {
+                    newCartList[key] = tempCart.cartList[key]
+                }
+            })
+            tempCart.cartList = newCartList
         } else {
             // +-數量
             updateFormData((draft) => {
                 draft.items[itemIndex].quantity = draft.items[itemIndex].quantity + value
             })
+
+            // 處理 localStorage 儲存的資訊
+            // 目前 catId 的數量要 + value
+            Object.keys(tempCart.cartList).forEach((key) => {
+                if (key === catId) {
+                    tempCart.cartList[key] = tempCart.cartList[key] + value
+                }
+            })
         }
+
+        localStorage.setItem('cart', JSON.stringify(tempCart))
     }
 
     function handleChange(value, Key) {
@@ -84,7 +111,11 @@ function Carts() {
 
     function handleSubmit() {
         // TODO: 1 送出訂單的 API
-        // TODO: 1 加入 userId 到 formData 中，redux userData 要增加 userId
+
+        // TODO: 1 加入 userId 到 formData 中
+        const userId = userData.id
+        console.log('userId', userId)
+
         // TODO: 1 縣市與行政區清單
         // TODO: 1 設為必填，或是有 default value
         console.log('handleSubmit formData', formData)

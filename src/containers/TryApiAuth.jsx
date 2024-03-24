@@ -81,6 +81,15 @@ function TryApiAuth() {
         }
     }
 
+    async function readOrderCSVtoDB() {
+        try {
+            const result = await apiHelper('post', mainUrl + '/api/readOrderCSVtoDB', {})
+            console.log('result', result)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <main>
             <button onClick={fetchOrders}>取回 orders</button>
@@ -92,6 +101,8 @@ function TryApiAuth() {
             <button onClick={putOrder}>更新 order</button>
             <hr />
             <button onClick={deleteOrder}>刪除 order</button>
+            <hr />
+            <button onClick={readOrderCSVtoDB}>讀取 order csv 並且寫入到資料庫</button>
         </main>
     )
 }

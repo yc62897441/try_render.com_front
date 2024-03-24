@@ -94,11 +94,17 @@ export function CatModalContent({ datum }) {
                             let tempCart = localStorage.getItem('cart')
                             if (!tempCart) {
                                 tempCart = {
-                                    cartList: [data.id],
+                                    cartList: {
+                                        [data.id]: 1,
+                                    },
                                 }
                             } else {
                                 tempCart = JSON.parse(tempCart)
-                                tempCart.cartList.push(data.id)
+                                if (tempCart.cartList[data.id]) {
+                                    tempCart.cartList[data.id] = tempCart.cartList[data.id] + 1
+                                } else {
+                                    tempCart.cartList[data.id] = 1
+                                }
                             }
                             localStorage.setItem('cart', JSON.stringify(tempCart))
                         }}
