@@ -1,5 +1,5 @@
 // 套件
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -11,7 +11,6 @@ import { Button } from '../components/miniComponents/MiniComponents'
 import Form from '../components/miniComponents/Form'
 
 // 自定義函數 or 參數
-import { mainUrl } from '../config/api'
 import { apiHelper } from '../utils/helper'
 import { dispatchLOADING } from '../actions'
 import { cartPageFormConfig } from '../config/containers/cartPage'
