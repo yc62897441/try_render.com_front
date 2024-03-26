@@ -37,6 +37,7 @@ import { isDevelopingMode } from './config/api.js'
 function App({ basename }) {
     // function App() {
     const isLogin = useSelector((state) => state.persistedControlReducer.isLogin)
+    const isAdmin = useSelector((state) => state.persistedControlReducer.isAdmin)
 
     return (
         // <BrowserRouter
@@ -52,14 +53,17 @@ function App({ basename }) {
                             <Route path='/restaurant' element={<RestaurantPage />} />
                             <Route path='/contribution' element={<ContributionPage />} />
                             <Route path='/cart' element={<CartPage />} />
-                            <Route path='/reactflow' element={<Reactflow />} />
 
-                            {/* 後台頁面 */}
-                            <Route path='/backstage/orders' element={<Orders />} />
-
+                            {/* 後台頁面，系統管理員才可見 */}
+                            {isAdmin && (
+                                <>
+                                    <Route path='/reactflow' element={<Reactflow />} />
+                                    <Route path='/backstage/orders' element={<Orders />} />
+                                </>
+                            )}
                             {
-                                // 開發模式下才顯示的頁面
-                                isDevelopingMode && (
+                                // 開發模式，系統管理員才可見
+                                isAdmin && isDevelopingMode && (
                                     <>
                                         <Route path='/miniComponent' element={<MiniComponent />} />
                                         <Route path='/tryApi' element={<TryApiAuthPage />} />

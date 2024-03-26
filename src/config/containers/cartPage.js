@@ -1,7 +1,10 @@
+import { cityList, cityDistrictList } from '../cityAndDistrict'
+
 export const cartPageFormConfig = {
     email: {
         label: 'email',
         type: 'email',
+        required: true,
     },
     tel: {
         label: '手機',
@@ -13,24 +16,18 @@ export const cartPageFormConfig = {
     city: {
         label: '居住縣市',
         type: 'select',
-        selectList: [
-            { label: '台北市', value: 0 },
-            { label: '新北市', value: 1 },
-            { label: '桃園市', value: 2 },
-            { label: '新竹縣', value: 3 },
-            { label: '新竹市', value: 4 },
-            { label: '基隆市', value: 5 },
-            { label: '宜蘭市', value: 6 },
-        ],
+        selectList: cityList,
         required: true,
     },
     district: {
         label: '行政區',
-        type: 'select',
-        selectList: [
-            { label: '大安區', value: 0 },
-            { label: '信義區', value: 1 },
-        ],
+        type: 'selectDistrict',
+        selectList: cityDistrictList,
+        required: true,
+    },
+    address: {
+        label: '地址',
+        type: 'text',
         required: true,
     },
     startDate: {

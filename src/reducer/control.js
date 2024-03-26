@@ -2,6 +2,7 @@ import * as actions from '../actions'
 
 const initState = {
     isLogin: false,
+    isAdmin: false,
     isLoading: false,
     reFetch: false,
     keepFetch: false,
@@ -14,6 +15,11 @@ const controlReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLogin: action.payload,
+            }
+        case actions.SWITCH_ADMIN:
+            return {
+                ...state,
+                isAdmin: action.payload,
             }
         case actions.SWITCH_LOADING:
             return {

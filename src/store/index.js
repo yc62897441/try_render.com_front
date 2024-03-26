@@ -23,7 +23,7 @@ const encryptor = encryptTransform({
 const persistConfig = {
     key: 'controlReducer',
     storage: storageSession,
-    whitelist: ['userData', 'isLogin'],
+    whitelist: ['userData', 'isLogin', 'isAdmin'],
     transforms: [encryptor], // 添加加密器到 transforms 陣列
 }
 const persistedControlReducer = persistReducer(persistConfig, controlReducer)
