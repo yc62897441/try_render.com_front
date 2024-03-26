@@ -58,6 +58,9 @@
 .cart-item-wrapper-content-control {
     flex-shrink: 0;
 }
+.cart-item-wrapper-content-control-remove {
+    cursor: pointer;
+}
 
 .cart-item-wrapper-content-total {
     display: flex;

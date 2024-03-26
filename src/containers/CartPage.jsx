@@ -23,9 +23,9 @@ function Carts() {
     useEffect(() => {
         async function fetch() {
             try {
+                // 取得購物車內項目
                 const cart = JSON.parse(localStorage.getItem('cart'))
                 const cartListTable = cart?.cartList || {}
-                // console.log('cartListTable', cartListTable)
                 if (Object.keys(cartListTable) === 0) return // 購物車內無東西
 
                 // 透過購物車內的 catIds，取回 cats' 詳細資料
@@ -33,26 +33,25 @@ function Carts() {
                 const promiseArray = Object.keys(cartListTable).map((catId) => {
                     return apiHelper('get', 'https://api.thecatapi.com/v1/images/' + catId)
                 })
-                const response = await Promise.all(promiseArray)
-                // console.log('response', response)
+                const responses = await Promise.all(promiseArray)
                 dispatch(dispatchLOADING(false))
 
                 // 建立發送購物車資料的表單
-                const tempFormData = {
-                    items: [],
-                }
-                response.forEach((result) => {
+                const items = []
+                responses.forEach((result) => {
                     if (result?.data) {
                         const obj = {
-                            catId: result.data.id,
+                            catId: result.data?.id,
                             name: result.data?.breeds?.[0]?.name,
                             url: result.data?.url,
                             quantity: cartListTable[result.data.id] || 1,
                         }
-                        tempFormData.items.push(obj)
+                        items.push(obj)
                     }
                 })
-                updateFormData(tempFormData)
+                updateFormData((draft) => {
+                    draft.items = items
+                })
             } catch (error) {
                 console.log(error)
             }
@@ -60,45 +59,68 @@ function Carts() {
         fetch()
     }, [])
 
-    // 更改購物車內項目的數量
-    function handleChangeQuantity(catId, value) {
-        const itemIndex = formData.items.findIndex((item) => item.catId === catId)
+    // 更改購物車內項目的數量，目前商業邏輯用不上
+    // function handleChangeQuantity(catId, value) {
+    //     const itemIndex = formData.items.findIndex((item) => item.catId === catId)
 
-        // localStorage 儲存的資訊
+    //     // localStorage 儲存的資訊
+    //     let tempCart = localStorage.getItem('cart')
+    //     tempCart = JSON.parse(tempCart)
+
+    //     // 數量變為 0 時，刪除項目
+    //     if (formData.items[itemIndex].quantity + value <= 0) {
+    //         updateFormData({
+    //             ...formData,
+    //             items: formData.items.filter((item) => item.catId !== catId),
+    //         })
+
+    //         // 處理 localStorage 儲存的資訊
+    //         // 建立新的清單，排除掉目前數量要變為 0 的這項 catId
+    //         const newCartList = {}
+    //         Object.keys(tempCart.cartList).forEach((key) => {
+    //             if (key !== catId) {
+    //                 newCartList[key] = tempCart.cartList[key]
+    //             }
+    //         })
+    //         tempCart.cartList = newCartList
+    //     } else {
+    //         // +-數量
+    //         updateFormData((draft) => {
+    //             draft.items[itemIndex].quantity = draft.items[itemIndex].quantity + value
+    //         })
+
+    //         // 處理 localStorage 儲存的資訊
+    //         // 目前 catId 的數量要 + value
+    //         Object.keys(tempCart.cartList).forEach((key) => {
+    //             if (key === catId) {
+    //                 tempCart.cartList[key] = tempCart.cartList[key] + value
+    //             }
+    //         })
+    //     }
+
+    //     localStorage.setItem('cart', JSON.stringify(tempCart))
+    // }
+
+    // 刪除購物車項目
+    function handleRemoveCartItem(catId) {
+        // 更新 formData 儲存的資訊
+        updateFormData({
+            ...formData,
+            items: formData.items.filter((item) => item.catId !== catId),
+        })
+
+        // 更新 localStorage 儲存的資訊
         let tempCart = localStorage.getItem('cart')
         tempCart = JSON.parse(tempCart)
 
-        // 數量變為 0 時，刪除項目
-        if (formData.items[itemIndex].quantity + value <= 0) {
-            updateFormData({
-                ...formData,
-                items: formData.items.filter((item) => item.catId !== catId),
-            })
-
-            // 處理 localStorage 儲存的資訊
-            // 建立新的清單，排除掉目前數量要變為 0 的這項 catId
-            const newCartList = {}
-            Object.keys(tempCart.cartList).forEach((key) => {
-                if (key !== catId) {
-                    newCartList[key] = tempCart.cartList[key]
-                }
-            })
-            tempCart.cartList = newCartList
-        } else {
-            // +-數量
-            updateFormData((draft) => {
-                draft.items[itemIndex].quantity = draft.items[itemIndex].quantity + value
-            })
-
-            // 處理 localStorage 儲存的資訊
-            // 目前 catId 的數量要 + value
-            Object.keys(tempCart.cartList).forEach((key) => {
-                if (key === catId) {
-                    tempCart.cartList[key] = tempCart.cartList[key] + value
-                }
-            })
-        }
-
+        // 建立新的清單，排除掉目前數量要變為 0 的這項 catId
+        const newCartList = {}
+        Object.keys(tempCart.cartList).forEach((key) => {
+            if (key !== catId) {
+                newCartList[key] = tempCart.cartList[key]
+            }
+        })
+        tempCart.cartList = newCartList
         localStorage.setItem('cart', JSON.stringify(tempCart))
     }
 
@@ -111,13 +133,12 @@ function Carts() {
     function handleSubmit() {
         // TODO: 1 送出訂單的 API
 
-        // TODO: 1 加入 userId 到 formData 中
-        const userId = userData.id
-        console.log('userId', userId)
-
         // TODO: 1 縣市與行政區清單
         // TODO: 1 設為必填，或是有 default value
-        console.log('handleSubmit formData', formData)
+        console.log('handleSubmit formData', {
+            ...formData,
+            userId: userData.id, // 加入 userId 到 formData 中
+        })
     }
 
     if (!formData?.items) return <main></main>
@@ -126,17 +147,21 @@ function Carts() {
         <main>
             {/* TODO: 1 清單 UI style */}
             <div className='cart-items-wrapper'>
-                {formData?.items?.length === 0
-                    ? '購物車內無項目'
-                    : formData?.items.map((datum) => (
-                          <div key={datum.catId} className='cart-item-wrapper '>
-                              <div className='cart-item-wrapper-content'>
-                                  <img src={datum?.url} alt='貓咪圖片' srcSet='' />
-                              </div>
-                              <div className='cart-item-wrapper-content cart-item-wrapper-content-name'>
-                                  {datum?.name}
-                              </div>
-                              <div className='cart-item-wrapper-content cart-item-wrapper-content-control'>
+                {formData?.items?.length === 0 ? (
+                    <div className='cart-item-wrapper'>
+                        <div className='cart-item-wrapper-content'>購物車內無項目</div>
+                    </div>
+                ) : (
+                    formData?.items?.map((datum) => (
+                        <div key={datum.catId} className='cart-item-wrapper'>
+                            <div className='cart-item-wrapper-content'>
+                                <img src={datum?.url} alt='貓咪圖片' srcSet='' />
+                            </div>
+                            <div className='cart-item-wrapper-content cart-item-wrapper-content-name'>
+                                {datum?.name}
+                            </div>
+                            {/* 「數量增減」目前商業邏輯用不上 */}
+                            {/* <div className='cart-item-wrapper-content cart-item-wrapper-content-control'>
                                   <div>
                                       <Button
                                           name='+'
@@ -152,12 +177,25 @@ function Carts() {
                                       />
                                   </div>
                                   <div>數量：{datum?.quantity}</div>
-                              </div>
-                              <div className='cart-item-wrapper-content'>
-                                  小計：{datum?.quantity}000
-                              </div>
-                          </div>
-                      ))}
+                              </div> */}
+                            <div className='cart-item-wrapper-content'>
+                                小計：{datum?.quantity}000
+                            </div>
+                            <div className='cart-item-wrapper-content cart-item-wrapper-content-control'>
+                                <div
+                                    className='cart-item-wrapper-content-control-remove'
+                                    onClick={() => {
+                                        if (window.confirm(`確定刪除：${datum.name}?`)) {
+                                            handleRemoveCartItem(datum.catId)
+                                        }
+                                    }}
+                                >
+                                    ✖
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                )}
 
                 <div className='cart-item-wrapper-content cart-item-wrapper-content-total'>
                     <div>總計：</div>

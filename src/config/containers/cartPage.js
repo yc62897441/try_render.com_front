@@ -2,6 +2,7 @@ export const cartPageFormConfig = {
     email: {
         label: 'email',
         type: 'email',
+        required: true,
     },
     tel: {
         label: '手機',
@@ -24,35 +25,40 @@ export const cartPageFormConfig = {
         ],
         required: true,
     },
-    district: {
-        label: '行政區',
-        type: 'select',
-        selectList: [
-            { label: '大安區', value: 0 },
-            { label: '信義區', value: 1 },
-        ],
-        required: true,
-    },
+    // district: {
+    //     label: '行政區',
+    //     type: 'select',
+    //     selectList: [
+    //         { label: '大安區', value: 0 },
+    //         { label: '信義區', value: 1 },
+    //     ],
+    //     required: true,
+    // },
+    // address: {
+    //     label: '地址',
+    //     type: 'test',
+    //     required: true,
+    // },
     startDate: {
         label: '起日',
         type: 'date',
         required: true,
     },
-    startTime: {
-        label: '起時',
-        type: 'time',
-        required: true,
-    },
-    endDate: {
-        label: '迄日',
-        type: 'date',
-        required: true,
-    },
-    endTime: {
-        label: '迄時',
-        type: 'time',
-        required: true,
-    },
+    // startTime: {
+    //     label: '起時',
+    //     type: 'time',
+    //     required: true,
+    // },
+    // endDate: {
+    //     label: '迄日',
+    //     type: 'date',
+    //     required: true,
+    // },
+    // endTime: {
+    //     label: '迄時',
+    //     type: 'time',
+    //     required: true,
+    // },
     elseInfo: {
         label: '其他',
         type: 'textarea',
