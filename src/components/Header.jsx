@@ -1,5 +1,6 @@
 // 套件
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 // 靜態資源
@@ -28,16 +29,19 @@ const urls = [
         name: '線上認養',
         url: '/contribution',
     },
-    {
-        name: 'Reactflow',
-        url: '/reactflow',
-    },
+
     {
         name: '購物車',
         url: '/cart',
     },
+]
 
-    // 後台頁面
+// 後台頁面
+const backStageUrls = [
+    {
+        name: 'Reactflow',
+        url: '/reactflow',
+    },
     {
         name: '訂單管理',
         url: '/backstage/orders',
@@ -45,19 +49,30 @@ const urls = [
 ]
 
 // 開發模式下才顯示的頁面
-if (isDevelopingMode) {
-    urls.push({
+const developingModeUrls = [
+    {
         name: 'MiniComponent',
         url: '/miniComponent',
-    })
-    urls.push({
+    },
+    {
         name: 'TryApi',
         url: '/tryApi',
-    })
-}
+    },
+]
 
 function Header() {
+    const isAdmin = useSelector((state) => state.persistedControlReducer.isAdmin)
     const [isDropdown, setIsDropdown] = useState('non-dropdown')
+
+    // 建立 header 選項
+    const headerUrls = useMemo(() => {
+        const outputUrls = [...urls] // 一般使用者可使用 urls
+        if (isAdmin) {
+            outputUrls.push(...backStageUrls) // 系統管理員可使用 urls
+            if (isDevelopingMode) outputUrls.push(...developingModeUrls) // 開發模式下，系統管理員可使用 urls
+        }
+        return outputUrls
+    }, [isAdmin])
 
     function handleDropdown() {
         if (isDropdown === 'non-dropdown') {
@@ -84,8 +99,8 @@ function Header() {
             </div>
 
             <div className={'urlsWrapper ' + isDropdown}>
-                {urls.length > 0 &&
-                    urls.map((item) => (
+                {headerUrls.length > 0 &&
+                    headerUrls.map((item) => (
                         <div key={item.name} className='urlWrapper'>
                             <Link to={item.url}>{item.name}</Link>
                         </div>
@@ -93,8 +108,8 @@ function Header() {
             </div>
 
             <div className={'urlsWrapperPc'}>
-                {urls.length > 0 &&
-                    urls.map((item) => (
+                {headerUrls.length > 0 &&
+                    headerUrls.map((item) => (
                         <div key={item.name} className='urlWrapper'>
                             <Link to={item.url}>{item.name}</Link>
                         </div>
