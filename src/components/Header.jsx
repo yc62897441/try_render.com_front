@@ -35,6 +35,7 @@ const urls = [
     {
         name: '購物車',
         url: '/cart',
+        isCart: true,
     },
 
     // 後台頁面
@@ -58,6 +59,11 @@ if (isDevelopingMode) {
 
 function Header() {
     const [isDropdown, setIsDropdown] = useState('non-dropdown')
+
+    // 取得購物車內項目的數量
+    const cart = JSON.parse(localStorage.getItem('cart'))
+    const cartListTable = cart?.cartList || {}
+    const cartItemsNum = Object.keys(cartListTable).length
 
     function handleDropdown() {
         if (isDropdown === 'non-dropdown') {
@@ -87,7 +93,15 @@ function Header() {
                 {urls.length > 0 &&
                     urls.map((item) => (
                         <div key={item.name} className='urlWrapper'>
-                            <Link to={item.url}>{item.name}</Link>
+                            <Link to={item.url}>
+                                <div>{item.name}</div>
+                                {
+                                    // 如果是購物車，且項目數量 > 0，則顯示數量
+                                    item.isCart && cartItemsNum > 0 && (
+                                        <div className='cartItemsNum'>{cartItemsNum}</div>
+                                    )
+                                }
+                            </Link>
                         </div>
                     ))}
             </div>
@@ -96,7 +110,15 @@ function Header() {
                 {urls.length > 0 &&
                     urls.map((item) => (
                         <div key={item.name} className='urlWrapper'>
-                            <Link to={item.url}>{item.name}</Link>
+                            <Link to={item.url}>
+                                {item.name}
+                                {
+                                    // 如果是購物車，且項目數量 > 0，則顯示數量
+                                    item.isCart && cartItemsNum > 0 && (
+                                        <div className='cartItemsNum'>{cartItemsNum}</div>
+                                    )
+                                }
+                            </Link>
                         </div>
                     ))}
             </div>
