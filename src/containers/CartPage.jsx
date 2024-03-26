@@ -14,6 +14,10 @@ import Form from '../components/miniComponents/Form'
 import { apiHelper } from '../utils/helper'
 import { dispatchLOADING } from '../actions'
 import { cartPageFormConfig } from '../config/containers/cartPage'
+import { checkTime } from '../helper/helper'
+import { mainUrl } from '../config/api'
+
+import { northTaiwanCitiesTable, northTaiwanDistrictsTable } from '../config/cityAndDistrict'
 
 function Carts() {
     const dispatch = useDispatch()
@@ -130,15 +134,31 @@ function Carts() {
         })
     }
 
-    function handleSubmit() {
-        // TODO: 1 送出訂單的 API
+    async function handleSubmit() {
+        if (!checkTime(formData)) return window.alert('起始時間不可晚於結束時間')
 
-        // TODO: 1 縣市與行政區清單
-        // TODO: 1 設為必填，或是有 default value
-        console.log('handleSubmit formData', {
-            ...formData,
+        // 建立訂單資訊
+        const orderAddress = `${northTaiwanCitiesTable[Number(formData.city)]}${northTaiwanDistrictsTable[Number(formData.city)][Number(formData.district)]}${formData.address}` // 拼回縣市完整地址
+        const startDateTime = `${formData.startDate} ${formData.startTime}`
+        const endDateTime = `${formData.endDate} ${formData.endTime}`
+        const catId = formData.items.map((item) => item.catId) // 儲存 catId 的陣列
+        const totalPrice = formData.items.reduce((accumulator, item) => accumulator + 1000, 0)
+
+        const response = await apiHelper('post', mainUrl + '/api/order', {
             userId: userData.id, // 加入 userId 到 formData 中
+            orderPhone: formData.tel,
+            orderAddress: orderAddress,
+            startDateTime,
+            endDateTime,
+            totalPrice: totalPrice,
+            status: 0, // 新增訂單時預設狀態為 0
+            catId,
+            // elseInfo: formData.elseInfo,
         })
+        console.log('response', response)
+
+        if (response?.data?.status === 'success') return window.alert('訂單成功送出\n專人處理中')
+        return window.alert('訂單失敗\n請稍後再試')
     }
 
     if (!formData?.items) return <main></main>

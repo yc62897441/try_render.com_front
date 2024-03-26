@@ -19,7 +19,31 @@ function Form({ formData, formConfig, handleChange, handleSubmit, AppendComponen
         >
             {Object.keys(formConfig)?.length > 0 &&
                 Object.keys(formConfig).map((key, index) => {
-                    return formConfig[key]?.type === 'select' ? (
+                    // selectDistrict 是為了行政區客製。在 city select 切換縣市時，行政區的 select UI 以及 formDate state 都要更新。
+                    return formConfig[key]?.type === 'selectDistrict' ? (
+                        // 「formConfig[key]?.selectList?.[Number(formData?.city)] &&」是因為 Form 一開始渲染時，formData?.city 還是 undefined，在取得 formConfig['district']?.selectList?.[Number(formData?.city)] 會是 undefined，在生成 Select 時會 error。所以，等到 Form 渲染好，formData?.city 取得初始值後，再來處理 selectDistrict select 的渲染。
+                        formConfig[key]?.selectList?.[Number(formData?.city)] && (
+                            <div
+                                className='formGroup'
+                                // key 加上 city 的 value，確保 city 改變時，selectDistrict select UI 會更新
+                                key={index + key + Number(formData?.city)}
+                            >
+                                <label htmlFor={key}>{formConfig[key]?.label}</label>
+                                <Select
+                                    selectList={
+                                        formConfig[key]?.selectList?.[Number(formData?.city)]
+                                    }
+                                    onChangeFunc={handleChange}
+                                    onChangeKey={key}
+                                    name={null}
+                                    defaultValue={null} // defaultValue 為 null，讓 Select 初始化建立時，自動去找 selectList 第一項作為 value
+                                    datumIndex={null}
+                                    disabled={false}
+                                    id={null}
+                                />
+                            </div>
+                        )
+                    ) : formConfig[key]?.type === 'select' ? (
                         <div className='formGroup' key={index + key}>
                             <label htmlFor={key}>{formConfig[key]?.label}</label>
                             <Select
