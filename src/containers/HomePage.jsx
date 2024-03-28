@@ -58,8 +58,7 @@ function HomePage() {
                 // 是否顯示 loading modal
                 isLoading && <LoadingModal text={''} />
             }
-
-            <h1 data-testid='homepageTitle'>HomePage xx</h1>
+            <h1 data-testid='homepageTitle'>HomePage</h1>
             <div>
                 <button onClick={fetchData}>fetchData</button>
             </div>
