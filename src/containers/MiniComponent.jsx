@@ -8,7 +8,7 @@ import '../style/containers/miniComponent.scss'
 
 // 自定義 components
 import Form from '../components/miniComponents/Form'
-import Table from '../components/miniComponents/Table'
+import Table, { TableWithSort } from '../components/miniComponents/Table'
 
 // 自定義函數 or 參數
 import { dummyTableData } from '../assets/dummyTableData'
@@ -52,6 +52,7 @@ function MiniComponentPage() {
                 <hr />
 
                 <Table tableData={tableData} />
+                <TableWithSort tableData={tableData} />
             </section>
         </main>
     )

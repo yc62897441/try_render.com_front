@@ -195,8 +195,43 @@ tr {
 th,
 td {
     padding: 10px;
+
     @media (min-width: 576px) {
         padding: 15px;
+    }
+}
+th {
+    span {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+
+        img {
+            transform: rotate(-180deg) translateY(-2px);
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            opacity: 0;
+        }
+    }
+
+    span:hover {
+        img {
+            opacity: 1;
+        }
+    }
+
+    .isSort {
+        img {
+            opacity: 1;
+        }
+    }
+
+    .acs {
+        img {
+            transform: rotate(0deg) translateY(2px);
+        }
     }
 }
 
