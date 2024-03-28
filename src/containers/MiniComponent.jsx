@@ -8,15 +8,15 @@ import '../style/containers/miniComponent.scss'
 
 // 自定義 components
 import Form from '../components/miniComponents/Form'
-import Table, { TableWithSort } from '../components/miniComponents/Table'
+import Table, { TableWithSort, TableWithSortPagination } from '../components/miniComponents/Table'
 
 // 自定義函數 or 參數
-import { dummyTableData } from '../assets/dummyTableData'
+import { dummyTableData, dummyTableDataLong } from '../assets/dummyTableData'
 import { dummyFormConfig } from '../assets/dummyFormConfig'
 
 function MiniComponentPage() {
     const [formData, updateFormData] = useImmer({})
-    const [tableData, updateTableData] = useImmer({})
+    const [tableData, updateTableData] = useImmer([])
 
     useEffect(() => {
         updateTableData(dummyTableData)
@@ -53,6 +53,7 @@ function MiniComponentPage() {
 
                 <Table tableData={tableData} />
                 <TableWithSort tableData={tableData} />
+                <TableWithSortPagination tableData={dummyTableDataLong} />
             </section>
         </main>
     )

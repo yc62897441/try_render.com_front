@@ -26,3 +26,13 @@ export function checkTime(formData) {
     if (startDateTime > endDateTime) return false
     return true
 }
+
+// 如何在 JavaScript 中為當前日期新增天數
+// 參考來源：https://www.delftstack.com/zh-tw/howto/javascript/javascript-add-days-to-date/
+function addDaysToDate(date, days) {
+    const res = new Date(date)
+    res.setDate(res.getDate() + days)
+    return res
+}
+const tmpDate = new Date('2020-07-20') // Wed Jul 22 2020 08:00:00 GMT+0800 (台北標準時間)
+// console.log(addDaysToDate(tmpDate, 2))
