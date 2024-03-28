@@ -59,7 +59,7 @@ function HomePage() {
                 isLoading && <LoadingModal text={''} />
             }
 
-            <h1 data-testid='homepageTitle'>HomePage</h1>
+            <h1 data-testid='homepageTitle'>HomePage xx</h1>
             <div>
                 <button onClick={fetchData}>fetchData</button>
             </div>

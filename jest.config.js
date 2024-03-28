@@ -13,60 +13,23 @@ module.exports = {
     //     // '^redux-persist-transform-encrypt$': 'redux-persist-transform-encrypt',
     //     // 'redux-persist-transform-encrypt': require.resolve('redux-persist-transform-encrypt'),
     // },
-    moduleNameMapper: {
-        // '^redux-persist-transform-encrypt$': path.resolve(
-        //     __dirname,
-        //     './node_modules/redux-persist-transform-encrypt'
-        // ),
-        'redux-persist-transform-encrypt': require.resolve('redux-persist-transform-encrypt'),
-        // '^redux-persist-transform-encrypt$': 'redux-persist-transform-encrypt',
-        // 'redux-persist-transform-encrypt': require.resolve('redux-persist-transform-encrypt'),
-    },
+    // moduleNameMapper: {
+    //     // '^redux-persist-transform-encrypt$': path.resolve(
+    //     //     __dirname,
+    //     //     './node_modules/redux-persist-transform-encrypt'
+    //     // ),
+    //     'redux-persist-transform-encrypt': require.resolve('redux-persist-transform-encrypt'),
+    //     // '^redux-persist-transform-encrypt$': 'redux-persist-transform-encrypt',
+    //     // 'redux-persist-transform-encrypt': require.resolve('redux-persist-transform-encrypt'),
+    // },
+    // transformIgnorePatterns: ['node_modules/(?!redux-persist-transform-encrypt/)'],
     transform: {
         '^.+\\.js$': 'babel-jest',
-        'redux-persist-transform-encrypt': './transformer.js',
+        '^.+\\.tsx?$': 'ts-jest',
+        // 'redux-persist-transform-encrypt': './transformer.js',
     },
 }
 
-// /** @type {import('jest').Config} */
-// const config = {
-//     verbose: true,
-//     transform: { '\\.[jt]sx?$': 'babel-jest' },
-//     transformIgnorePatterns: ['/node_modules/', '\\.pnp\\.[^\\/]+$'],
-// }
-// module.exports = config
-
-// jest.config.js
-// module.exports = {
-//     transform: {
-//         '\\.m?jsx?$': 'babel-jest',
-//     },
-//     transformIgnorePatterns: [
-//         // for cross platform
-//         `node_modules\\${require('path').sep}(?!(pupa|escape-goat))`,
-//     ],
-// }
-
-// // jest.config.js
-// const path = require('path')
-// module.exports = {
-//     preset: 'ts-jest',
-//     globals: {
-//         'ts-jest': {
-//             tsconfig: path.join(__dirname, 'tsconfig-test.json'),
-//         },
-//     },
-//     transform: {
-//         '\\.m?jsx?$': [
-//             'babel-jest',
-//             {
-//                 plugins: ['@babel/plugin-transform-modules-commonjs'],
-//             },
-//         ],
-//         '\\.tsx?$': 'ts-jest',
-//     },
-//     transformIgnorePatterns: [
-//         // for cross platform
-//         `node_modules\\${path.sep}(?!(pupa|escape-goat))`,
-//     ],
-// }
+// 解決 Jest 測試時 redux-persist-transform-encrypt SyntaxError: Unexpected token 'export' 的問題。
+// 解決方式是在 package.json 加入 "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!redux-persist-transform-encrypt)/\"",
+// 參考來源：https://stackoverflow.com/questions/49263429/jest-gives-an-error-syntaxerror-unexpected-token-export

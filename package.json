@@ -3,7 +3,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "react-scripts start",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!redux-persist-transform-encrypt)/\"",
     "lint:check": "eslint --ext=js,jsx src/",
     "lint": "eslint --fix --ext=js,jsx src/",
     "format:check": "prettier . --check --ignore-unknown",
