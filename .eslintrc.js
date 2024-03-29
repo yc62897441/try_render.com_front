@@ -32,5 +32,6 @@ module.exports = {
         'prettier/prettier': 'warn',
         'react/prop-types': 'off',
         'no-unused-vars': 'warn',
+        'no-unreachable': 'warn', // 規則 'error'、'off'、'warn'
     },
 }

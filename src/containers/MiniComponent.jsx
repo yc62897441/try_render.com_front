@@ -56,7 +56,7 @@ function MiniComponentPage() {
                 />
                 <hr />
 
-                {/* <Table tableData={tableData} /> */}
+                <Table tableData={tableData} />
                 {/* <TableWithSort tableData={tableData} />*/}
                 {/* <TableWithPagination tableData={dummyTableDataLong} />  */}
                 <TableWithPaginationSort tableData={dummyTableDataLong} />

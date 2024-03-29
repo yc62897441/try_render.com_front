@@ -15,53 +15,14 @@ import Form from '../components/miniComponents/Form'
 import { mainUrl } from '../config/api'
 import { dispatchLOGIN, dispatchADMIN, dispatchLOADING, dispatchUSER_DATA } from '../actions'
 import { apiHelper } from '../utils/helper'
+import {
+    loginConfig,
+    registerConfig,
+    forgetPasswordConfig,
+    loginApiConfig,
+} from '../config/containers/loginPage'
 
-const loginConfig = {
-    account: {
-        label: '帳號',
-        type: 'text',
-        required: true,
-    },
-    password: {
-        label: '密碼',
-        type: 'password',
-        autoComplete: true,
-        required: true,
-    },
-}
-const registerConfig = {
-    account: {
-        label: '帳號',
-        type: 'text',
-        required: true,
-    },
-    password: {
-        label: '密碼',
-        type: 'password',
-        autoComplete: false,
-        required: true,
-    },
-    passwordCheck: {
-        label: '密碼確認',
-        type: 'password',
-        autoComplete: false,
-        required: true,
-    },
-}
-const forgetPasswordConfig = {
-    account: {
-        label: '帳號',
-        type: 'text',
-        required: true,
-    },
-    email: {
-        label: 'email',
-        type: 'email',
-        required: true,
-    },
-}
-
-// 向 google oauth 取回 access token
+// 向 google oauth 取回 access token(google 提供的範例函式)
 async function oauthSignIn() {
     try {
         // Google's OAuth 2.0 endpoint for requesting an access token
@@ -71,11 +32,6 @@ async function oauthSignIn() {
         var form = document.createElement('form')
         form.setAttribute('method', 'GET') // Send as a GET request.
         form.setAttribute('action', oauth2Endpoint)
-
-        console.log(
-            'process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID',
-            process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID
-        )
 
         // Parameters to pass to OAuth 2.0 endpoint.
         var params = {
@@ -106,7 +62,7 @@ async function oauthSignIn() {
 
 function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) {
     const dispatch = useDispatch()
-    const [formData, setFormData] = useState({}) // 帳號a001 密碼abc123
+    const [formData, setFormData] = useState({})
 
     function handleChange(value, key) {
         setFormData({
@@ -119,19 +75,14 @@ function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) 
         return async (dispatch) => {
             try {
                 dispatch(dispatchLOADING(true))
-                const apiUrl =
-                    formType === 'login'
-                        ? '/auth/signin'
-                        : formType === 'register'
-                          ? '/auth/register'
-                          : formType === 'forgetPassword'
-                            ? '/auth/forgetPassword'
-                            : ''
-                const response = await apiHelper('post', mainUrl + apiUrl, {
+                const apiConfig = loginApiConfig[formType]
+                const response = await apiHelper(apiConfig.method, mainUrl + apiConfig.path, {
                     ...formData,
                 })
+                console.log('response', response)
 
                 if (formType === 'login') {
+                    // 成功登入，有 token
                     if (response?.data?.token) {
                         let token = response.data.token
                         sessionStorage.setItem('token', token)
@@ -144,19 +95,18 @@ function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) 
                                 ...response.data.user,
                             })
                         )
-                        dispatch(dispatchLOADING(false))
                     } else {
-                        dispatch(dispatchLOADING(false))
+                        window.alert('登入失敗')
                     }
                 }
-                if (formType === 'register') {
-                    console.log('response', response)
-                    dispatch(dispatchLOADING(false))
-                }
-                if (formType === 'forgetPassword') {
-                    console.log('response', response)
-                    dispatch(dispatchLOADING(false))
-                }
+
+                // TODO: 註冊功能
+                if (formType === 'register') console.log('register')
+
+                // TODO: 忘記密碼功能
+                if (formType === 'forgetPassword') console.log('forgetPassword')
+
+                dispatch(dispatchLOADING(false))
             } catch (error) {
                 dispatch(dispatchLOADING(false))
                 console.log(error)
@@ -164,22 +114,24 @@ function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) 
         }
     }
 
-    let formTitleAndButtonName = ''
+    let formTitle = '' // 表單標題
     switch (formType) {
         case 'login':
-            formTitleAndButtonName = '登入'
+            formTitle = '登入'
             break
         case 'register':
-            formTitleAndButtonName = '註冊'
+            formTitle = '註冊'
             break
         case 'forgetPassword':
-            formTitleAndButtonName = '忘記密碼'
+            formTitle = '忘記密碼'
             break
+        default:
+            formTitle = ''
     }
 
     return (
         <div className='loginSectionMain'>
-            <h2>{formTitleAndButtonName}</h2>
+            <h2>{formTitle}</h2>
 
             <Form
                 formData={formData}
@@ -195,10 +147,12 @@ function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) 
                 AppendComponent={function AppendComponent() {
                     return (
                         <div className='formControlGroup'>
+                            {/* Google login 按鈕 */}
                             {formType === 'login' && (
                                 <div onClick={oauthSignIn}>使用 Google login</div>
                             )}
 
+                            {/* 切換登入、註冊、忘記密碼表單 */}
                             {formType !== 'login' && (
                                 <div onClick={() => changeFormType('login')}>登入</div>
                             )}
@@ -302,15 +256,9 @@ function LoginPage() {
             break
     }
 
+    // google OAuth2 redirect 回來的 url
     // const url =
     //     'https://xxxxxxxxx.github.io/xxxxxxxxxxx/?state=pass-through%20value&access_token=ya29.a0Ad52N38m2wEhK5Mn2LVPSl1566TkOmn8436ygyH_Cv4sdmnuIPFVJC4pD_rPhNFkCmDDYZPkHuJ5xVMI6o6jLsXwv2IRDwaG0_EmXKXtNlbQJ-j7O9pYEOpwHUtF8JutPfpM_5ZmMhU2qPn0eApkev5fHiRHLCw6AN0aCgYKAZ8SARASFQHGX2MiRur5qqJZVTdYTZgsa2gMmg0170&token_type=Bearer&expires_in=3599&scope=email%20profile%20https://www.googleapis.com/auth/userinfo.profile%20openid%20https://www.googleapis.com/auth/drive.metadata.readonly%20https://www.googleapis.com/auth/userinfo.email&authuser=2&prompt=none'
-    // const paramsPart = url.split('/?')[1]
-    // const table = {}
-    // paramsPart.split('&').forEach((pair) => {
-    //     const [key, value] = pair.split('=')
-    //     table[key] = value
-    // })
-    // console.log('table', table)
 
     // 如果是從 google OAuth2 redirect 回來，則須從 redirect url 解析回傳的參數
     if (location.href.includes('state')) {
@@ -320,7 +268,7 @@ function LoginPage() {
             const [key, value] = pair.split('=')
             table[key] = value
         })
-        console.log('table', table)
+        // console.log('table', table)
 
         // 使用回傳參數 access_token，去向 google API 取回使用者資訊
         fetchGoogleUserInfo(table.access_token)
@@ -329,18 +277,20 @@ function LoginPage() {
     async function fetchGoogleUserInfo(access_token) {
         try {
             dispatch(dispatchLOADING(true))
-            console.log('fetchGoogleUserInfo', access_token)
+            // console.log('fetchGoogleUserInfo', access_token)
 
-            // 往後端送 access_token，讓後端去向 google API 取回使用者資訊
-            const response = await apiHelper('post', mainUrl + '/auth/google_signin', {
-                access_token: access_token,
-            })
-            // 直接前端去向 google API 取回使用者資訊
+            // 使用 access_token 取得使用者資訊，有 2 個途徑，前端取 or 後端取
+            // 1. 直接前端去向 google API 取回使用者資訊
             // const response = await Axios.get(
             //     `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${access_token}`
             // )
-            console.log('response', response)
+            // 2. 往後端送 access_token，讓後端去向 google API 取回使用者資訊
+            const response = await apiHelper('post', mainUrl + '/auth/google_signin', {
+                access_token: access_token,
+            })
+            // console.log('response', response)
 
+            // 成功登入，有 token
             if (response?.data?.token) {
                 let token = response.data.token
                 sessionStorage.setItem('token', token)
@@ -353,7 +303,6 @@ function LoginPage() {
                         ...response.data.user,
                     })
                 )
-                dispatch(dispatchLOADING(false))
             }
 
             dispatch(dispatchLOADING(false))
