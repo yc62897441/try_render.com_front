@@ -8,7 +8,12 @@ import '../style/containers/miniComponent.scss'
 
 // 自定義 components
 import Form from '../components/miniComponents/Form'
-import Table, { TableWithSort, TableWithSortPagination } from '../components/miniComponents/Table'
+import Table from '../components/miniComponents/Table'
+import {
+    TableWithSort,
+    TableWithPagination,
+    TableWithPaginationSort,
+} from '../components/miniComponents/TableHOC'
 
 // 自定義函數 or 參數
 import { dummyTableData, dummyTableDataLong } from '../assets/dummyTableData'
@@ -51,9 +56,10 @@ function MiniComponentPage() {
                 />
                 <hr />
 
-                <Table tableData={tableData} />
-                <TableWithSort tableData={tableData} />
-                <TableWithSortPagination tableData={dummyTableDataLong} />
+                {/* <Table tableData={tableData} /> */}
+                {/* <TableWithSort tableData={tableData} />*/}
+                {/* <TableWithPagination tableData={dummyTableDataLong} />  */}
+                <TableWithPaginationSort tableData={dummyTableDataLong} />
             </section>
         </main>
     )
