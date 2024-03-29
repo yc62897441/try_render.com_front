@@ -239,11 +239,7 @@ function LoginPage() {
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
     const [formType, setFormType] = useState('login')
 
-    function changeFormType(value) {
-        setFormType(value)
-    }
-
-    let formConfig = ''
+    let formConfig = '' // 決定要用哪個表單 config 來渲染 Form
     switch (formType) {
         case 'login':
             formConfig = loginConfig
@@ -256,12 +252,14 @@ function LoginPage() {
             break
     }
 
-    // google OAuth2 redirect 回來的 url
-    // const url =
-    //     'https://xxxxxxxxx.github.io/xxxxxxxxxxx/?state=pass-through%20value&access_token=ya29.a0Ad52N38m2wEhK5Mn2LVPSl1566TkOmn8436ygyH_Cv4sdmnuIPFVJC4pD_rPhNFkCmDDYZPkHuJ5xVMI6o6jLsXwv2IRDwaG0_EmXKXtNlbQJ-j7O9pYEOpwHUtF8JutPfpM_5ZmMhU2qPn0eApkev5fHiRHLCw6AN0aCgYKAZ8SARASFQHGX2MiRur5qqJZVTdYTZgsa2gMmg0170&token_type=Bearer&expires_in=3599&scope=email%20profile%20https://www.googleapis.com/auth/userinfo.profile%20openid%20https://www.googleapis.com/auth/drive.metadata.readonly%20https://www.googleapis.com/auth/userinfo.email&authuser=2&prompt=none'
+    function changeFormType(value) {
+        setFormType(value)
+    }
 
+    // 特別處理 google OAuth2
     // 如果是從 google OAuth2 redirect 回來，則須從 redirect url 解析回傳的參數
     if (location.href.includes('state')) {
+        // google OAuth2 redirect 回來的 url 結構如下：'https://xxxxxxxxx.github.io/xxxxxxxxxxx/?state=pass-through%20value&access_token=ya29.a0Ad52N38m2wEhK5Mn2LVPSl1566TkOmn8436ygyH_Cv4sdmnuIPFVJC4pD_rPhNFkCmDDYZPkHuJ5xVMI6o6jLsXwv2IRDwaG0_EmXKXtNlbQJ-j7O9pYEOpwHUtF8JutPfpM_5ZmMhU2qPn0eApkev5fHiRHLCw6AN0aCgYKAZ8SARASFQHGX2MiRur5qqJZVTdYTZgsa2gMmg0170&token_type=Bearer&expires_in=3599&scope=email%20profile%20https://www.googleapis.com/auth/userinfo.profile%20openid%20https://www.googleapis.com/auth/drive.metadata.readonly%20https://www.googleapis.com/auth/userinfo.email&authuser=2&prompt=none'
         const paramsPart = location.href.split('/?')[1]
         const table = {}
         paramsPart.split('&').forEach((pair) => {
