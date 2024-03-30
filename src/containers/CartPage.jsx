@@ -137,13 +137,30 @@ function Carts() {
     async function handleSubmit() {
         if (!checkTime(formData)) return window.alert('起始時間不可晚於結束時間')
 
-        // 建立訂單資訊
-        const orderAddress = `${northTaiwanCitiesTable[Number(formData.city)]}${northTaiwanDistrictsTable[Number(formData.city)][Number(formData.district)]}${formData.address}` // 拼回縣市完整地址
+        // 檢查訂單中的貓咪，是否在起訖時間內允許被預訂
         const startDateTime = `${formData.startDate} ${formData.startTime}`
         const endDateTime = `${formData.endDate} ${formData.endTime}`
-        const catId = formData.items.map((item) => item.catId) // 儲存 catId 的陣列
-        const totalPrice = formData.items.reduce((accumulator, item) => accumulator + 1000, 0)
+        const catId = formData.items.map((item) => item.catId) // 建立 catId 的陣列
+        const checkResponse = await apiHelper('post', mainUrl + '/api/checkCatsAvailable', {
+            startDateTime,
+            endDateTime,
+            catId,
+        })
+        // console.log('checkResponse', checkResponse)
 
+        if (checkResponse?.data?.status !== 'success') return window.alert('訂單失敗\n請稍後再試')
+        const checkCatsAvailableTable = checkResponse.data?.checkCatsAvailableTable || {}
+        let notAvailableWarning = ''
+        Object.keys(checkCatsAvailableTable).forEach((key) => {
+            if (!checkCatsAvailableTable[key]) {
+                notAvailableWarning += `${key} 該時段貓咪無法預訂\n`
+            }
+        })
+        if (notAvailableWarning) return window.alert(notAvailableWarning)
+
+        // 如果通過上述檢查，則建立訂單資訊
+        const orderAddress = `${northTaiwanCitiesTable[Number(formData.city)]}${northTaiwanDistrictsTable[Number(formData.city)][Number(formData.district)]}${formData.address}` // 拼回縣市完整地址
+        const totalPrice = formData.items.reduce((accumulator, item) => accumulator + 1000, 0) // 假定每隻 1000 元
         const response = await apiHelper('post', mainUrl + '/api/order', {
             userId: userData.id, // 加入 userId 到 formData 中
             orderPhone: formData.tel,
@@ -153,9 +170,9 @@ function Carts() {
             totalPrice: totalPrice,
             status: 0, // 新增訂單時預設狀態為 0
             catId,
-            // elseInfo: formData.elseInfo,
+            elseInfo: formData.elseInfo,
         })
-        console.log('response', response)
+        // console.log('response', response)
 
         if (response?.data?.status === 'success') return window.alert('訂單成功送出\n專人處理中')
         return window.alert('訂單失敗\n請稍後再試')
