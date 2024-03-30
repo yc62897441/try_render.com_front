@@ -1,6 +1,6 @@
 // 套件
-import React, { useState, useMemo } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect, useMemo } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 // 靜態資源
@@ -11,6 +11,7 @@ import LogoImg from '../assets/img/logo.png'
 
 // 自定義函數 or 參數
 import { isDevelopingMode } from '../config/api'
+import { dispatchCART_CHANGED } from '../actions'
 
 const urls = [
     {
@@ -61,14 +62,32 @@ const developingModeUrls = [
     },
 ]
 
-function Header() {
-    const isAdmin = useSelector((state) => state.persistedControlReducer.isAdmin)
-    const [isDropdown, setIsDropdown] = useState('non-dropdown')
+// TODO: 待優化。當 isCartChanged 變為 true，CartItemsNum 元件會 re-render 更新正確的 cartItemsNum，但是為了要把 isCartChanged 改回 false，會多造成 CartItemsNum 元件在 render 一次。
+// 把 isCartChanged 從 Header 移到 CartItemsNum 之中，如此 isCartChanged 改變時不會造成 Header 重新渲染。
+function CartItemsNum() {
+    const dispatch = useDispatch()
+    const isCartChanged = useSelector((state) => state.persistedControlReducer.isCartChanged)
+    // console.log('CartItemsNum render')
+
+    useEffect(() => {
+        if (isCartChanged) {
+            dispatch(dispatchCART_CHANGED(false))
+        }
+    }, [isCartChanged])
 
     // 取得購物車內項目的數量
     const cart = JSON.parse(localStorage.getItem('cart'))
     const cartListTable = cart?.cartList || {}
     const cartItemsNum = Object.keys(cartListTable).length
+
+    // 項目數量 > 0 才顯示
+    if (cartItemsNum === 0) return null
+    return <div className='cartItemsNum'>{cartItemsNum}</div>
+}
+
+function Header() {
+    const isAdmin = useSelector((state) => state.persistedControlReducer.isAdmin)
+    const [isDropdown, setIsDropdown] = useState('non-dropdown')
 
     // 建立 header 選項
     const headerUrls = useMemo(() => {
@@ -111,10 +130,8 @@ function Header() {
                             <Link to={item.url}>
                                 <div>{item.name}</div>
                                 {
-                                    // 如果是購物車，且項目數量 > 0，則顯示數量
-                                    item.isCart && cartItemsNum > 0 && (
-                                        <div className='cartItemsNum'>{cartItemsNum}</div>
-                                    )
+                                    // 如果是購物車，則顯示數量
+                                    item.isCart && <CartItemsNum />
                                 }
                             </Link>
                         </div>
@@ -128,10 +145,8 @@ function Header() {
                             <Link to={item.url}>
                                 {item.name}
                                 {
-                                    // 如果是購物車，且項目數量 > 0，則顯示數量
-                                    item.isCart && cartItemsNum > 0 && (
-                                        <div className='cartItemsNum'>{cartItemsNum}</div>
-                                    )
+                                    // 如果是購物車，則顯示數量
+                                    item.isCart && <CartItemsNum />
                                 }
                             </Link>
                         </div>

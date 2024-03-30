@@ -1,5 +1,5 @@
 // 套件
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 
 // 靜態資源
@@ -11,19 +11,26 @@ import LoadingModal from './LoadingModal'
 
 // 自定義函數 or 參數
 
-function Layout({ children }) {
+// 把 isLoading，移到 Main 之中，不要放在 Layout 層。避免 isLoading 改變時，整個 Layout(包含 Header) 都要 re-render。
+function Main({ children }) {
     const isLoading = useSelector((state) => state.persistedControlReducer.isLoading)
 
     return (
-        <div className='layoutWrapper'>
+        <Fragment>
             {
                 // 是否顯示 loading modal
                 isLoading && <LoadingModal text={''} />
             }
-
-            <Header />
-
             {children}
+        </Fragment>
+    )
+}
+
+function Layout({ children }) {
+    return (
+        <div className='layoutWrapper'>
+            <Header />
+            <Main>{children}</Main>
         </div>
     )
 }

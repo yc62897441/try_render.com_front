@@ -10,7 +10,7 @@ import { Button } from './miniComponents/MiniComponents'
 
 // 自定義函數 or 參數
 import { apiHelper } from '../utils/helper'
-import { dispatchLOADING } from '../actions'
+import { dispatchLOADING, dispatchCART_CHANGED } from '../actions'
 
 function Modal({ children, switchModal }) {
     return (
@@ -57,6 +57,42 @@ export function CatModalContent({ datum }) {
         }
     }
 
+    // 把貓咪 id 加入到購物車中(localStorage)
+    function handelAddToCart() {
+        let tempCart = localStorage.getItem('cart')
+        // 只記錄存在於購物車的寫法
+        if (!tempCart) {
+            tempCart = {
+                cartList: {
+                    [data.id]: 1,
+                },
+            }
+        } else {
+            tempCart = JSON.parse(tempCart)
+            if (!tempCart.cartList[data.id]) {
+                tempCart.cartList[data.id] = 1
+            }
+        }
+        // 有記錄數量的寫法
+        // if (!tempCart) {
+        //     tempCart = {
+        //         cartList: {
+        //             [data.id]: 1,
+        //         },
+        //     }
+        // } else {
+        //     tempCart = JSON.parse(tempCart)
+        //     if (tempCart.cartList[data.id]) {
+        //         tempCart.cartList[data.id] = tempCart.cartList[data.id] + 1
+        //     } else {
+        //         tempCart.cartList[data.id] = 1
+        //     }
+        // }
+        localStorage.setItem('cart', JSON.stringify(tempCart))
+
+        dispatch(dispatchCART_CHANGED(true)) // 讓 header 顯示的購物車數量更新
+    }
+
     return (
         <div className='modalContentWrapper'>
             {data !== null && data.breeds && (
@@ -88,27 +124,7 @@ export function CatModalContent({ datum }) {
                         <img src={data?.url} alt='貓咪圖片' srcSet='' />
                     </div>
 
-                    <Button
-                        name='加入購物車'
-                        onClick={() => {
-                            let tempCart = localStorage.getItem('cart')
-                            if (!tempCart) {
-                                tempCart = {
-                                    cartList: {
-                                        [data.id]: 1,
-                                    },
-                                }
-                            } else {
-                                tempCart = JSON.parse(tempCart)
-                                if (tempCart.cartList[data.id]) {
-                                    tempCart.cartList[data.id] = tempCart.cartList[data.id] + 1
-                                } else {
-                                    tempCart.cartList[data.id] = 1
-                                }
-                            }
-                            localStorage.setItem('cart', JSON.stringify(tempCart))
-                        }}
-                    />
+                    <Button name='加入購物車' onClick={handelAddToCart} />
                 </>
             )}
         </div>

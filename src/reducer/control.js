@@ -4,6 +4,7 @@ const initState = {
     isLogin: false,
     isAdmin: false,
     isLoading: false,
+    isCartChanged: false,
     reFetch: false,
     keepFetch: false,
     userData: {},
@@ -25,6 +26,11 @@ const controlReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: action.payload,
+            }
+        case actions.SWITCH_CART_CHANGED:
+            return {
+                ...state,
+                isCartChanged: action.payload,
             }
         case actions.SWITCH_REFETCH:
             return {
