@@ -54,6 +54,10 @@
     width: 100%;
     max-width: 200px;
     flex-shrink: 1;
+
+    span {
+        color: 'red';
+    }
 }
 .cart-item-wrapper-content-control {
     flex-shrink: 0;

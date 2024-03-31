@@ -1,5 +1,5 @@
 // 套件
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -23,6 +23,7 @@ function Carts() {
     const dispatch = useDispatch()
     const userData = useSelector((state) => state.persistedControlReducer.userData)
     const [formData, updateFormData] = useImmer({})
+    const [unavailableResult, setUnavailableResult] = useState([])
 
     useEffect(() => {
         async function fetch() {
@@ -134,10 +135,11 @@ function Carts() {
         })
     }
 
+    // 送出新增訂單
     async function handleSubmit() {
         if (!checkTime(formData)) return window.alert('起始時間不可晚於結束時間')
 
-        // 檢查訂單中的貓咪，是否在起訖時間內允許被預訂
+        // 發送訂單中的貓咪 ids，檢查這些貓咪 ids 是否在訂單的起訖時間內，是允許被預訂
         const startDateTime = `${formData.startDate} ${formData.startTime}`
         const endDateTime = `${formData.endDate} ${formData.endTime}`
         const catId = formData.items.map((item) => item.catId) // 建立 catId 的陣列
@@ -148,15 +150,19 @@ function Carts() {
         })
         // console.log('checkResponse', checkResponse)
 
-        if (checkResponse?.data?.status !== 'success') return window.alert('訂單失敗\n請稍後再試')
+        // 整理回傳的檢查結果，並且如果有貓咪 ids 在訂單的起訖時間內無法預定，則畫面顯示錯誤提示
+        if (checkResponse?.data?.status !== 'success') return window.alert('訂單失敗\n請稍後再試') // request 失敗
         const checkCatsAvailableTable = checkResponse.data?.checkCatsAvailableTable || {}
-        let notAvailableWarning = ''
+        const tempUnavailableResult = [] // 檢查結果，
         Object.keys(checkCatsAvailableTable).forEach((key) => {
             if (!checkCatsAvailableTable[key]) {
-                notAvailableWarning += `${key} 該時段貓咪無法預訂\n`
+                tempUnavailableResult.push(key)
             }
         })
-        if (notAvailableWarning) return window.alert(notAvailableWarning)
+        if (tempUnavailableResult?.length > 0) {
+            setUnavailableResult(tempUnavailableResult)
+            return window.alert('預定時段中，有貓咪無法預訂')
+        }
 
         // 如果通過上述檢查，則建立訂單資訊
         const orderAddress = `${northTaiwanCitiesTable[Number(formData.city)]}${northTaiwanDistrictsTable[Number(formData.city)][Number(formData.district)]}${formData.address}` // 拼回縣市完整地址
@@ -196,6 +202,9 @@ function Carts() {
                             </div>
                             <div className='cart-item-wrapper-content cart-item-wrapper-content-name'>
                                 {datum?.name}
+                                {unavailableResult?.includes(datum.catId) && (
+                                    <span> 該時段無法預定</span>
+                                )}
                             </div>
                             {/* 「數量增減」目前商業邏輯用不上 */}
                             {/* <div className='cart-item-wrapper-content cart-item-wrapper-content-control'>
