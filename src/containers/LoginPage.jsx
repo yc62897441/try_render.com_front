@@ -81,6 +81,7 @@ function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) 
                 })
                 console.log('response', response)
 
+                // 登入功能
                 if (formType === 'login') {
                     // 成功登入，有 token
                     if (response?.data?.token) {
@@ -100,11 +101,25 @@ function FormWrapper({ formType, changeFormType, formConfig, reCaptchaSubmit }) 
                     }
                 }
 
-                // TODO: 註冊功能
-                if (formType === 'register') console.log('register')
+                // 註冊功能
+                if (formType === 'register') {
+                    if (response?.data?.status === 'success') {
+                        alert('註冊成功\n請重新登入')
+                        changeFormType('login') // 切回登入表格
+                    } else {
+                        alert('註冊失敗')
+                    }
+                }
 
-                // TODO: 忘記密碼功能
-                if (formType === 'forgetPassword') console.log('forgetPassword')
+                // 忘記密碼功能
+                if (formType === 'forgetPassword') {
+                    if (response?.data?.status === 'success') {
+                        alert('重設密碼成功\n請至 email 收取新密碼')
+                        changeFormType('login') // 切回登入表格
+                    } else {
+                        alert('發生錯誤')
+                    }
+                }
 
                 dispatch(dispatchLOADING(false))
             } catch (error) {
