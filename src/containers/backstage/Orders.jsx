@@ -5,8 +5,8 @@ import { useImmer } from 'use-immer'
 // 靜態資源
 
 // 自定義 components
-import Table, { TableWithModal } from '../../components/miniComponents/Table'
 import { Textarea, Button } from '../../components/miniComponents/MiniComponents'
+import { TableWithModalPaginationSort } from '../../components/miniComponents/TableHOC'
 
 // 自定義函數 or 參數
 import { mainUrl } from '../../config/api'
@@ -127,7 +127,7 @@ function Orders() {
                     userId: '',
                 })
                 updateTableData(resultOrders?.data?.data || [])
-                // console.log('訂單', resultOrders)
+                console.log('訂單', resultOrders)
             } catch (error) {
                 console.log(error)
             }
@@ -137,7 +137,12 @@ function Orders() {
 
     return (
         <main>
-            <TableWithModal tableData={tableData} ModalContent={OrderModalContent} />
+            {tableData.length > 0 && (
+                <TableWithModalPaginationSort
+                    tableData={tableData}
+                    ModalContent={OrderModalContent}
+                />
+            )}
         </main>
     )
 }

@@ -7,11 +7,12 @@ import arrowSVG from '../../assets/img/arrow-up-svgrepo-com.svg'
 
 // 自定義 components
 import PaginationRaw from './Pagination'
+import Modal from '../Modal'
 
 // 自定義函數 or 參數
 import { dispatchKEEP_FETCH } from '../../actions'
 
-function Table({ tableData, isSortAsc, sortProperty, handleClickSort }) {
+function Table({ tableData, isSortAsc, sortProperty, handleClickSort, handleOpen }) {
     if (!tableData?.length && tableData?.length !== 0) return null // 避免 tableData 是 undefined 時出錯
 
     return (
@@ -31,7 +32,7 @@ function Table({ tableData, isSortAsc, sortProperty, handleClickSort }) {
                                                 (sortProperty === key ? 'isSort' : '')
                                             }
                                             onClick={() => {
-                                                handleClickSort(key)
+                                                if (handleClickSort) handleClickSort(key)
                                             }}
                                         >
                                             {key}
@@ -44,7 +45,12 @@ function Table({ tableData, isSortAsc, sortProperty, handleClickSort }) {
                     <tbody>
                         {tableData.length > 0 &&
                             tableData.map((item, index) => (
-                                <tr key={index}>
+                                <tr
+                                    key={index}
+                                    onClick={() => {
+                                        if (handleOpen) handleOpen(index)
+                                    }}
+                                >
                                     {Object.keys(tableData[0])?.length > 0 &&
                                         Object.keys(tableData[0]).map((key, keyIndex) => (
                                             <td key={keyIndex + key}>{item[key]}</td>
@@ -58,8 +64,41 @@ function Table({ tableData, isSortAsc, sortProperty, handleClickSort }) {
     )
 }
 
+const WithModalHOC = (WrappedComponent) => {
+    function WithModal({ tableData, ModalContent, ...props }) {
+        const [openIndex, setOpenIndex] = useState(null) // 選擇開啟的 table 資料的 index
+        function handleOpen(index) {
+            if (index === null) {
+                setOpenIndex(null)
+            } else {
+                setOpenIndex(index)
+            }
+        }
+
+        let openIndexData = null // 選擇開啟的 table 資料
+        if (openIndex !== null) openIndexData = { ...tableData[openIndex] }
+
+        return (
+            <Fragment>
+                <WrappedComponent tableData={tableData} handleOpen={handleOpen} {...props} />
+
+                {openIndexData !== null && (
+                    <Modal
+                        switchModal={() => {
+                            setOpenIndex(null)
+                        }}
+                    >
+                        <ModalContent datum={openIndexData} />
+                    </Modal>
+                )}
+            </Fragment>
+        )
+    }
+    return WithModal
+}
+
 const WithSortHOC = (WrappedComponent) => {
-    function WIthSort({ tableData }) {
+    function WIthSort({ tableData, ...props }) {
         if (!tableData?.length && tableData?.length !== 0) return null // 避免 tableData 是 undefined 時出錯
 
         const [sortProperty, setSortProperty] = useState(null)
@@ -100,6 +139,7 @@ const WithSortHOC = (WrappedComponent) => {
                 isSortAsc={isSortAsc}
                 sortProperty={sortProperty}
                 handleClickSort={handleClickSort}
+                {...props}
             />
         )
     }
@@ -213,6 +253,7 @@ const WithPaginationHOC = (WrappedComponent) => {
 const TableWithSort = WithSortHOC(Table)
 const TableWithPagination = WithPaginationHOC(Table)
 const TableWithPaginationSort = WithSortHOC(WithPaginationHOC(Table)) // WithSortHOC 要在外層，把資料排序好再傳到內層的 WithPaginationHOC；WithPaginationHOC 在進行分頁顯示資料
+const TableWithModalPaginationSort = WithSortHOC(WithPaginationHOC(WithModalHOC(Table)))
 
 export default Table
-export { TableWithSort, TableWithPagination, TableWithPaginationSort }
+export { TableWithSort, TableWithPagination, TableWithPaginationSort, TableWithModalPaginationSort }
